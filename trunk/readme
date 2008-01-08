@@ -1,0 +1,4 @@
+
+构建时指定iLbc的位置
+
+./configure --with-ilbc=/usr/local
