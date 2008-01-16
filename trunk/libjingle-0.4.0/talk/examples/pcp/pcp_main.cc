@@ -73,6 +73,15 @@ class Italk:public sigslot::has_slots <>, public talk_base::MessageHandler {
 		}
 	}
 
+	void OnJingleInfo(const std::string& relay_token,
+			const std::vector<std::string>& relay_addresses,
+			const std::vector<talk_base::SocketAddress>& stun_addresses)
+	{
+		port_allocator_->SetStunHosts(stun_addresses);
+		port_allocator_->SetRelayHosts(relay_addresses);
+		port_allocator_->SetRelayToken(relay_token);
+	}
+
 
   void OnStatusUpdate(const buzz::Status &status) {
     //if (status.available() && status.fileshare_capability()) {
@@ -97,6 +106,11 @@ class Italk:public sigslot::has_slots <>, public talk_base::MessageHandler {
 		//delete session_;
 		thread->Stop();
 	}
+
+  void OnFileShareSessionCreate(cricket::FileShareSession *sess) {
+	  std::cout<<"someone send session here\n";
+
+  }
 
 	void OnSignon(){
     std::string client_unique = xmpp_client_->jid().Str();
@@ -123,15 +137,16 @@ class Italk:public sigslot::has_slots <>, public talk_base::MessageHandler {
     presence_out_->Send(my_status);
     presence_out_->Start();
     
-    /*
-    port_allocator_.reset(new cricket::HttpPortAllocator(&network_manager_, "pcp"));
+    port_allocator_.reset(new cricket::HttpPortAllocator(&network_manager_, "talkmm"));
 
     session_manager_.reset(new cricket::SessionManager(port_allocator_.get(), NULL));
 
+    //创建对象，用来发送/接收 XMPP会话请求
     cricket::SessionManagerTask * session_manager_task = new cricket::SessionManagerTask(xmpp_client_, session_manager_.get());
     session_manager_task->EnableOutgoingMessages();
     session_manager_task->Start();
     
+    //设置STUN和RELAY相关参数,这是异步调用，所以要设置SignalJingleInfo信号
     buzz::JingleInfoTask *jingle_info_task = new buzz::JingleInfoTask(xmpp_client_);
     jingle_info_task->RefreshJingleInfoNow();
     jingle_info_task->SignalJingleInfo.connect(this, &Italk::OnJingleInfo);
@@ -140,12 +155,17 @@ class Italk:public sigslot::has_slots <>, public talk_base::MessageHandler {
     file_share_session_client_.reset(new cricket::FileShareSessionClient(session_manager_.get(), xmpp_client_->jid(), "pcp"));
     file_share_session_client_->SignalFileShareSessionCreate.connect(this, &Italk::OnFileShareSessionCreate);
     session_manager_->AddClient(NS_GOOGLE_SHARE, file_share_session_client_.get());
-    */
   }
       private:
 	enum {
 		MSG_STOP,
 	};
+
+	talk_base::NetworkManager network_manager_;
+	talk_base::scoped_ptr<cricket::HttpPortAllocator> port_allocator_;
+	talk_base::scoped_ptr<cricket::SessionManager> session_manager_;
+	talk_base::scoped_ptr<cricket::FileShareSessionClient> file_share_session_client_;
+	
 	buzz::XmppClient * xmpp_client_;
 };
 
