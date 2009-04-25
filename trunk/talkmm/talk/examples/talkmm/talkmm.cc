@@ -16,8 +16,8 @@
  * =====================================================================================
  */
 
-#include "talkmm.h"
 #include "MainWindow.h"
+#include "talkmm.h"
 
 bool debug=false;
 

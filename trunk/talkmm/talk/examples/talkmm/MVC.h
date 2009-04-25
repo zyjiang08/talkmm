@@ -1,3 +1,7 @@
+#ifndef MVC_H_
+#define MVC_H_
+
+
 #include <iostream>
 
 using namespace std;
@@ -20,3 +24,4 @@ typedef void (Handler::*Func)();
 }
 }
 
+#endif
