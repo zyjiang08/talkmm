@@ -31,7 +31,7 @@
 #include "callclient.h"
 #include "console.h"
 
-class Mainwindow;
+class MainWindow;
 
 class Talkmm {
 
@@ -51,7 +51,7 @@ class Talkmm {
 		talk_base::Thread* main_thread;
 		talk_base::Thread* console_thread;
 
-		Mainwindow* main_window;
+		MainWindow* main_window;
 
 
 

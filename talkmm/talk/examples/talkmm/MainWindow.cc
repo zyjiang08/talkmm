@@ -125,11 +125,13 @@ MainWindow::MainWindow():
         entry_passwd = dynamic_cast<Gtk::Entry*>
                       (main_xml->get_widget("entry_passwd"));
 
-	Gtk::Label* label=Gtk::manage(new Gtk::Label("label demo"));
-	add(*label);
+	//Gtk::Label* label=Gtk::manage(new Gtk::Label("label demo"));
+	//add(*label);
 
 	tray_icon = new TrayIcon(*this);
 
+
+	add(*main_notebook);
 	this->set_size_request(100,400);
 	this->show_all();
 	this->resize(1,1);
@@ -192,9 +194,13 @@ void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 void MainWindow::signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 {
 
-        Button* button_ok = dynamic_cast <Button*>(main_xml->get_widget("login_ok"));
+	Gtk::Button* button_ok = dynamic_cast <Gtk::Button*>(main_xml->get_widget("login_ok"));
 	button_ok->signal_clicked().connect(sigc::bind(
 				sigc::mem_fun(*this,&MainWindow::on_login),f_handler,f_call));
 
 
+}
+
+void MainWindow::on_quit()
+{
 }

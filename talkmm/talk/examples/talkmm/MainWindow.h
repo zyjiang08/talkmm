@@ -23,12 +23,13 @@
 
 #include <gtkmm.h>
 #include <libglademm/xml.h>
+//#include <glibmm/refptr.h>
 #include <glib/gi18n.h>
 #include "TrayIcon.h"
 #include "MVC.h"
 
 #define main_ui "./main_window.glade"
-typedef Glib::Refptr<Gnome::Glade::Xml> GlademmXML;
+typedef Glib::RefPtr <Gnome::Glade::Xml> GlademmXML;
 
 
 class MainWindow : public Gtk::Window {
@@ -40,9 +41,10 @@ class MainWindow : public Gtk::Window {
 		void hide_window();
 		void show_window();
 		void on_init();
+		void on_quit();
 		void on_loginWindow_ok();
 		void on_loginWindow_cancel();
-		void on_login();
+		void on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 
 	protected:
