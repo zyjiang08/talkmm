@@ -131,11 +131,12 @@ bool LoginWindow::on_delete_event(GdkEventAny*)
 
 void LoginWindow::on_loginWindow_cancel()
 {
+    parent.on_loginWindow_cancel();
 }
 
 void LoginWindow::on_loginWindow_ok()
 {
-	parent.login();
+	//parent.on_login();
 	this->hide();
 
 }

@@ -1,0 +1,16 @@
+On Ubuntu for building you'll need (use sudo apt-get install):
+
+build-essential
+
+libogg-dev
+
+libmediastreamer0-dev
+libspeexdsp-dev
+
+Then
+
+    * Extract the tar.gz file into any folder you like (tar -xvf <version>.tar.gz)
+    * Change into the created directory, add execute permissions to ./make (chmod +x ./make) and run ./make 
+    * if no error, change into XXPalk/talk/examples/xxpalk
+    * if you want to run the program with GUI, then execute ./XXPalk_ui, else if you prefer commande line, the execute ./xxpalk
+    * that's it, enjoy it!!!

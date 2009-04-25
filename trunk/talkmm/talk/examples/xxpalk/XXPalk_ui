@@ -1,0 +1,2 @@
+cp xxpalk xxpalk_ui/
+java xxpalk_ui.ui.XXPalkMainFrame

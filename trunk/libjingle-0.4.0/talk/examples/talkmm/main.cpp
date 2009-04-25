@@ -16,7 +16,7 @@
  * =====================================================================================
  */
 
-#include "MainWindow.h"
+#include "talkmm.h"
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -35,9 +35,9 @@ int main(int argc, char* argv[])
 	*/
 
 	Gtk::Main kit(argc, argv);
+	Talkmm talkmm;
+	talkmm.on_login("botcalk@gmail.com","botcalk2038");
 
-	MainWindow wnd; 
-	wnd.on_init();
 	
 	kit.run();
 

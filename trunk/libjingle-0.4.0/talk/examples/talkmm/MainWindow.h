@@ -25,6 +25,7 @@
 //#include <libglademm/xml.h>
 #include <glib/gi18n.h>
 #include "TrayIcon.h"
+#include "MVC.h"
 
 class LoginWindow;
 
@@ -39,7 +40,8 @@ class MainWindow : public Gtk::Window {
 		void on_init();
 		void on_loginWindow_ok();
 		void on_loginWindow_cancel();
-		void login();
+		void on_login();
+		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 
 	protected:
 		bool on_delete_event(GdkEventAny* event);
@@ -51,6 +53,7 @@ class MainWindow : public Gtk::Window {
 		
 
 	private:
+		//Gtk::Notebook*			notebook;
 		TrayIcon				*tray_icon;
 		//ConfWindow*			confwindow;
 		int					window_width;
