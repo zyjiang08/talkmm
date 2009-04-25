@@ -1,0 +1,68 @@
+On Ubuntu for building you'll need (use sudo apt-get install):
+
+build-essential
+libogg-dev
+
+
+these 4 lib is normally included, if not, please intall them
+libortp7-dev
+libspeex-dev
+libmediastreamer0-dev
+libexpat1-dev
+
+
+suggested on Ubuntu:
+
+libmediastreamer0-dev
+libspeexdsp-dev
+
+Then
+
+    * Extract the tar.gz file into any folder you like (tar -xvf <version>.tar.gz)
+    * Change into the created directory, add execute permissions to ./make (chmod +x ./make) and run ./make 
+    * if everything goes alright, u can just go to the directory XXPalk/talk/examples/xxpalk, and execute "./XXPalk_ui" , 
+      this commande will launch my programme with a simple Java GUI. 
+      If you like commande line, you can run ./xxpalk, this will run XXPalk with a commande mode.
+
+if you get any probleme, please check the erroe information and verify if you have installed all the libs dependence.
+
+If always can't run it, contact me xiongq@gmail.commande
+
+here is some more information to solve your problem
+
+libs needed:
+
+* libjingle code
+      Download the package from Google Code.
+    * Expat XML parser
+      XML parser used by libjingle's XML-parsing classes. It is included in the libjingle download.
+    * GIPS VoiceEngine Lite
+      Voice chat engine for Windows. Required to run the voice chat sample on Windows.
+    * Linphone
+      Voice chat engine for UNIX/Linux. Required to run the voice chat sample on UNIX/Linux.
+    * oRTP
+      Real-Time Transport Protocol stack used by the libjingle sample applications. Included in the libjingle download.
+    * GLib
+      Utility library used by oRTP. Included in the libjingle download.
+    * Microsoft Visual C++ 2005 Express Edition
+      A free C++ IDE that can be used to develop libjingle code on Windows platforms. libjingle includes a Visual Studio 2005 solution file.
+
+
+libs suggested: 
+
+    libmediastreamer0-dev
+    libspeexdsp-dev
+
+for some distributions, ex: UBUNTU, u will nedd these libs to get a sound.
+Maybe it's juste my problème, but these libs really solved it.
+
+If you have installed these libs succesfully, normally you can compile libjingle and my programme with no difficult.
+
+Attention!!!
+
+there are bugs in libjingle, I have fixed some, but i belive there are more...cause I've just used less than 30% of them just for google talk kind fonctions. So dont so strust this lib, or it will really kill your programme. Otherwise, C'est un très bon outil!!!
+
+Bon courage.
+
+
+

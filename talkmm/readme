@@ -1,0 +1,57 @@
+Thanks to google's libjingle.
+Thanks to Jozsef Bekes's modification of this lib.
+
+
+Google's Information:
+
+About libjingle
+
+libjingle is a collection of open-source C++ code and sample applications that enables you to build a peer-to-peer application. The code handles creating a network connection (through NAT and firewall devices, relay servers, and proxies), negotiating session details (codecs, formats, etc.), and exchanging data. It also provides helper tasks such as parsing XML, and handling network proxies. You could build the following programs with libjingle:
+
+    * A multi-user voice chat application
+    * A multi-user video conferencing application
+    * A multi-user live music streaming application
+    * A peer-to-peer file sharing application
+
+libjingle is available on Google Code for both Windows and UNIX/Linux operating systems. This documentation supplements the readme files included with the code.
+
+We are providing this source code as part of our ongoing commitment to promoting consumer choice and interoperability in Internet-based real-time-communications. This code is made available under a Berkeley-style license, which means you are free to incorporate it into commercial and non-commercial software and distribute it.
+
+Start with the Developer Guide page to learn how to use libjingle.
+Additional Information
+Support
+
+    * Ask other developers
+      Find answers or post questions on the Google Talk Developer Forum.
+    * Google Talkabout
+      The official Google Talk blog about voice, IM and open communications with Google Talk.
+
+Code and Tools
+
+    * libjingle code
+      Download the package from Google Code.
+    * Expat XML parser
+      XML parser used by libjingle's XML-parsing classes. It is included in the libjingle download.
+    * GIPS VoiceEngine Lite
+      Voice chat engine for Windows. Required to run the voice chat sample on Windows.
+    * Linphone
+      Voice chat engine for UNIX/Linux. Required to run the voice chat sample on UNIX/Linux.
+    * oRTP
+      Real-Time Transport Protocol stack used by the libjingle sample applications. Included in the libjingle download.
+    * GLib
+      Utility library used by oRTP. Included in the libjingle download.
+    * Microsoft Visual C++ 2005 Express Edition
+      A free C++ IDE that can be used to develop libjingle code on Windows platforms. libjingle includes a Visual Studio 2005 solution file.
+
+Reference
+
+    * XMPP home page
+      XMPP (previously called Jabber) is the open source protocol used to exchange session information in the libjingle sample applications.
+    * Jingle specification (XEP-0166)
+      The proposed XMPP specification for the Jingle.
+    * Jingle Audio Media Description (XEP-0167)
+      The proposed XMPP specification for voice conversations.
+    * Jingle ICE Transport (XEP-0176)
+      The proposed XMPP extension describing ICE transport negotiation between clients.
+    * Jingle Raw UDP Transport (XEP-0177)
+      The proposed XMPP specification describing UDP transport over Jingle.

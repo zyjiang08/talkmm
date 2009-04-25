@@ -1,7 +1,7 @@
 bin_PROGRAMS = talkmm
 xxpalk_CXXFLAGS = $(AM_CXXFLAGS)
-xxpalk_SOURCES = xxpalk_main.cc callclient.cc console.cc chatclient.cc fileclient.cc
-noinst_HEADERS = callclient.h  console.h chatclient.h xxpclient.h fileclient.h
+xxpalk_SOURCES = main.cc talkmm.cc callclient.cc console.cc chatclient.cc fileclient.cc
+noinst_HEADERS = talkmm.h callclient.h  console.h chatclient.h xxpclient.h fileclient.h
 xxpalk_LDADD =  \
 	       $(top_srcdir)/talk/login/libcricketlogin.la \
 	       $(top_srcdir)/talk/session/phone/libcricketsessionphone.la \

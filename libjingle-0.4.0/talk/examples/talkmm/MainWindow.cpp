@@ -104,12 +104,13 @@ MainWindow::MainWindow():
 	//,confwindow(NULL)
 	,tray_icon(NULL)
 {
+	//notebook=Gtk::manage(new Gtk::Notebook());
 	Gtk::Label* label=Gtk::manage(new Gtk::Label("label demo"));
 	add(*label);
 
 	tray_icon = new TrayIcon(*this);
 
-	this->set_size_request(400,300);
+	this->set_size_request(100,400);
 	this->show_all();
 	this->resize(1,1);
 
@@ -154,8 +155,17 @@ void MainWindow::on_init()
 	LoginWindow* dlg = new LoginWindow(*this);
 
 }
-void MainWindow::login()
+void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 {
 	this->show();
 }
 
+
+void MainWindow::signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
+{
+
+	button_ok->signal_clicked().connect(sigc::bind(
+				sigc::mem_fun(*this,&MainWindow::on_login),f_handler,f_call));
+
+
+}
