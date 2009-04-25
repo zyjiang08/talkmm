@@ -34,12 +34,12 @@ int main(int argc, char* argv[])
 	textdomain (GETTEXT_PACKAGE);
 	*/
 
-	//Gtk::Main kit(argc, argv);
+	Gtk::Main kit(argc, argv);
 	Talkmm talkmm;
-	talkmm.on_login("botcalk@gmail.com","botcalk2038");
+	//talkmm.on_login("botcalk@gmail.com","botcalk2038");
 
 	
-	//kit.run();
+	kit.run();
 
 	return 0;
 }

@@ -17,7 +17,7 @@
  */
 
 #include "talkmm.h"
-//#include "MainWindow.h"
+#include "MainWindow.h"
 
 bool debug=false;
 
@@ -36,8 +36,8 @@ Talkmm::Talkmm()
 	m_client->SetConsole(m_console);
 	console_thread = new talk_base::Thread(&m_ss);
 
-	//main_window = new MainWindow();
-	//main_window->signal_on_login(this,&Talkmm::on_login);
+	main_window = new MainWindow();
+	main_window->signal_on_login(this,&Talkmm::on_login);
 
 }
 
