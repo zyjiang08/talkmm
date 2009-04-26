@@ -155,13 +155,13 @@ void CallClient::ParseLine(const std::string& line) {
 
   if ((words.size() == 1) && (words[0] == "roster")) {
       console_->Print("roster");
-      PrintRoster();
+      //PrintRoster();
       console_->Send("roster\n");
       return;
   }else if((words.size() == 1) && (words[0] == "OLRoster")){
       console_->Print("OLRoster");
       console_->Send("OLRoster\n");
-      PrintOLRoster();
+      //PrintOLRoster();
       return;
   }else if ((words.size() == 2) && (words[0] == "call")) {
       MakeCallTo(words[1]);
@@ -251,8 +251,9 @@ void CallClient::ParseLine(const std::string& line) {
 }
 
 CallClient::CallClient(buzz::XmppClient* xmpp_client)
-    : xmpp_client_(xmpp_client), roster_(new RosterMap), file_roster_(new RosterMap), 
-      enligne_roster_(new RosterMap), all_roster_(new RosterMap),
+    : xmpp_client_(xmpp_client), 
+	//roster_(new RosterMap), file_roster_(new RosterMap), 
+      //enligne_roster_(new RosterMap), all_roster_(new RosterMap),
       call_(NULL),incoming_call_(false), incoming_file_(false), sending_file_(false){
 
   b_first_time_send_file_ = true;
@@ -290,9 +291,9 @@ CallClient::CallClient(buzz::XmppClient* xmpp_client)
 }
 
 CallClient::~CallClient() {
-  delete roster_;
-  delete enligne_roster_;
-  delete all_roster_;
+  //delete roster_;
+  //delete enligne_roster_;
+  //delete all_roster_;
   //delete _chatclient;
   delete _current_waiting_fileclient;
   delete _current_sending_fileclient;
@@ -302,6 +303,7 @@ CallClient::~CallClient() {
 void CallClient::SendFile(const std::string& to, const std::string& file)
 {
 
+#if 0
   bool found = false;
   buzz::Jid found_jid;
   buzz::Jid sendto_jid = buzz::Jid(to);
@@ -345,6 +347,7 @@ void CallClient::SendFile(const std::string& to, const std::string& file)
     console_->Printf("Could not find file friend '%s'", to.c_str());
   } //if&else
 
+#endif
 }
 
 void CallClient::OnFileTransferStatue(const std::string& type, const std::string& statue, const std::string& no_use)
@@ -439,6 +442,7 @@ void CallClient::OnJingleInfo(const std::string &relay_token,
   port_allocator_->SetRelayToken(relay_token);
 }
 
+/*
 void CallClient::OnStateChange(buzz::XmppEngine::State state) {
   switch (state) {
   case buzz::XmppEngine::STATE_START:
@@ -469,7 +473,6 @@ void CallClient::OnStateChange(buzz::XmppEngine::State state) {
     
   }
 }
-/*
 void CallClient:InitFileShareClient()
 {
   
@@ -590,6 +593,7 @@ void CallClient::OnSessionState(cricket::Call* call,
 
 
 
+/*
 void CallClient::OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte){
 	std::string str;
 	str += from;
@@ -685,6 +689,7 @@ void CallClient::PrintOLRoster() {
   }
  console_->SetPrompting(true);
 }
+*/
 
 void CallClient::SendTexte(const std::string& name, const std::string& texte)
 {
@@ -715,6 +720,7 @@ void CallClient::SendTexte(const std::string& name, const std::string& texte)
 }
 
 void CallClient::MakeCallTo(const std::string& name) {
+	/*
   bool found = false;
   buzz::Jid found_jid;
   buzz::Jid callto_jid = buzz::Jid(name);
@@ -744,4 +750,5 @@ void CallClient::MakeCallTo(const std::string& name) {
     console_->Printf("Could not find online friend '%s'", name.c_str());
     console_->Send("callnotanswered###\n");
   } 
+  */
 }

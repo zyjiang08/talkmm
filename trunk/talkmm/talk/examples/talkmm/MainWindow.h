@@ -40,9 +40,10 @@ class MainWindow : public Gtk::Window {
 		bool on_key_press_event(GdkEventKey* ev);
 		void hide_window();
 		void show_window();
+		/** finsh login*/
+		void on_signon();
 		void on_init();
 		void on_quit();
-		void on_loginWindow_ok();
 		void on_loginWindow_cancel();
 		void on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);

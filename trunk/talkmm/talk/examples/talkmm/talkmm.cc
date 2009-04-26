@@ -22,7 +22,9 @@
 
 bool debug=false;
 
-Talkmm::Talkmm()
+Talkmm::Talkmm():m_roster(new RosterMap)
+		 ,m_presence_push(NULL)
+		 ,m_chatclient(NULL)
 {
 
 	if (debug)
@@ -47,11 +49,12 @@ Talkmm::Talkmm()
 Talkmm::~Talkmm()
 {
 	delete m_client;
-	delete main_thread;
 	delete m_console;
+	delete main_thread;
 	delete console_thread;
 	delete m_chatclient;
 	delete main_window;
+	delete m_roster;
 
 }
 
@@ -140,6 +143,7 @@ void Talkmm::OnStateChange(buzz::XmppEngine::State state) {
     m_client->InitPhone();
     this->InitPresence();
     m_client->InitPresence();
+    //main_window->on_signon();
     break;
 
   case buzz::XmppEngine::STATE_CLOSED:
@@ -151,17 +155,32 @@ void Talkmm::OnStateChange(buzz::XmppEngine::State state) {
   }
 }
 
+/*
+RosterItem Talkmm::FindRoster(const std::string& f_jid)
+{
+	RosterMap::const_iterator iter = m_roster.find(f_jid);
+	if(iter == m_roster.end())
+		return NULL;
+	return (*iter).second;
+}
+*/
+
+
 void Talkmm::OnStatusUpdate(const buzz::Status& status)
 {
-	printf("get buddy %s presence\n",status.jid().Str().c_str());
+	RosterItem item;
+  	item.jid = status.jid();
+  	item.show = status.show();
+  	item.status = status.status();
+  	item.file_cap = status.fileshare_capability()?1:0;
+  	item.phone_cap = status.phone_capability()?1:0;
+
+  	std::string key = item.jid.Str();
+  	/** i want to change a method to insert roster, please fixed me */
+  	(*m_roster)[key] = item;
+	printf("add buddy %s presence\n",key.c_str());
+
 #if 0
-  RosterItem item;
-  item.jid = status.jid();
-  item.show = status.show();
-  item.status = status.status();
-
-  std::string key = item.jid.Str();
-
   size_t pos = key.find("/");
   std::string str = key.substr(0, pos);;
   str += status.available()?"<online\n":"<offline\n";
@@ -213,12 +232,12 @@ void Talkmm::InitPresence()
 {
   
   buzz::XmppClient* xmpp_client_ = m_pump.client();
-  presence_push_ = new buzz::PresencePushTask(xmpp_client_);
-  presence_push_->SignalStatusUpdate.connect(
+  m_presence_push = new buzz::PresencePushTask(xmpp_client_);
+  m_presence_push->SignalStatusUpdate.connect(
     this, &Talkmm::OnStatusUpdate);
-  //presence_push_->SignalStatusUpdate.connect(
+  //m_presence_push->SignalStatusUpdate.connect(
   //  _current_sending_fileclient, &FileShareClient::OnStatusUpdate);
-  presence_push_->Start();
+  m_presence_push->Start();
 
   buzz::Status my_status;
   my_status.set_jid(xmpp_client_->jid());
@@ -245,6 +264,20 @@ void Talkmm::InitPresence()
 /** on recive message */
 void Talkmm::OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte)
 {
+	std::string str;
+	str += from;
+	str += std::string("(");
+	str += iconset;
+	str += std::string(") said: ");
+	str += texte;
+	this->m_console->Print(str);
+	std::string message = "message###";
+	message += from;
+	message += "###";
+	message += texte;
+	message += "\n";
+	this->m_console->Print(message);
+	
 
 }
 
