@@ -22,6 +22,7 @@
 
 #include <time.h>
 #include <iomanip>
+#include <map>
 #include "talk/base/logging.h"
 #include "talk/base/physicalsocketserver.h"
 #include "talk/base/ssladapter.h"
@@ -32,6 +33,15 @@
 #include "console.h"
 
 class MainWindow;
+
+struct RosterItem {
+  buzz::Jid jid;
+  buzz::Status::Show show;
+  std::string status;
+  bool file_cap;
+  bool phone_cap;
+    
+};
 
 class Talkmm : public sigslot::has_slots<> {
 
@@ -46,6 +56,8 @@ class Talkmm : public sigslot::has_slots<> {
 		void InitPresence();
 		void OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte);
 	private:
+		typedef std::map<std::string,RosterItem> RosterMap;
+		RosterMap* m_roster;
 		XmppPump m_pump;
 		buzz::Jid m_jid;
 		buzz::XmppClientSettings m_xcs;
@@ -57,7 +69,7 @@ class Talkmm : public sigslot::has_slots<> {
 		talk_base::Thread* console_thread;
 
 		/** presence status about online,alway, leave .etc */
-		buzz::PresencePushTask* presence_push_;
+		buzz::PresencePushTask* m_presence_push;
 		buzz::ChatClient* m_chatclient;
 		MainWindow* main_window;
 		//sigc::connection connect_IO;

@@ -51,12 +51,14 @@ class Call;
 class SessionManagerTask;
 }
 
+/*
 struct RosterItem {
   buzz::Jid jid;
   buzz::Status::Show show;
   std::string status;
     
 };
+*/
 
 class CallClient: public sigslot::has_slots<> {
 public:
@@ -65,8 +67,8 @@ public:
 
   cricket::PhoneSessionClient* phone_client() const { return phone_client_; }
 
-  void PrintRoster();
-  void PrintOLRoster();
+  //void PrintRoster();
+  //void PrintOLRoster();
   void MakeCallTo(const std::string& name);
   void SetConsole(Console *console) {console_ = console;
     _current_sending_fileclient->setConsole(this->console_);
@@ -74,7 +76,7 @@ public:
   void ParseLine(const std::string &str);
 
 private:
-  typedef std::map<std::string,RosterItem> RosterMap;
+  //typedef std::map<std::string,RosterItem> RosterMap;
 
   bool b_first_time_send_file_;
   Console *console_;
@@ -97,13 +99,13 @@ private:
   bool sending_file_;
 
   //buzz::PresencePushTask* presence_push_;
-  RosterMap* roster_;
-  RosterMap* file_roster_;
-  RosterMap* enligne_roster_;
-  RosterMap* all_roster_;
+  //RosterMap* roster_;
+  //RosterMap* file_roster_;
+  //RosterMap* enligne_roster_;
+  //RosterMap* all_roster_;
 
-  void OnStateChange(buzz::XmppEngine::State state);
-  void OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte);
+  //void OnStateChange(buzz::XmppEngine::State state);
+  //void OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte);
   void SendTexte(const std::string& name, const std::string& texte);
   void SendFile(const std::string& name, const std::string& texte);
   void OnFileReceived(const std::string& from, const std::string& file, const std::string& no_use);
@@ -122,7 +124,7 @@ public:
                       cricket::Session::State state);
 
   void InitPresence();
-  void OnStatusUpdate(const buzz::Status& status);
+  //void OnStatusUpdate(const buzz::Status& status);
 };
 
 #endif // CRICKET_EXAMPLES_CALL_CALLCLIENT_H__

@@ -27,6 +27,7 @@
 
 using namespace std;
 
+enum{ LOGIN_INIT=0,LOGIN_LOADING,LOGIN_FINISH};
 
 void MainWindow::show_window()
 {
@@ -107,7 +108,7 @@ MainWindow::MainWindow():
         main_notebook =
                 dynamic_cast <
                 Gtk::Notebook * > (main_xml->get_widget("main_notebook"));
-        main_notebook->set_current_page(0);
+        main_notebook->set_current_page(LOGIN_INIT);
         main_notebook->set_show_tabs(false);
 
 	/** first page */
@@ -125,14 +126,17 @@ MainWindow::MainWindow():
         entry_passwd = dynamic_cast<Gtk::Entry*>
                       (main_xml->get_widget("entry_passwd"));
 
-	//Gtk::Label* label=Gtk::manage(new Gtk::Label("label demo"));
-	//add(*label);
-
 	tray_icon = new TrayIcon(*this);
+
+	/**third page*/
+	//Gtk::Container* list_window= dynamic_cast<Gtk::Container*>
+	//	(main_xml->get_widget("listWindow"));
+	//Gtk::Label* label = Gtk::manage(new Gtk::Label("test list"));
+	//list_window->add(*label);
 
 
 	add(*main_notebook);
-	this->set_size_request(180,400);
+	this->set_size_request(200,400);
 	this->show_all();
 	this->resize(1,1);
 
@@ -165,8 +169,10 @@ void MainWindow::on_loginWindow_cancel()
 
 }
 
-void MainWindow::on_loginWindow_ok()
+void MainWindow::on_signon()
 {
+	main_notebook->set_current_page(2);
+	//main_notebook->set_current_page(LOGIN_FINISH);
 
 }
 
@@ -183,8 +189,7 @@ void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 
         if (name.empty() || passwd.empty())
                 return ;
-        //main_notebook->set_current_page(LOGIN_LOADING); //设置当前状态为登录中
-        main_notebook->set_current_page(1); //设置当前状态为登录中
+        main_notebook->set_current_page(LOGIN_LOADING); //设置当前状态为登录中
         if (!(f_handler->*f_call)(name, passwd)) { // 登录失败
 		printf("login false\n");
 	}

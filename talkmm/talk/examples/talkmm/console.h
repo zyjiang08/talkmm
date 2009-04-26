@@ -55,6 +55,7 @@ class Console : public talk_base::MessageHandler {
   void Print(const char* str);
   void Print(const std::string& str);
   void Printf(const char* format, ...);
+  void onSignOn();
 
   bool b_with_ui;
 
