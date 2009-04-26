@@ -35,12 +35,15 @@ int main(int argc, char* argv[])
 	textdomain (GETTEXT_PACKAGE);
 	*/
 
+	if (!g_thread_supported())
+		g_thread_init(NULL);
+	gdk_threads_init();
 	Gtk::Main kit(argc, argv);
 	Talkmm talkmm;
-	//talkmm.on_login("botcalk@gmail.com","botcalk2038");
-
 	
+	gdk_threads_enter();
 	kit.run();
+	gdk_threads_leave();
 
 	return 0;
 }

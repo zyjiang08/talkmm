@@ -34,15 +34,17 @@ Talkmm::Talkmm():m_roster(new RosterMap)
 	m_client = new CallClient(m_pump.client());
 	main_thread = new talk_base::Thread(&m_ss);
 	talk_base::ThreadManager::SetCurrent(main_thread);
+
+	main_window = new MainWindow();
+	main_window->signal_on_login(this,&Talkmm::OnLogin);
+
 	int port=0;
-	m_console = new Console(main_thread, m_client, port);
+	m_console = new Console(main_thread, m_client,main_window, port);
 	m_client->SetConsole(m_console);
 	console_thread = new talk_base::Thread(&m_ss);
 
 	m_pump.client()->SignalStateChange.connect(this, &Talkmm::OnStateChange);
 
-	main_window = new MainWindow();
-	main_window->signal_on_login(this,&Talkmm::OnLogin);
 
 }
 
@@ -143,6 +145,7 @@ void Talkmm::OnStateChange(buzz::XmppEngine::State state) {
     m_client->InitPhone();
     this->InitPresence();
     m_client->InitPresence();
+    m_console->OnSignOn();
     //main_window->on_signon();
     break;
 
