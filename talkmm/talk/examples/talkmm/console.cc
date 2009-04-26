@@ -32,11 +32,14 @@
 #include <netinet/in.h>
 #include <stdio.h>
 #include "string.h"
+#include "MainWindow.h"
 
 
-Console::Console(talk_base::Thread *thread, CallClient *client, int port) : 
+Console::Console(talk_base::Thread *thread, CallClient *client,MainWindow* win, int port) : 
   client_thread_(thread), client_(client), prompt_(std::string("talkmm")),
-  prompting_(true) {
+  prompting_(true) 
+	,main_window(win)
+{
 
   if(port == 0)
     b_with_ui = false;
@@ -184,4 +187,9 @@ void Console::Printf(const char* format, ...) {
   va_end(ap);
 }
 
-
+void Console::OnSignOn()
+{
+	gdk_threads_enter();
+	main_window->on_signon();
+	gdk_threads_leave();
+}

@@ -28,6 +28,7 @@
 
 
 class CallClient;
+class MainWindow;
 
 enum {
 	MSG_START,
@@ -36,7 +37,7 @@ enum {
 
 class Console : public talk_base::MessageHandler {
  public:
-  Console(talk_base::Thread *thread, CallClient *client, int port);
+  Console(talk_base::Thread *thread, CallClient *client,MainWindow* win, int port);
   virtual void OnMessage(talk_base::Message *msg);
   void SetPrompt(const char *prompt) {
 	  prompt_ = prompt ? std::string(prompt) : std::string("xxpalk");
@@ -55,12 +56,13 @@ class Console : public talk_base::MessageHandler {
   void Print(const char* str);
   void Print(const std::string& str);
   void Printf(const char* format, ...);
-  void onSignOn();
+  void OnSignOn();
 
   bool b_with_ui;
 
  private:
   CallClient *client_;
+  MainWindow* main_window;
   talk_base::Thread *client_thread_;
   void StartConsole();
   void ParseLine(std::string &str);
