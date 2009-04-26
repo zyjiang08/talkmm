@@ -132,7 +132,7 @@ MainWindow::MainWindow():
 
 
 	add(*main_notebook);
-	this->set_size_request(100,400);
+	this->set_size_request(180,400);
 	this->show_all();
 	this->resize(1,1);
 

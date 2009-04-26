@@ -16,6 +16,7 @@
  * =====================================================================================
  */
 
+#include <stdio.h>
 #include "MainWindow.h"
 #include "talkmm.h"
 
@@ -36,17 +37,25 @@ Talkmm::Talkmm()
 	m_client->SetConsole(m_console);
 	console_thread = new talk_base::Thread(&m_ss);
 
+	m_pump.client()->SignalStateChange.connect(this, &Talkmm::OnStateChange);
+
 	main_window = new MainWindow();
-	main_window->signal_on_login(this,&Talkmm::on_login);
+	main_window->signal_on_login(this,&Talkmm::OnLogin);
 
 }
 
 Talkmm::~Talkmm()
 {
+	delete m_client;
+	delete main_thread;
+	delete m_console;
+	delete console_thread;
+	delete m_chatclient;
+	delete main_window;
 
 }
 
-bool Talkmm::on_login(const std::string& f_username,const std::string& f_pass)
+bool Talkmm::OnLogin(const std::string& f_username,const std::string& f_pass)
 {
 	m_jid = buzz::Jid(f_username);
 	std::string& password = m_pass.password();
@@ -68,6 +77,174 @@ bool Talkmm::on_login(const std::string& f_username,const std::string& f_pass)
 	m_pump.DoLogin(m_xcs, new XmppSocket(true), NULL);
 	main_thread->Start();
 	//main_thread->Run();
+	
+	/*
+	mysock_fd=open_socket();
+	connect_IO = Glib::signal_io().connect(
+			sigc::mem_fun(*this,&Talkmm::callback),
+			mysock_fd, Glib::IO_IN|Glib::IO_HUP);
+		*/
+
 	return true;
 }
 	
+
+/*
+bool Talkmm::callback(Glib::IOCondition f_condition)
+{
+
+    char buffer[256];
+    bzero(buffer, 256);
+    int n = read(mysock_fd,buffer,255);
+
+}
+
+int Talkmm::open_socket(int f_port)
+{
+    int sockfd, newsockfd, portno, clilen;
+  
+    struct sockaddr_in serv_addr, cli_addr;
+
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0) 
+      printf("ERROR opening socket\n");
+    bzero((char *) &serv_addr, sizeof(serv_addr));
+    portno = f_port;
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_addr.s_addr = INADDR_ANY;
+    serv_addr.sin_port = htons(portno);
+    if (bind(sockfd, (struct sockaddr *) &serv_addr,
+	    sizeof(serv_addr)) < 0) 
+	    printf("ERROR on binding\n");
+    return sockfd;
+}
+*/
+
+
+
+
+void Talkmm::OnStateChange(buzz::XmppEngine::State state) {
+  switch (state) {
+  case buzz::XmppEngine::STATE_START:
+    m_console->Print("connecting...");
+    m_console->Send("loggingin\n");
+    break;
+
+  case buzz::XmppEngine::STATE_OPENING:
+    m_console->Print("logging in...");
+    break;
+
+  case buzz::XmppEngine::STATE_OPEN:
+    m_console->Print("talkmm has==========logged in...");
+    m_console->Send("loggedin\n");
+    m_client->InitPhone();
+    this->InitPresence();
+    m_client->InitPresence();
+    break;
+
+  case buzz::XmppEngine::STATE_CLOSED:
+    buzz::XmppEngine::Error error = m_pump.client()->GetError(NULL);
+    //m_console->Print("logged out..." + strerror(error));
+    m_console->Send("loggedout\n");
+    exit(0);
+    
+  }
+}
+
+void Talkmm::OnStatusUpdate(const buzz::Status& status)
+{
+	printf("get buddy %s presence\n",status.jid().Str().c_str());
+#if 0
+  RosterItem item;
+  item.jid = status.jid();
+  item.show = status.show();
+  item.status = status.status();
+
+  std::string key = item.jid.Str();
+
+  size_t pos = key.find("/");
+  std::string str = key.substr(0, pos);;
+  str += status.available()?"<online\n":"<offline\n";
+  m_console->Send(str);
+
+  m_console->Printf("Adding to All roster: %s", key.c_str());
+  (*all_roster_)[key] = item;
+
+  if (status.available() && status.fileshare_capability()){
+    m_console->Printf("Adding to file roster: %s", key.c_str());
+    (*file_roster_)[key] = item;
+  }//if
+  else{
+    RosterMap::iterator iter = file_roster_->find(key);
+    if (iter != file_roster_->end()){
+      file_roster_->erase(iter);
+      m_console->Printf("Removing from file roster: %s", key.c_str());
+    }//if
+  }//else
+
+  if(status.available()){
+    m_console->Printf("Adding to available roster: %s", key.c_str());
+    (*enligne_roster_)[key] = item;
+  }//if
+  else{
+    RosterMap::iterator iter = enligne_roster_->find(key);
+    if (iter != enligne_roster_->end()){
+      enligne_roster_->erase(iter);
+      m_console->Printf("Removing from available roster: %s", key.c_str());
+    }//if
+  }//else
+
+
+  if (status.available() && status.phone_capability()) {
+     m_console->Printf("Adding to phone roster: %s", key.c_str());
+    (*roster_)[key] = item;
+  } else {
+    RosterMap::iterator iter = roster_->find(key);
+    if (iter != roster_->end()){
+      roster_->erase(iter);
+      m_console->Printf("Removing from phone roster: %s", key.c_str());
+    }//if
+  }
+#endif
+}
+
+
+void Talkmm::InitPresence() 
+{
+  
+  buzz::XmppClient* xmpp_client_ = m_pump.client();
+  presence_push_ = new buzz::PresencePushTask(xmpp_client_);
+  presence_push_->SignalStatusUpdate.connect(
+    this, &Talkmm::OnStatusUpdate);
+  //presence_push_->SignalStatusUpdate.connect(
+  //  _current_sending_fileclient, &FileShareClient::OnStatusUpdate);
+  presence_push_->Start();
+
+  buzz::Status my_status;
+  my_status.set_jid(xmpp_client_->jid());
+  my_status.set_available(true);
+  my_status.set_show(buzz::Status::SHOW_ONLINE);
+  my_status.set_priority(0);
+  my_status.set_know_capabilities(true);
+  my_status.set_phone_capability(true);
+  my_status.set_fileshare_capability(true);
+  my_status.set_is_google_client(true);
+  my_status.set_version("1.0.0.66");
+
+  buzz::PresenceOutTask* presence_out_ =
+      new buzz::PresenceOutTask(xmpp_client_);
+  presence_out_->Send(my_status);
+  presence_out_->Start();
+
+  m_chatclient = new buzz::ChatClient(xmpp_client_);
+  m_chatclient->SignalTexteRecu.connect(this, &Talkmm::OnTexteRecu);
+  //_current_sending_fileclient->OnSignon(port_allocator_, session_manager_, NULL, session_manager_task_);
+}
+
+
+/** on recive message */
+void Talkmm::OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte)
+{
+
+}
+

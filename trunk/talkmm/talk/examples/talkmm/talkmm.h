@@ -33,13 +33,18 @@
 
 class MainWindow;
 
-class Talkmm {
+class Talkmm : public sigslot::has_slots<> {
 
 	public:
 		Talkmm();
 		~Talkmm();
-		bool on_login(const std::string& f_username,const std::string& f_pass);
+		bool OnLogin(const std::string& f_username,const std::string& f_pass);
 
+	public:
+		void OnStateChange(buzz::XmppEngine::State state);
+		void OnStatusUpdate(const buzz::Status& status);
+		void InitPresence();
+		void OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte);
 	private:
 		XmppPump m_pump;
 		buzz::Jid m_jid;
@@ -51,7 +56,12 @@ class Talkmm {
 		talk_base::Thread* main_thread;
 		talk_base::Thread* console_thread;
 
+		/** presence status about online,alway, leave .etc */
+		buzz::PresencePushTask* presence_push_;
+		buzz::ChatClient* m_chatclient;
 		MainWindow* main_window;
+		//sigc::connection connect_IO;
+		//int mysock_fd;
 
 
 

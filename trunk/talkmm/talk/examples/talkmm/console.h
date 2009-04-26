@@ -22,6 +22,7 @@
 #ifndef CRICKET_EXAMPLES_CALL_CONSOLE_H__
 #define CRICKET_EXAMPLES_CALL_CONSOLE_H__
 
+#include <stdio.h>
 #include "talk/base/thread.h"
 #include "talk/base/messagequeue.h"
 

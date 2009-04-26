@@ -256,7 +256,7 @@ CallClient::CallClient(buzz::XmppClient* xmpp_client)
       call_(NULL),incoming_call_(false), incoming_file_(false), sending_file_(false){
 
   b_first_time_send_file_ = true;
-  xmpp_client_->SignalStateChange.connect(this, &CallClient::OnStateChange);
+  //xmpp_client_->SignalStateChange.connect(this, &CallClient::OnStateChange);
   
   char cwd[256];
   getcwd(cwd, sizeof(cwd));
@@ -281,7 +281,7 @@ CallClient::CallClient(buzz::XmppClient* xmpp_client)
     }//else
 */
   _current_sending_fileclient = new FileShareClient(xmpp_client_, buzz::JID_EMPTY, NULL, cwd);
-  xmpp_client_->SignalStateChange.connect(_current_sending_fileclient, &FileShareClient::OnStateChange);
+  //xmpp_client_->SignalStateChange.connect(_current_sending_fileclient, &FileShareClient::OnStateChange);
   _current_sending_fileclient->SignalFileReceived.connect(this, &CallClient::OnFileReceived);
   _current_sending_fileclient->SignalFileTransferStatue.connect(this, &CallClient::OnFileTransferStatue);
 
@@ -293,7 +293,7 @@ CallClient::~CallClient() {
   delete roster_;
   delete enligne_roster_;
   delete all_roster_;
-  delete _chatclient;
+  //delete _chatclient;
   delete _current_waiting_fileclient;
   delete _current_sending_fileclient;
 
@@ -518,6 +518,7 @@ void CallClient::InitPhone(/*cricket::SessionManager* s*/) {
 
 void CallClient::InitPresence() {
   
+/*
   presence_push_ = new buzz::PresencePushTask(xmpp_client_);
   presence_push_->SignalStatusUpdate.connect(
     this, &CallClient::OnStatusUpdate);
@@ -540,9 +541,10 @@ void CallClient::InitPresence() {
       new buzz::PresenceOutTask(xmpp_client_);
   presence_out_->Send(my_status);
   presence_out_->Start();
+  */
 
-  _chatclient = new buzz::ChatClient(this->xmpp_client_);
-  _chatclient->SignalTexteRecu.connect(this, &CallClient::OnTexteRecu);
+  //_chatclient = new buzz::ChatClient(this->xmpp_client_);
+  //_chatclient->SignalTexteRecu.connect(this, &CallClient::OnTexteRecu);
   _current_sending_fileclient->OnSignon(port_allocator_, session_manager_, NULL, session_manager_task_);
 }
 
@@ -686,6 +688,7 @@ void CallClient::PrintOLRoster() {
 
 void CallClient::SendTexte(const std::string& name, const std::string& texte)
 {
+#if 0
 
   bool found = false;
   buzz::Jid found_jid;
@@ -708,6 +711,7 @@ void CallClient::SendTexte(const std::string& name, const std::string& texte)
     console_->Printf("Could not find online friend '%s'", name.c_str());
   } //if&else
 
+#endif
 }
 
 void CallClient::MakeCallTo(const std::string& name) {

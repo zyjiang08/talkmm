@@ -79,7 +79,7 @@ private:
   bool b_first_time_send_file_;
   Console *console_;
   buzz::XmppClient* xmpp_client_;
-  buzz::ChatClient* _chatclient;
+  //buzz::ChatClient* _chatclient;
   FileShareClient* _current_waiting_fileclient;
   FileShareClient* _current_sending_fileclient;
   talk_base::Thread* worker_thread_;
@@ -96,7 +96,7 @@ private:
   bool incoming_file_;
   bool sending_file_;
 
-  buzz::PresencePushTask* presence_push_;
+  //buzz::PresencePushTask* presence_push_;
   RosterMap* roster_;
   RosterMap* file_roster_;
   RosterMap* enligne_roster_;
@@ -111,8 +111,8 @@ private:
   void OnJingleInfo(const std::string &relay_token, const std::vector<std::string> &relay_hosts, 
 		    const std::vector<talk_base::SocketAddress> &stun_hosts);
   void OnProxyDetect(talk_base::SignalThread *thread);
+public:
   void InitPhone();
-//  void InitFileShareClient();
   void OnRequestSignaling();
   void OnCallCreate(cricket::Call* call);
   void OnCallDestroy(cricket::Call* call);
