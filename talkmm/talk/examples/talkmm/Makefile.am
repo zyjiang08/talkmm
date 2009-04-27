@@ -2,10 +2,14 @@ bin_PROGRAMS = talkmm
 talkmm_CXXFLAGS = $(AM_CXXFLAGS)
 talkmm_SOURCES = talkmm.cc main.cc callclient.cc console.cc chatclient.cc fileclient.cc \
 		 MainWindow.cc \
+		 BuddyView.cc \
+		 TreeModelDnd.cc \
 		 TrayIcon.cc 
 noinst_HEADERS = talkmm.h callclient.h  console.h chatclient.h  fileclient.h \
 		 MVC.h \
 		 MainWindow.h \
+		 BuddyView.h \
+		 TreeModelDnd.h \
 		 TrayIcon.h
 talkmm_LDADD =  \
 	       $(top_srcdir)/talk/login/libcricketlogin.la \

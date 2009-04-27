@@ -131,13 +131,18 @@ void Console::Printf(const char *format, ...)
 void Console::OnSignOn()
 {
 	LockMutex locked;
-	//gdk_threads_enter();
 	main_window->on_signon();
-	//gdk_threads_leave();
 }
 
 void Console::RosterPresence(const std::string& jid)
 {
 	LockMutex locked;
 	main_window->on_roster_presence(jid);
+}
+
+void Console::RecuMessage(const std::string& from,const std::string& message)
+{
+	LockMutex locked;
+	main_window->on_receive_message(from,message);
+
 }

@@ -24,6 +24,7 @@
 #include <glib/gi18n.h>
 #include <stdio.h>
 #include <string.h>
+#include "BuddyView.h"
 
 using namespace std;
 
@@ -129,11 +130,12 @@ MainWindow::MainWindow():
 	tray_icon = new TrayIcon(*this);
 
 	/**third page*/
-	//Gtk::Container* list_window= dynamic_cast<Gtk::Container*>
-	//	(main_xml->get_widget("listWindow"));
+	Gtk::Container* list_window= dynamic_cast<Gtk::Container*>
+		(main_xml->get_widget("listWindow"));
 	//Gtk::Label* label = Gtk::manage(new Gtk::Label("test list"));
 	//list_window->add(*label);
-
+	list_view = Gtk::manage(new BuddyView(*this));
+	list_window->add(*list_view);
 
 	add(*main_notebook);
 	this->set_size_request(200,400);
@@ -209,6 +211,12 @@ void MainWindow::on_quit()
 {
 }
 void MainWindow::on_roster_presence(const std::string& jid)
+{
+
+	list_view->add(jid);
+}
+
+void MainWindow::on_receive_message(const std::string& from,const std::string& message)
 {
 
 
