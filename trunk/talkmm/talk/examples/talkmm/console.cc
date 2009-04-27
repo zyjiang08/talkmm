@@ -27,169 +27,117 @@
 #include "talk/base/stringutils.h"
 #include "talk/examples/talkmm/console.h"
 #include "talk/examples/talkmm/callclient.h"
-#include <sys/types.h> 
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <stdio.h>
 #include "string.h"
 #include "MainWindow.h"
 
+struct LockMutex {
+	LockMutex() {
+		gdk_threads_enter();
+	} ~LockMutex() {
+		gdk_threads_leave();
+	}
+};
 
-Console::Console(talk_base::Thread *thread, CallClient *client,MainWindow* win, int port) : 
-  client_thread_(thread), client_(client), prompt_(std::string("talkmm")),
-  prompting_(true) 
-	,main_window(win)
+Console::Console(talk_base::Thread * thread, CallClient * client, MainWindow * win):
+client_thread_(thread), client_(client), prompt_(std::string("talkmm")),
+prompting_(true)
+    , main_window(win)
 {
 
-  if(port == 0)
-    b_with_ui = false;
-  else
-    b_with_ui = true;
-  //init socket here
-  
-  if(b_with_ui){
-
-    int sockfd, newsockfd, portno, clilen;
-  
-    struct sockaddr_in serv_addr, cli_addr;
-
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    sock_fd_ = sockfd;
-    if (sockfd < 0) 
-      printf("ERROR opening socket\n");
-    bzero((char *) &serv_addr, sizeof(serv_addr));
-    portno = port;
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = INADDR_ANY;
-    serv_addr.sin_port = htons(portno);
-    if (bind(sockfd, (struct sockaddr *) &serv_addr,
-	    sizeof(serv_addr)) < 0) 
-	    printf("ERROR on binding\n");
-    listen(sockfd,50);
-    clilen = sizeof(cli_addr);
-    printf("waiting from client to accept\n");
-    newsockfd = accept(sockfd, 
-		      (struct sockaddr *) &cli_addr, 
-		      (socklen_t*)(&clilen));
-    printf("accepted from client\n");
-    if (newsockfd < 0) 
-	printf("ERROR on accept\n");
-    
-    new_sock_fd_ = newsockfd;
-  }//if
-  
 
 }
 
 
-void Console::Send(const char* str)
+void Console::Send(const char *str)
 {
-  if(b_with_ui){
-    int n = write(new_sock_fd_, str, strlen(str));
-    if (n < 0) printf("ERROR writing to socket\n");
-  }//if
 }
 
-void Console::Send(const std::string& str)
+void Console::Send(const std::string & str)
 {
-  if(b_with_ui){
-    Send(str.c_str());
-  }//if
-  
+
 }
 
 std::string Console::Receive()
 {
 
-  if(b_with_ui){
-    char buffer[256];
-    bzero(buffer, 256);
-    int n = read(new_sock_fd_,buffer,255);
-      if (n < 0) printf("ERROR reading from socket\n");
-      else
-	  return std::string(buffer);
-  }//if
 }
 
-void Console::StartConsole() {
-  char buffer[256];
-  std::string message;
-  for (;;) {
-//	fgets(buffer, sizeof(buffer), stdin);
-    if(b_with_ui){
-      bzero(buffer,256);
-      int n = read(new_sock_fd_,buffer,255);
-      if (n < 0) printf("ERROR reading from socket\n");
-  //     printf("Here is the message: %s\n",buffer);
-  //     n = write(new_sock_fd_,"I got your message",18);
-  //     if (n < 0) printf("ERROR writing to socket\n");
-      
-      
-      std::string str = std::string(buffer);
-      int pos = str.find("\n");
-      message = str.substr(0, pos);
-      client_thread_->Post(this, MSG_INPUT, 
-	            new talk_base::TypedMessageData<std::string>(message));
-    }//if
-    else{
-      fgets(buffer, sizeof(buffer), stdin);
-      client_thread_->Post(this, MSG_INPUT, 
-	            new talk_base::TypedMessageData<std::string>(buffer));
-    }//else
-    
+void Console::StartConsole()
+{
+	char buffer[256];
+	std::string message;
+	for (;;) {
+//      fgets(buffer, sizeof(buffer), stdin);
+		fgets(buffer, sizeof(buffer), stdin);
+		client_thread_->Post(this, MSG_INPUT,
+				     new talk_base::TypedMessageData <
+				     std::string > (buffer));
 
 
-  }//for
+	}			//for
 }
 
 void Console::Close()
 {
-  close(sock_fd_);
-//  dostuff(new_sock_fd_);
-  close(new_sock_fd_);
 }
 
-void Console::OnMessage(talk_base::Message *msg) {
-  switch (msg->message_id) {
-    case MSG_START:
-      StartConsole();
-	  break;
+void Console::OnMessage(talk_base::Message * msg)
+{
+	switch (msg->message_id) {
+	case MSG_START:
+		StartConsole();
+		break;
 	case MSG_INPUT:
-	  talk_base::TypedMessageData<std::string> *data = 
-	    static_cast<talk_base::TypedMessageData<std::string>*>(msg->pdata);
-	  client_->ParseLine(data->data());
-	  break;
-  }
+		talk_base::TypedMessageData < std::string > *data =
+		    static_cast < talk_base::TypedMessageData <
+		    std::string > *>(msg->pdata);
+		client_->ParseLine(data->data());
+		break;
+	}
 }
 
 
-void Console::Print(const char* str) {
-  printf("\n%s", str);
-  if (prompting_)
-    printf("\n(%s) ", prompt_.c_str());
+void Console::Print(const char *str)
+{
+	printf("\n%s", str);
+	if (prompting_)
+		printf("\n(%s) ", prompt_.c_str());
 }
 
-void Console::Print(const std::string& str) {
-  Print(str.c_str());
+void Console::Print(const std::string & str)
+{
+	Print(str.c_str());
 }
 
-void Console::Printf(const char* format, ...) {
-  va_list ap;
-  va_start(ap, format);
+void Console::Printf(const char *format, ...)
+{
+	va_list ap;
+	va_start(ap, format);
 
-  char buf[4096];
-  int size = vsnprintf(buf, sizeof(buf), format, ap);
-  assert(size >= 0);
-  assert(size < static_cast<int>(sizeof(buf)));
-  buf[size] = '\0';
-  Print(buf);
+	char buf[4096];
+	int size = vsnprintf(buf, sizeof(buf), format, ap);
+	assert(size >= 0);
+	assert(size < static_cast < int >(sizeof(buf)));
+	buf[size] = '\0';
+	Print(buf);
 
-  va_end(ap);
+	va_end(ap);
 }
 
 void Console::OnSignOn()
 {
-	gdk_threads_enter();
+	LockMutex locked;
+	//gdk_threads_enter();
 	main_window->on_signon();
-	gdk_threads_leave();
+	//gdk_threads_leave();
+}
+
+void Console::RosterPresence(const std::string& jid)
+{
+	LockMutex locked;
+	main_window->on_roster_presence(jid);
 }

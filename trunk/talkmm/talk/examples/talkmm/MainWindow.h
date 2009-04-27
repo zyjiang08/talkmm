@@ -23,7 +23,6 @@
 
 #include <gtkmm.h>
 #include <libglademm/xml.h>
-//#include <glibmm/refptr.h>
 #include <glib/gi18n.h>
 #include "TrayIcon.h"
 #include "MVC.h"
@@ -42,6 +41,7 @@ class MainWindow : public Gtk::Window {
 		void show_window();
 		/** finsh login*/
 		void on_signon();
+		void on_roster_presence(const std::string& jid);
 		void on_init();
 		void on_quit();
 		void on_loginWindow_cancel();

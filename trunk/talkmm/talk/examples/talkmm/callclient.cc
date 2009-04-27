@@ -90,29 +90,6 @@ const char* CONSOLE_COMMANDS =
 void CallClient::ParseLine(const std::string& line) {
   std::vector<std::string> words;
 
-  if(!console_->b_with_ui){
-    int start = -1;
-    int state = 0;
-    for (int index = 0; index <= static_cast<int>(line.size()); ++index) {
-      if (state == 0) {
-	if (!isspace(line[index])) {
-	  start = index;
-	  state = 1;
-	}
-      } else {
-	assert(state == 1);
-	assert(start >= 0);
-	if (isspace(line[index])) {
-	  std::string word(line, start, index - start);
-	  words.push_back(word);
-	  start = -1;
-	  state = 0;
-	}
-      }
-    }
-  }//if
-
-  else{
 //  console_->Print(line);
     std::string templine = line;
     std::size_t found=templine.find_first_of(' ');
@@ -131,7 +108,6 @@ void CallClient::ParseLine(const std::string& line) {
 	break;
       }//if
     }//while
-  }//else
  /* 
   if(words.size() == 0)
     console_->Send("size = 0\n");

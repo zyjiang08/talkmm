@@ -35,43 +35,42 @@ enum {
 	MSG_INPUT,
 };
 
-class Console : public talk_base::MessageHandler {
- public:
-  Console(talk_base::Thread *thread, CallClient *client,MainWindow* win, int port);
-  virtual void OnMessage(talk_base::Message *msg);
-  void SetPrompt(const char *prompt) {
-	  prompt_ = prompt ? std::string(prompt) : std::string("xxpalk");
-  }
-  void SetPrompting(bool prompting) {
-    prompting_ = prompting;
-    if (prompting)
-	  printf("\n(%s) ", prompt_.c_str());
-    }
-  bool prompting() {return prompting_;}
+class Console:public talk_base::MessageHandler {
+      public:
+	Console(talk_base::Thread * thread, CallClient * client,
+		MainWindow * win);
+	virtual void OnMessage(talk_base::Message * msg);
+	void SetPrompt(const char *prompt) {
+		prompt_ =
+		    prompt ? std::string(prompt) : std::string("xxpalk");
+	} void SetPrompting(bool prompting) {
+		prompting_ = prompting;
+		if (prompting)
+			printf("\n(%s) ", prompt_.c_str());
+	}
+	bool prompting() {
+		return prompting_;
+	}
 
-  void Close();
-  void Send(const char* str);
-  void Send(const std::string& str);
-  std::string Receive();
-  void Print(const char* str);
-  void Print(const std::string& str);
-  void Printf(const char* format, ...);
-  void OnSignOn();
+	void Close();
+	void Send(const char *str);
+	void Send(const std::string & str);
+	std::string Receive();
+	void Print(const char *str);
+	void Print(const std::string & str);
+	void Printf(const char *format, ...);
+	void OnSignOn();
+	void RosterPresence(const std::string& jid);
 
-  bool b_with_ui;
+      private:
+	CallClient * client_;
+	MainWindow *main_window;
+	talk_base::Thread * client_thread_;
+	void StartConsole();
+	void ParseLine(std::string & str);
+	std::string prompt_;
+	bool prompting_;
 
- private:
-  CallClient *client_;
-  MainWindow* main_window;
-  talk_base::Thread *client_thread_;
-  void StartConsole();
-  void ParseLine(std::string &str);
-  std::string prompt_;
-  bool prompting_;
-  int new_sock_fd_;
-  int sock_fd_;
-  
 };
 
-#endif // CRICKET_EXAMPLES_CALL_CONSOLE_H__
-
+#endif				// CRICKET_EXAMPLES_CALL_CONSOLE_H__

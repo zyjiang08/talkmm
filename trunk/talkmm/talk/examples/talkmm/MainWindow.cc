@@ -171,8 +171,7 @@ void MainWindow::on_loginWindow_cancel()
 
 void MainWindow::on_signon()
 {
-	main_notebook->set_current_page(2);
-	//main_notebook->set_current_page(LOGIN_FINISH);
+	main_notebook->set_current_page(LOGIN_FINISH);
 
 }
 
@@ -208,4 +207,9 @@ void MainWindow::signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f
 
 void MainWindow::on_quit()
 {
+}
+void MainWindow::on_roster_presence(const std::string& jid)
+{
+
+
 }
