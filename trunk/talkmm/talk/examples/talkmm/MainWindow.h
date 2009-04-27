@@ -31,6 +31,8 @@
 typedef Glib::RefPtr <Gnome::Glade::Xml> GlademmXML;
 
 
+class BuddyView;
+
 class MainWindow : public Gtk::Window {
 	public:
 		MainWindow();
@@ -42,6 +44,7 @@ class MainWindow : public Gtk::Window {
 		/** finsh login*/
 		void on_signon();
 		void on_roster_presence(const std::string& jid);
+		void on_receive_message(const std::string& from,const std::string& message);
 		void on_init();
 		void on_quit();
 		void on_loginWindow_cancel();
@@ -63,6 +66,7 @@ class MainWindow : public Gtk::Window {
 		Gtk::Entry*				entry_account;
 		Gtk::Entry*				entry_passwd;
 		TrayIcon				*tray_icon;
+		BuddyView*				list_view;
 		//ConfWindow*			confwindow;
 		int					window_width;
 		int					window_height;

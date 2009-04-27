@@ -51,7 +51,8 @@ PROGRAMS = $(bin_PROGRAMS)
 am_talkmm_OBJECTS = talkmm-talkmm.$(OBJEXT) talkmm-main.$(OBJEXT) \
 	talkmm-callclient.$(OBJEXT) talkmm-console.$(OBJEXT) \
 	talkmm-chatclient.$(OBJEXT) talkmm-fileclient.$(OBJEXT) \
-	talkmm-MainWindow.$(OBJEXT) talkmm-TrayIcon.$(OBJEXT)
+	talkmm-MainWindow.$(OBJEXT) talkmm-BuddyView.$(OBJEXT) \
+	talkmm-TreeModelDnd.$(OBJEXT) talkmm-TrayIcon.$(OBJEXT)
 talkmm_OBJECTS = $(am_talkmm_OBJECTS)
 am__DEPENDENCIES_1 =
 talkmm_DEPENDENCIES = $(top_srcdir)/talk/login/libcricketlogin.la \
@@ -224,11 +225,15 @@ top_srcdir = @top_srcdir@
 talkmm_CXXFLAGS = $(AM_CXXFLAGS)
 talkmm_SOURCES = talkmm.cc main.cc callclient.cc console.cc chatclient.cc fileclient.cc \
 		 MainWindow.cc \
+		 BuddyView.cc \
+		 TreeModelDnd.cc \
 		 TrayIcon.cc 
 
 noinst_HEADERS = talkmm.h callclient.h  console.h chatclient.h  fileclient.h \
 		 MVC.h \
 		 MainWindow.h \
+		 BuddyView.h \
+		 TreeModelDnd.h \
 		 TrayIcon.h
 
 talkmm_LDADD = \
@@ -317,8 +322,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-BuddyView.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-MainWindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-TrayIcon.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-TreeModelDnd.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-callclient.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-chatclient.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-console.Po@am__quote@
@@ -444,6 +451,34 @@ talkmm-MainWindow.obj: MainWindow.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MainWindow.cc' object='talkmm-MainWindow.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-MainWindow.obj `if test -f 'MainWindow.cc'; then $(CYGPATH_W) 'MainWindow.cc'; else $(CYGPATH_W) '$(srcdir)/MainWindow.cc'; fi`
+
+talkmm-BuddyView.o: BuddyView.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-BuddyView.o -MD -MP -MF $(DEPDIR)/talkmm-BuddyView.Tpo -c -o talkmm-BuddyView.o `test -f 'BuddyView.cc' || echo '$(srcdir)/'`BuddyView.cc
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-BuddyView.Tpo $(DEPDIR)/talkmm-BuddyView.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='BuddyView.cc' object='talkmm-BuddyView.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-BuddyView.o `test -f 'BuddyView.cc' || echo '$(srcdir)/'`BuddyView.cc
+
+talkmm-BuddyView.obj: BuddyView.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-BuddyView.obj -MD -MP -MF $(DEPDIR)/talkmm-BuddyView.Tpo -c -o talkmm-BuddyView.obj `if test -f 'BuddyView.cc'; then $(CYGPATH_W) 'BuddyView.cc'; else $(CYGPATH_W) '$(srcdir)/BuddyView.cc'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-BuddyView.Tpo $(DEPDIR)/talkmm-BuddyView.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='BuddyView.cc' object='talkmm-BuddyView.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-BuddyView.obj `if test -f 'BuddyView.cc'; then $(CYGPATH_W) 'BuddyView.cc'; else $(CYGPATH_W) '$(srcdir)/BuddyView.cc'; fi`
+
+talkmm-TreeModelDnd.o: TreeModelDnd.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-TreeModelDnd.o -MD -MP -MF $(DEPDIR)/talkmm-TreeModelDnd.Tpo -c -o talkmm-TreeModelDnd.o `test -f 'TreeModelDnd.cc' || echo '$(srcdir)/'`TreeModelDnd.cc
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-TreeModelDnd.Tpo $(DEPDIR)/talkmm-TreeModelDnd.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='TreeModelDnd.cc' object='talkmm-TreeModelDnd.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-TreeModelDnd.o `test -f 'TreeModelDnd.cc' || echo '$(srcdir)/'`TreeModelDnd.cc
+
+talkmm-TreeModelDnd.obj: TreeModelDnd.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-TreeModelDnd.obj -MD -MP -MF $(DEPDIR)/talkmm-TreeModelDnd.Tpo -c -o talkmm-TreeModelDnd.obj `if test -f 'TreeModelDnd.cc'; then $(CYGPATH_W) 'TreeModelDnd.cc'; else $(CYGPATH_W) '$(srcdir)/TreeModelDnd.cc'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-TreeModelDnd.Tpo $(DEPDIR)/talkmm-TreeModelDnd.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='TreeModelDnd.cc' object='talkmm-TreeModelDnd.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-TreeModelDnd.obj `if test -f 'TreeModelDnd.cc'; then $(CYGPATH_W) 'TreeModelDnd.cc'; else $(CYGPATH_W) '$(srcdir)/TreeModelDnd.cc'; fi`
 
 talkmm-TrayIcon.o: TrayIcon.cc
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-TrayIcon.o -MD -MP -MF $(DEPDIR)/talkmm-TrayIcon.Tpo -c -o talkmm-TrayIcon.o `test -f 'TrayIcon.cc' || echo '$(srcdir)/'`TrayIcon.cc

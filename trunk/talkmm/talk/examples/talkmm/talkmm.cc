@@ -142,7 +142,8 @@ void Talkmm::OnStatusUpdate(const buzz::Status& status)
   	/** i want to change a method to insert roster, please fixed me */
   	(*m_roster)[key] = item;
 	printf("add buddy %s presence\n",key.c_str());
-	m_console->RosterPresence(key);
+	if(status.available())
+		m_console->RosterPresence(key);
 
 #if 0
   size_t pos = key.find("/");
@@ -241,6 +242,7 @@ void Talkmm::OnTexteRecu(const std::string& iconset, const std::string& from, co
 	message += texte;
 	message += "\n";
 	this->m_console->Print(message);
+	m_console->RecuMessage(from,texte);
 	
 
 }

@@ -61,6 +61,7 @@ class Console:public talk_base::MessageHandler {
 	void Printf(const char *format, ...);
 	void OnSignOn();
 	void RosterPresence(const std::string& jid);
+	void RecuMessage(const std::string& from,const std::string& message);
 
       private:
 	CallClient * client_;

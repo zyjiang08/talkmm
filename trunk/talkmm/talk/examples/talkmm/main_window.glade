@@ -569,10 +569,7 @@
                     <property name="vscrollbar_policy">automatic</property>
                     <property name="shadow_type">in</property>
                     <child>
-                      <widget class="GtkLabel" id="label33">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">test list</property>
-                      </widget>
+                      <placeholder/>
                     </child>
                   </widget>
                   <packing>
