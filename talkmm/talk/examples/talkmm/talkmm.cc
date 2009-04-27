@@ -39,7 +39,7 @@ Talkmm::Talkmm():m_roster(new RosterMap)
 	main_window->signal_on_login(this,&Talkmm::OnLogin);
 
 	int port=0;
-	m_console = new Console(main_thread, m_client,main_window, port);
+	m_console = new Console(main_thread, m_client,main_window);
 	m_client->SetConsole(m_console);
 	console_thread = new talk_base::Thread(&m_ss);
 
@@ -83,48 +83,9 @@ bool Talkmm::OnLogin(const std::string& f_username,const std::string& f_pass)
 	main_thread->Start();
 	//main_thread->Run();
 	
-	/*
-	mysock_fd=open_socket();
-	connect_IO = Glib::signal_io().connect(
-			sigc::mem_fun(*this,&Talkmm::callback),
-			mysock_fd, Glib::IO_IN|Glib::IO_HUP);
-		*/
-
 	return true;
 }
 	
-
-/*
-bool Talkmm::callback(Glib::IOCondition f_condition)
-{
-
-    char buffer[256];
-    bzero(buffer, 256);
-    int n = read(mysock_fd,buffer,255);
-
-}
-
-int Talkmm::open_socket(int f_port)
-{
-    int sockfd, newsockfd, portno, clilen;
-  
-    struct sockaddr_in serv_addr, cli_addr;
-
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) 
-      printf("ERROR opening socket\n");
-    bzero((char *) &serv_addr, sizeof(serv_addr));
-    portno = f_port;
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = INADDR_ANY;
-    serv_addr.sin_port = htons(portno);
-    if (bind(sockfd, (struct sockaddr *) &serv_addr,
-	    sizeof(serv_addr)) < 0) 
-	    printf("ERROR on binding\n");
-    return sockfd;
-}
-*/
-
 
 
 
@@ -146,7 +107,6 @@ void Talkmm::OnStateChange(buzz::XmppEngine::State state) {
     this->InitPresence();
     m_client->InitPresence();
     m_console->OnSignOn();
-    //main_window->on_signon();
     break;
 
   case buzz::XmppEngine::STATE_CLOSED:
@@ -182,6 +142,7 @@ void Talkmm::OnStatusUpdate(const buzz::Status& status)
   	/** i want to change a method to insert roster, please fixed me */
   	(*m_roster)[key] = item;
 	printf("add buddy %s presence\n",key.c_str());
+	m_console->RosterPresence(key);
 
 #if 0
   size_t pos = key.find("/");
