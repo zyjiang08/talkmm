@@ -31,11 +31,13 @@
 typedef Glib::RefPtr <Gnome::Glade::Xml> GlademmXML;
 
 
+class Talkmm;
 class BuddyView;
+
 
 class MainWindow : public Gtk::Window {
 	public:
-		MainWindow();
+		MainWindow(Talkmm* f_parent);
 		~MainWindow();
 		//void on_conf_window_close(ConfWindow* dlg);
 		bool on_key_press_event(GdkEventKey* ev);
@@ -61,6 +63,7 @@ class MainWindow : public Gtk::Window {
 		
 
 	private:
+		Talkmm*					m_parent;
 		Gtk::Notebook*				main_notebook;
 		GlademmXML				main_xml;
 		Gtk::Entry*				entry_account;

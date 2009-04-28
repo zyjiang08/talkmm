@@ -35,7 +35,7 @@ Talkmm::Talkmm():m_roster(new RosterMap)
 	main_thread = new talk_base::Thread(&m_ss);
 	talk_base::ThreadManager::SetCurrent(main_thread);
 
-	main_window = new MainWindow();
+	main_window = new MainWindow(this);
 	main_window->signal_on_login(this,&Talkmm::OnLogin);
 
 	int port=0;
@@ -247,3 +247,8 @@ void Talkmm::OnTexteRecu(const std::string& iconset, const std::string& from, co
 
 }
 
+void Talkmm::SendTexte(const std::string& name, const std::string& texte)
+{
+    m_chatclient->envoyerTexte(name, texte);
+
+}

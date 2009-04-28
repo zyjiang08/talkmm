@@ -19,12 +19,14 @@
 #include <config.h>
 #endif
 
+#include "talkmm.h"
 #include "MainWindow.h"
 //#include "ConfWindow.h"
 #include <glib/gi18n.h>
 #include <stdio.h>
 #include <string.h>
 #include "BuddyView.h"
+#include "MsgWindow.h"
 
 using namespace std;
 
@@ -99,11 +101,12 @@ void MainWindow::on_conf_window_close(ConfWindow* dlg)
 }
 */
 
-MainWindow::MainWindow():
+MainWindow::MainWindow(Talkmm* f_parent):
 	window_width(1)
 	,window_height(1)
 	//,confwindow(NULL)
 	,tray_icon(NULL)
+	,m_parent(f_parent)
 {
         main_xml = Gnome::Glade::Xml::create(main_ui, "main_notebook");
         main_notebook =
@@ -217,5 +220,6 @@ void MainWindow::on_roster_presence(const std::string& jid)
 void MainWindow::on_receive_message(const std::string& from,const std::string& message)
 {
 
+	new MsgWindow();
 
 }

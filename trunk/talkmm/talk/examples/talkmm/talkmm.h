@@ -55,6 +55,7 @@ class Talkmm : public sigslot::has_slots<> {
 		void OnStatusUpdate(const buzz::Status& status);
 		void InitPresence();
 		void OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte);
+		void SendTexte(const std::string& name, const std::string& texte);
 	private:
 		typedef std::map<std::string,RosterItem> RosterMap;
 		RosterMap* m_roster;
