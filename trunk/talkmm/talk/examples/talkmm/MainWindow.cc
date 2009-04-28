@@ -132,8 +132,6 @@ MainWindow::MainWindow():
 	/**third page*/
 	Gtk::Container* list_window= dynamic_cast<Gtk::Container*>
 		(main_xml->get_widget("listWindow"));
-	//Gtk::Label* label = Gtk::manage(new Gtk::Label("test list"));
-	//list_window->add(*label);
 	list_view = Gtk::manage(new BuddyView(*this));
 	list_window->add(*list_view);
 
