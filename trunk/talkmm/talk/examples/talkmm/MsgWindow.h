@@ -21,13 +21,22 @@
 
 #include <gtkmm.h>
 
+#define msg_ui "./msg_window.glade"
+//typedef Glib::RefPtr <Gnome::Glade::Xml> GlademmXML;
 
+class MainWindow;
 class MsgWindow: public Gtk::Window
 {
 	public:
-		MsgWindow();
+		MsgWindow(MainWindow* f_parent);
 		~MsgWindow();
-
+		void show_message(const std::string& msg);
+		void send_message();
+	private:
+		MainWindow*				parent;
+		GlademmXML				msg_xml;
+		Gtk::Entry*				entry_send;
+		Gtk::TextView*				textview_msg;
 
 
 };
