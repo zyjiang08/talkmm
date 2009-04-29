@@ -20,7 +20,8 @@
 #include "MainWindow.h"
 #include "MsgWindow.h"
 
-MsgWindow::MsgWindow(MainWindow* f_parent):parent(f_parent)
+MsgWindow::MsgWindow(MainWindow* f_parent,const std::string& f_jid):parent(f_parent)
+					   ,m_jid(f_jid)
 {
         msg_xml = Gnome::Glade::Xml::create(msg_ui, "vbox_main");
 	Gtk::VBox* vbox_main= dynamic_cast <

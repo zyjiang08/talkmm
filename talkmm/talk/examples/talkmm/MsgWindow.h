@@ -28,12 +28,13 @@ class MainWindow;
 class MsgWindow: public Gtk::Window
 {
 	public:
-		MsgWindow(MainWindow* f_parent);
+		MsgWindow(MainWindow* f_parent,const std::string& f_jid);
 		~MsgWindow();
 		void show_message(const std::string& msg);
 		void send_message();
 	private:
 		MainWindow*				parent;
+		std::string				m_jid;
 		GlademmXML				msg_xml;
 		Gtk::Entry*				entry_send;
 		Gtk::TextView*				textview_msg;
