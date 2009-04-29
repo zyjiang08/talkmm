@@ -22,6 +22,7 @@
 
 
 #include <gtkmm.h>
+#include <sigc++/connection.h>
 #include <libglademm/xml.h>
 #include <glib/gi18n.h>
 #include <map>
@@ -54,6 +55,7 @@ class MainWindow : public Gtk::Window {
 		void on_init();
 		void on_quit();
 		void on_loginWindow_cancel();
+		void on_login_emit();
 		void on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 
@@ -73,6 +75,7 @@ class MainWindow : public Gtk::Window {
 		GlademmXML				main_xml;
 		Gtk::Entry*				entry_account;
 		Gtk::Entry*				entry_passwd;
+		Gtk::Button*				button_ok;
 		TrayIcon				*tray_icon;
 		BuddyView*				list_view;
 		Session*				m_session;
