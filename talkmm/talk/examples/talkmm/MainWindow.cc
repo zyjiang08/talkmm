@@ -220,6 +220,7 @@ void MainWindow::on_roster_presence(const std::string& jid)
 void MainWindow::on_receive_message(const std::string& from,const std::string& message)
 {
 
-	new MsgWindow();
+	MsgWindow* msg_window = new MsgWindow(this);
+	msg_window->show_message(message);
 
 }
