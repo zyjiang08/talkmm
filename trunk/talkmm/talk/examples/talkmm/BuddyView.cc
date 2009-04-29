@@ -124,6 +124,8 @@ bool BuddyView::on_button_press_event(GdkEventButton * ev)
 	if ((ev->type == GDK_2BUTTON_PRESS ||
 	     ev->type == GDK_3BUTTON_PRESS)) {
 		printf("select %s \n",mid.c_str());
+		m_parent.open_session(mid);
+		
 
 	} else if ((ev->type == GDK_BUTTON_PRESS)
 		   && (ev->button == 3)) {
