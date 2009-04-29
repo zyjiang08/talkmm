@@ -124,12 +124,15 @@ MainWindow::MainWindow(Talkmm* f_parent):
         button_cancel->signal_clicked().
         connect(sigc::mem_fun(*this, &MainWindow::on_quit));
 
+	button_ok = dynamic_cast <Gtk::Button*>(main_xml->get_widget("login_ok"));
 
         entry_account = dynamic_cast<Gtk::Entry*>
                       (main_xml->get_widget("entry_account"));
 
         entry_passwd = dynamic_cast<Gtk::Entry*>
                       (main_xml->get_widget("entry_passwd"));
+	entry_passwd->signal_activate().connect(sigc::mem_fun(*this,
+				&MainWindow::on_login_emit));
 
 	tray_icon = new TrayIcon(*this);
 
@@ -186,6 +189,11 @@ void MainWindow::on_init()
 	this->hide();
 
 }
+void MainWindow::on_login_emit()
+{
+	//((sigc::signal<void>)button_ok->signal_clicked()).emit();
+	button_ok->clicked();
+}
 void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 {
         Glib::ustring name = entry_account->get_text();
@@ -203,7 +211,6 @@ void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 void MainWindow::signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 {
 
-	Gtk::Button* button_ok = dynamic_cast <Gtk::Button*>(main_xml->get_widget("login_ok"));
 	button_ok->signal_clicked().connect(sigc::bind(
 				sigc::mem_fun(*this,&MainWindow::on_login),f_handler,f_call));
 
@@ -234,7 +241,8 @@ void MainWindow::on_receive_message(const std::string& from,const std::string& m
 #endif
 	MsgWindow* msg_window = open_session(from);
 
-	msg_window->show_message(message);
+	std::string utext = from +" : "+message+"\n";
+	msg_window->show_message(utext);
 
 }
 

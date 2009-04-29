@@ -66,5 +66,9 @@ void MsgWindow::send_message()
 {
 	std::string text = entry_send->get_text();
 	m_parent->on_send_message(m_jid,text);
+	std::string utext="me : "+ text ;
+	show_message(utext);
+	show_message("\n");
+	entry_send->set_text("");
 
 }
