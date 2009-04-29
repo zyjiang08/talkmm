@@ -45,3 +45,5 @@ class ChatClient : public XmppTask {
 };
 }
 #endif
+
+

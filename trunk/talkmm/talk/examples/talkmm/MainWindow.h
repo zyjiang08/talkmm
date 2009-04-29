@@ -24,6 +24,7 @@
 #include <gtkmm.h>
 #include <libglademm/xml.h>
 #include <glib/gi18n.h>
+#include <map>
 #include "TrayIcon.h"
 #include "MVC.h"
 
@@ -33,6 +34,7 @@ typedef Glib::RefPtr <Gnome::Glade::Xml> GlademmXML;
 
 class Talkmm;
 class BuddyView;
+class MsgWindow;
 
 
 class MainWindow : public Gtk::Window {
@@ -63,6 +65,7 @@ class MainWindow : public Gtk::Window {
 		
 
 	private:
+		typedef std::map<std::string,MsgWindow*> Session;
 		Talkmm*					m_parent;
 		Gtk::Notebook*				main_notebook;
 		GlademmXML				main_xml;
@@ -70,6 +73,7 @@ class MainWindow : public Gtk::Window {
 		Gtk::Entry*				entry_passwd;
 		TrayIcon				*tray_icon;
 		BuddyView*				list_view;
+		Session*				m_session;
 		//ConfWindow*			confwindow;
 		int					window_width;
 		int					window_height;

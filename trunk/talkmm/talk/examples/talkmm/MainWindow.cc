@@ -107,6 +107,7 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	//,confwindow(NULL)
 	,tray_icon(NULL)
 	,m_parent(f_parent)
+	,m_session(new Session)
 {
         main_xml = Gnome::Glade::Xml::create(main_ui, "main_notebook");
         main_notebook =
@@ -147,6 +148,7 @@ MainWindow::MainWindow(Talkmm* f_parent):
 
 MainWindow::~MainWindow()
 {
+	delete m_session;
 }
 
 bool MainWindow::on_key_press_event(GdkEventKey* ev)
@@ -219,8 +221,17 @@ void MainWindow::on_roster_presence(const std::string& jid)
 
 void MainWindow::on_receive_message(const std::string& from,const std::string& message)
 {
+	MsgWindow* msg_window=NULL;
+	Session::iterator iter = m_session->find(from);
+	if(iter != m_session->end()){
+		msg_window = iter->second;
+	}
+	else{
+		msg_window =new MsgWindow(this,from);
+		(*m_session)[from]=msg_window;
+	}
 
-	MsgWindow* msg_window = new MsgWindow(this);
 	msg_window->show_message(message);
+	msg_window->show();
 
 }
