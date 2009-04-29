@@ -33,7 +33,7 @@ class MsgWindow: public Gtk::Window
 		void show_message(const std::string& msg);
 		void send_message();
 	private:
-		MainWindow*				parent;
+		MainWindow*				m_parent;
 		std::string				m_jid;
 		GlademmXML				msg_xml;
 		Gtk::Entry*				entry_send;

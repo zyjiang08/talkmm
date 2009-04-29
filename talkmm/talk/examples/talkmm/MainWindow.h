@@ -45,10 +45,12 @@ class MainWindow : public Gtk::Window {
 		bool on_key_press_event(GdkEventKey* ev);
 		void hide_window();
 		void show_window();
+		MsgWindow* open_session(const std::string& from);
 		/** finsh login*/
 		void on_signon();
 		void on_roster_presence(const std::string& jid);
 		void on_receive_message(const std::string& from,const std::string& message);
+		void on_send_message(const std::string& to,const std::string& message);
 		void on_init();
 		void on_quit();
 		void on_loginWindow_cancel();
