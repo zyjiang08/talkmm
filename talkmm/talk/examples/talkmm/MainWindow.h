@@ -52,6 +52,7 @@ class MainWindow : public Gtk::Window {
 		void on_roster_presence(const std::string& jid);
 		void on_receive_message(const std::string& from,const std::string& message);
 		void on_send_message(const std::string& to,const std::string& message);
+		void on_file_receive(const std::string& from,const std::string& file);
 		void on_init();
 		void on_quit();
 		void on_loginWindow_cancel();

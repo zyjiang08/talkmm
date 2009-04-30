@@ -122,6 +122,8 @@ public:
   void OnSessionState(cricket::Call* call,
                       cricket::Session* session,
                       cricket::Session::State state);
+  void OnAnswerFile(bool accept);
+  void OnAnswerCall(bool accept);
 
   void InitPresence();
   //void OnStatusUpdate(const buzz::Status& status);

@@ -62,6 +62,7 @@ class Console:public talk_base::MessageHandler {
 	void OnSignOn();
 	void RosterPresence(const std::string& jid);
 	void RecuMessage(const std::string& from,const std::string& message);
+	void OnFileRecu(const std::string& from, const std::string& file);
 
       private:
 	CallClient * client_;

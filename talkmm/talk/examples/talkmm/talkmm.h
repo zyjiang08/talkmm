@@ -56,6 +56,8 @@ class Talkmm : public sigslot::has_slots<> {
 		void InitPresence();
 		void OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte);
 		void SendTexte(const std::string& name, const std::string& texte);
+		void AnswerFile(bool accept=true);
+		void AnswerCall(bool accept=true);
 	private:
 		typedef std::map<std::string,RosterItem> RosterMap;
 		RosterMap* m_roster;
@@ -64,7 +66,7 @@ class Talkmm : public sigslot::has_slots<> {
 		buzz::XmppClientSettings m_xcs;
 		talk_base::InsecureCryptStringImpl m_pass;
 		talk_base::PhysicalSocketServer m_ss;
-		CallClient* m_client;
+		CallClient* m_callclient;
 		Console* m_console;
 		talk_base::Thread* main_thread;
 		talk_base::Thread* console_thread;
@@ -73,8 +75,6 @@ class Talkmm : public sigslot::has_slots<> {
 		buzz::PresencePushTask* m_presence_push;
 		buzz::ChatClient* m_chatclient;
 		MainWindow* main_window;
-		//sigc::connection connect_IO;
-		//int mysock_fd;
 
 
 
