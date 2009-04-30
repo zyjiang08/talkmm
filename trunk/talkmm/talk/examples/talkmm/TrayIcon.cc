@@ -22,7 +22,7 @@ TrayIcon::TrayIcon(MainWindow& wnd) :
 	main_wnd_(wnd)
 {
 	//stat_ = Gtk::StatusIcon::create_from_file(DATA_DIR"/gmlive.png");
-	stat_ = Gtk::StatusIcon::create_from_file("./gmlive.png");
+	stat_ = Gtk::StatusIcon::create_from_file("./talkmm.png");
 	if (!stat_)
 		return;
 

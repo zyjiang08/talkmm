@@ -31,7 +31,7 @@ Talkmm::Talkmm():m_roster(new RosterMap)
 	    talk_base::LogMessage::LogToDebug(talk_base::LS_VERBOSE);
 	talk_base::InitializeSSL();
 
-	m_client = new CallClient(m_pump.client());
+	m_callclient = new CallClient(m_pump.client());
 	main_thread = new talk_base::Thread(&m_ss);
 	talk_base::ThreadManager::SetCurrent(main_thread);
 
@@ -39,8 +39,8 @@ Talkmm::Talkmm():m_roster(new RosterMap)
 	main_window->signal_on_login(this,&Talkmm::OnLogin);
 
 	int port=0;
-	m_console = new Console(main_thread, m_client,main_window);
-	m_client->SetConsole(m_console);
+	m_console = new Console(main_thread, m_callclient,main_window);
+	m_callclient->SetConsole(m_console);
 	console_thread = new talk_base::Thread(&m_ss);
 
 	m_pump.client()->SignalStateChange.connect(this, &Talkmm::OnStateChange);
@@ -50,7 +50,7 @@ Talkmm::Talkmm():m_roster(new RosterMap)
 
 Talkmm::~Talkmm()
 {
-	delete m_client;
+	delete m_callclient;
 	delete m_console;
 	delete main_thread;
 	delete console_thread;
@@ -103,9 +103,9 @@ void Talkmm::OnStateChange(buzz::XmppEngine::State state) {
   case buzz::XmppEngine::STATE_OPEN:
     m_console->Print("talkmm has==========logged in...");
     m_console->Send("loggedin\n");
-    m_client->InitPhone();
+    m_callclient->InitPhone();
     this->InitPresence();
-    m_client->InitPresence();
+    m_callclient->InitPresence();
     m_console->OnSignOn();
     break;
 
@@ -251,4 +251,15 @@ void Talkmm::SendTexte(const std::string& name, const std::string& texte)
 {
     m_chatclient->envoyerTexte(name, texte);
 
+}
+
+void Talkmm::AnswerFile(bool accept)
+{
+	m_callclient->OnAnswerFile(accept);
+
+}
+
+void Talkmm::AnswerCall(bool accept)
+{
+	m_callclient->OnAnswerCall(accept);
 }

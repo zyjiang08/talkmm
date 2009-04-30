@@ -140,6 +140,13 @@ void Console::RosterPresence(const std::string& jid)
 	main_window->on_roster_presence(jid);
 }
 
+void Console::OnFileRecu(const std::string& from, const std::string& file)
+{
+	LockMutex locked;
+	main_window->on_file_receive(from,file);
+}
+
+
 void Console::RecuMessage(const std::string& from,const std::string& message)
 {
 	LockMutex locked;

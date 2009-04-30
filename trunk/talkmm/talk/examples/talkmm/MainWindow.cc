@@ -191,7 +191,6 @@ void MainWindow::on_init()
 }
 void MainWindow::on_login_emit()
 {
-	//((sigc::signal<void>)button_ok->signal_clicked()).emit();
 	button_ok->clicked();
 }
 void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
@@ -268,3 +267,27 @@ void MainWindow::on_send_message(const std::string& to,const std::string& messag
 }
 
 
+void MainWindow::on_file_receive(const std::string& from,const std::string& file)
+{
+        Gtk::MessageDialog dialog(*this, _("Receive File"), false,
+                                  Gtk::MESSAGE_QUESTION,
+                                  Gtk::BUTTONS_OK_CANCEL);
+
+        Glib::ustring msg = from +" want to send a file to you "+"("+file+")";
+        dialog.set_secondary_text(msg);
+        int result = dialog.run();
+        switch (result) {
+        case (Gtk::RESPONSE_OK): {
+					 m_parent->AnswerFile(true);
+					 break;
+				 }
+        case (Gtk::RESPONSE_CANCEL): {
+					 m_parent->AnswerFile(false);
+                        break;
+                }
+        default: {
+					 m_parent->AnswerFile(false);
+                        break;
+                }
+	}
+}

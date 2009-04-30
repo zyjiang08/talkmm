@@ -368,6 +368,7 @@ void CallClient::OnFileReceived(const std::string& from, const std::string& file
    str += "' to you...";
    console_->Print(str);
    incoming_file_ = true;
+   console_->OnFileRecu(from,file);
     
 }
 
@@ -696,6 +697,8 @@ void CallClient::SendTexte(const std::string& name, const std::string& texte)
 }
 
 void CallClient::MakeCallTo(const std::string& name) {
+
+  buzz::Jid callto_jid = buzz::Jid(name);
 	/*
   bool found = false;
   buzz::Jid found_jid;
@@ -727,4 +730,37 @@ void CallClient::MakeCallTo(const std::string& name) {
     console_->Send("callnotanswered###\n");
   } 
   */
+}
+
+
+void CallClient::OnAnswerCall(bool accept)
+{
+
+    if (call_ && incoming_call_) {
+	if(accept){
+		      console_->Send("accept call\n");
+		      assert(call_->sessions().size() == 1);
+		      call_->AcceptSession(call_->sessions()[0]);
+		      phone_client()->SetFocus(call_);
+		      incoming_call_ = false;
+	    }
+	else{
+		call_->RejectSession(call_->sessions()[0]);
+		incoming_call_ = false;
+	}
+   }
+}
+
+void CallClient::OnAnswerFile(bool accept)
+{
+    if(incoming_file_){
+	if(accept)
+		      _current_sending_fileclient->acceptFile();
+	else{
+		      _current_sending_fileclient->Cancel();
+		      incoming_file_=false;
+	}
+	
+    }
+
 }
