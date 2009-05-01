@@ -146,6 +146,11 @@ void Console::OnFileRecu(const std::string& from, const std::string& file)
 	main_window->on_file_receive(from,file);
 }
 
+void Console::OnIncomingCall(const std::string& from)
+{
+	LockMutex locked;
+	main_window->on_incoming_call(from);
+}
 
 void Console::RecuMessage(const std::string& from,const std::string& message)
 {
