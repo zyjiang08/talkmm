@@ -551,6 +551,7 @@ void CallClient::OnSessionState(cricket::Call* call,
     call_ = call;
     session_ = session;
     incoming_call_ = true;
+    console_->OnIncomingCall(jid.Str());
   } else if (state == cricket::Session::STATE_SENTINITIATE) {
     console_->Print("calling...");
   } else if (state == cricket::Session::STATE_RECEIVEDACCEPT) {
@@ -571,23 +572,6 @@ void CallClient::OnSessionState(cricket::Call* call,
 
 
 /*
-void CallClient::OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte){
-	std::string str;
-	str += from;
-	str += std::string("(");
-	str += iconset;
-	str += std::string(") said: ");
-	str += texte;
-	this->console_->Print(str);
-	std::string message = "message###";
-	message += from;
-	message += "###";
-	message += texte;
-	message += "\n";
-	
-	console_->Send(message);
-}
-
 void CallClient::OnStatusUpdate(const buzz::Status& status) {
   RosterItem item;
   item.jid = status.jid();

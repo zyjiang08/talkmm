@@ -266,6 +266,32 @@ void MainWindow::on_send_message(const std::string& to,const std::string& messag
 	m_parent->SendTexte(to,message);
 }
 
+void MainWindow::on_incoming_call(const std::string& from)
+{
+
+        Gtk::MessageDialog dialog(*this, _("Incoming Call"), false,
+                                  Gtk::MESSAGE_QUESTION,
+                                  Gtk::BUTTONS_OK_CANCEL);
+
+        Glib::ustring msg = from +" Calling you! Are you accept? ";
+        dialog.set_secondary_text(msg);
+        int result = dialog.run();
+        switch (result) {
+        case (Gtk::RESPONSE_OK): {
+					 m_parent->AnswerCall(true);
+					 break;
+				 }
+        case (Gtk::RESPONSE_CANCEL): {
+					 m_parent->AnswerCall(false);
+                        break;
+                }
+        default: {
+					 m_parent->AnswerCall(false);
+                        break;
+                }
+	}
+
+}
 
 void MainWindow::on_file_receive(const std::string& from,const std::string& file)
 {
