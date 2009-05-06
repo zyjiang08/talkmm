@@ -24,17 +24,15 @@ MsgWindow::MsgWindow(MainWindow* f_parent,const std::string& f_jid):m_parent(f_p
 					   ,m_jid(f_jid)
 {
         msg_xml = Gnome::Glade::Xml::create(msg_ui, "vbox_main");
-	Gtk::VBox* vbox_main= dynamic_cast <
-                Gtk::VBox * > (msg_xml->get_widget("vbox_main"));
-	entry_send = dynamic_cast<Gtk::Entry*>
-		(msg_xml->get_widget("entry_send"));
-	textview_msg = dynamic_cast<Gtk::TextView*>
-		(msg_xml->get_widget("textview_msg"));
+	Gtk::VBox* vbox_main= dynamic_cast < Gtk::VBox * > (msg_xml->get_widget("vbox_main"));
+	entry_send = dynamic_cast<Gtk::Entry*> (msg_xml->get_widget("entry_send"));
+	textview_msg = dynamic_cast<Gtk::TextView*> (msg_xml->get_widget("textview_msg"));
 
 	entry_send->signal_activate().connect(sigc::mem_fun(*this,&MsgWindow::send_message));
 
 	add(*vbox_main);
-	this->set_size_request(400,200);
+	//this->set_size_request(400,300);
+	this->set_size_request(294,233);
 	this->show_all();
 }
 MsgWindow::~MsgWindow()

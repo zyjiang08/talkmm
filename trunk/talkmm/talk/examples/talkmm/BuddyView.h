@@ -67,14 +67,10 @@ class BuddyView:public Gtk::TreeView {
 		return (*iter)[buddyColumns.id];
 	}
 	/** 以ID号获取到TreeView里的某行指针*/
-	    Gtk::TreeModel::iterator getListIter(Gtk::TreeModel::
-						 Children children,
-						 const Glib::ustring & id);
-
+	Gtk::TreeModel::iterator getListIter(Gtk::TreeModel::Children children, const Glib::ustring & id);
 
       protected:
 	bool on_button_press_event(GdkEventButton *);
-
 
       private:
 	MainWindow & m_parent;
@@ -84,24 +80,18 @@ class BuddyView:public Gtk::TreeView {
 	BuddyColumns buddyColumns;
 	Gtk::CellRendererText m_rendtext;
 
-
       private:
 	/** 比较好友*/
 
-	struct CompareBuddy:public binary_function < Gtk::TreeModel::Row,
-	    const Glib::ustring, bool > {
-		explicit CompareBuddy(const BuddyColumns &
-				      column_):column(column_) {
-		} bool operator () (const Gtk::TreeRow & lhs,
-				    const Glib::ustring & var) const {
+	struct CompareBuddy:public binary_function < Gtk::TreeModel::Row, const Glib::ustring, bool > {
+		explicit CompareBuddy(const BuddyColumns &column_):column(column_) {
+		} bool operator () (const Gtk::TreeRow & lhs, const Glib::ustring & var) const {
 			return lhs[column.id] == var;
 		} const BuddyColumns & column;
 	};
 
 	/** TreeView的排序函数*/
-	int on_sort_compare(const Gtk::TreeModel::iterator & a,
-			    const Gtk::TreeModel::iterator & b);
-
+	int on_sort_compare(const Gtk::TreeModel::iterator & a, const Gtk::TreeModel::iterator & b);
 };
 
-#endif				// _BUDDY_VIEW_H_
+#endif	// _BUDDY_VIEW_H_
