@@ -32,6 +32,7 @@
 #endif
 
 #include <iostream>
+#include <cstring>
 #include <iomanip>
 
 #include "talk/base/logging.h"

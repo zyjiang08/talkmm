@@ -69,6 +69,10 @@
 /* Logging */
 #undef LOGGING
 
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#undef LT_OBJDIR
+
 /* Building on OSX */
 #undef OSX
 

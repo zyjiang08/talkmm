@@ -28,6 +28,7 @@
 #include "talk/base/logging.h"
 #include "talk/p2p/base/stun.h"
 #include <iostream>
+#include <cstring>
 #include <cassert>
 
 #if defined(_MSC_VER) && _MSC_VER < 1300

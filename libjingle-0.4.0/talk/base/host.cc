@@ -26,9 +26,12 @@
  */
 
 #include <string>
+#include <stdlib.h>
 #include <iostream>
 #include <cassert>
 #include <errno.h>
+#include <cstring>
+#include <cstdlib>
 
 #ifdef POSIX
 extern "C" {
