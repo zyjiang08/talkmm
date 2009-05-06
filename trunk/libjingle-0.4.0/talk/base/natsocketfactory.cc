@@ -26,6 +26,7 @@
  */
 
 #include <iostream>
+#include <cstring>
 #include <cassert>
 #include "talk/base/natsocketfactory.h"
 
