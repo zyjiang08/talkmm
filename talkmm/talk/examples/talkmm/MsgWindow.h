@@ -22,6 +22,7 @@
 #include <gtkmm.h>
 
 #define msg_ui "./msg_window.glade"
+//#define msg_ui "./msg_window_t.glade"
 //typedef Glib::RefPtr <Gnome::Glade::Xml> GlademmXML;
 
 class MainWindow;

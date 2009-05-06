@@ -29,28 +29,22 @@ m_parent(f_parent)
 	set_border_width(5);
 	set_name("icalk_blist_treeview");
 
-
-	add_events(Gdk::POINTER_MOTION_MASK | Gdk::BUTTON_MOTION_MASK |
-		   Gdk::
-		   BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK | Gdk::
-		   ENTER_NOTIFY_MASK | Gdk::LEAVE_NOTIFY_MASK);
+	add_events(Gdk::POINTER_MOTION_MASK | Gdk::BUTTON_MOTION_MASK | 
+		   Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK | 
+		   Gdk::ENTER_NOTIFY_MASK | Gdk::LEAVE_NOTIFY_MASK);
 
 	m_treestore = TreeModelDnd::create(buddyColumns);
 	set_model(m_treestore);
 
-
 	append_column("ICON", buddyColumns.icon);
 	//set_show_expanders(false); //gtkmm 2.12
 
-	Gtk::TreeView::Column * col =
-	    Gtk::manage(new Gtk::TreeView::Column("iCalk"));
+	Gtk::TreeView::Column * col = Gtk::manage(new Gtk::TreeView::Column("iCalk"));
 	col->pack_start(m_rendtext);
 
-	col->add_attribute(m_rendtext.property_markup(),
-			   buddyColumns.nickname);
+	col->add_attribute(m_rendtext.property_markup(), buddyColumns.nickname);
 	col->set_resizable(true);
 	col->set_expand();
-
 
 	this->append_column(*col);
 	this->append_column("Voip", buddyColumns.audioicon);
@@ -65,26 +59,21 @@ m_parent(f_parent)
 BuddyView::~BuddyView()
 {
 	//delete m_tooltips;
-
 }
 
-Gtk::TreeModel::iterator BuddyView::getListIter(Gtk::
-						TreeModel::Children
-						children,
-						const Glib::ustring & id)
+Gtk::TreeModel::iterator BuddyView::getListIter(Gtk::TreeModel::Children children, const Glib::ustring & id)
 {
 	/*查找好友列表项 */
-	return find_if(children.begin(),
-		       children.end(),
-		       bind2nd(CompareBuddy(buddyColumns), id));
+	return find_if(children.begin(), children.end(), bind2nd(CompareBuddy(buddyColumns), id));
 }
 
-bool BuddyView::remove(const Glib::ustring & id) {
+bool BuddyView::remove(const Glib::ustring & id) 
+{
 	return false;
 }
 
-void BuddyView::add(const std::string & jid_str) {
-
+void BuddyView::add(const std::string & jid_str) 
+{
         Gtk::TreeModel::iterator listiter = m_treestore->append();
 	(*listiter)[buddyColumns.id] = jid_str;
 	(*listiter)[buddyColumns.nickname] = jid_str;
@@ -99,8 +88,7 @@ bool BuddyView::on_button_press_event(GdkEventButton * ev)
 {
 	bool result = Gtk::TreeView::on_button_press_event(ev);
 
-	Glib::RefPtr < Gtk::TreeSelection > selection =
-	    this->get_selection();
+	Glib::RefPtr < Gtk::TreeSelection > selection = this->get_selection();
 	Gtk::TreeModel::iterator iter = selection->get_selected();
 
 	if (!selection->count_selected_rows())
@@ -121,12 +109,9 @@ bool BuddyView::on_button_press_event(GdkEventButton * ev)
 
 	//int type = (*iter)[buddyColumns.status];
 
-	if ((ev->type == GDK_2BUTTON_PRESS ||
-	     ev->type == GDK_3BUTTON_PRESS)) {
+	if ((ev->type == GDK_2BUTTON_PRESS || ev->type == GDK_3BUTTON_PRESS)) {
 		printf("select %s \n",mid.c_str());
 		m_parent.open_session(mid);
-		
-
 	} else if ((ev->type == GDK_BUTTON_PRESS)
 		   && (ev->button == 3)) {
 	}

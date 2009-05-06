@@ -117,12 +117,14 @@ MainWindow::MainWindow(Talkmm* f_parent):
         main_notebook->set_show_tabs(false);
 
 	/** first page */
+	/*
         Gtk::Button * button_cancel =
                 dynamic_cast <
                 Gtk::Button * > (main_xml->get_widget("login_cancel"));
 
         button_cancel->signal_clicked().
         connect(sigc::mem_fun(*this, &MainWindow::on_quit));
+	*/
 
 	button_ok = dynamic_cast <Gtk::Button*>(main_xml->get_widget("login_ok"));
 
@@ -143,7 +145,9 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	list_window->add(*list_view);
 
 	add(*main_notebook);
-	this->set_size_request(200,400);
+	//this->set_size_request(200,400);
+	//this->set_size_request(256,641);
+	this->set_size_request(240,576);
 	this->show_all();
 	this->resize(1,1);
 
