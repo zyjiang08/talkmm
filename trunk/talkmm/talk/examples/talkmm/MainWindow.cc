@@ -25,6 +25,7 @@
 #include <glib/gi18n.h>
 #include <stdio.h>
 #include <string.h>
+#include "./config/rwxml.h"
 #include "BuddyView.h"
 #include "MsgWindow.h"
 
@@ -110,37 +111,43 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	,m_session(new Session)
 {
         main_xml = Gnome::Glade::Xml::create(main_ui, "main_notebook");
-        main_notebook =
-                dynamic_cast <
-                Gtk::Notebook * > (main_xml->get_widget("main_notebook"));
+        main_notebook = dynamic_cast < Gtk::Notebook * > (main_xml->get_widget("main_notebook"));
         main_notebook->set_current_page(LOGIN_INIT);
         main_notebook->set_show_tabs(false);
 
 	/** first page */
-	/*
-        Gtk::Button * button_cancel =
-                dynamic_cast <
-                Gtk::Button * > (main_xml->get_widget("login_cancel"));
 
-        button_cancel->signal_clicked().
-        connect(sigc::mem_fun(*this, &MainWindow::on_quit));
+	/*
+        Gtk::Button * button_cancel = dynamic_cast < Gtk::Button * > (main_xml->get_widget("login_cancel"));
+        button_cancel->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_quit));
 	*/
 
+	check_button_rememberMe = dynamic_cast <Gtk::CheckButton*>(main_xml->get_widget("rememberMe"));
+	check_button_rememberMe->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::check_button_rememberme_clicked));
+	check_button_keeppasswd = dynamic_cast <Gtk::CheckButton*>(main_xml->get_widget("keeppasswd"));
+	check_button_keeppasswd->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::check_button_keeppasswd_clicked));
+
 	button_ok = dynamic_cast <Gtk::Button*>(main_xml->get_widget("login_ok"));
+        entry_account = dynamic_cast <Gtk::Entry*>(main_xml->get_widget("entry_account"));
+        entry_passwd = dynamic_cast <Gtk::Entry*>(main_xml->get_widget("entry_passwd"));
+	entry_passwd->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::on_login_emit));
 
-        entry_account = dynamic_cast<Gtk::Entry*>
-                      (main_xml->get_widget("entry_account"));
+	if(dealconf.ReadXML() != -2){
+		if(dealconf.username_r.size() != 0){
+			check_button_rememberMe->set_active();
+			entry_account->set_text(dealconf.username_r);
+		}
 
-        entry_passwd = dynamic_cast<Gtk::Entry*>
-                      (main_xml->get_widget("entry_passwd"));
-	entry_passwd->signal_activate().connect(sigc::mem_fun(*this,
-				&MainWindow::on_login_emit));
+		if(dealconf.password_r.size() != 0){
+			check_button_keeppasswd->set_active();
+			entry_passwd->set_text(dealconf.password_r);
+		}
+	}
 
 	tray_icon = new TrayIcon(*this);
 
 	/**third page*/
-	Gtk::Container* list_window= dynamic_cast<Gtk::Container*>
-		(main_xml->get_widget("listWindow"));
+	Gtk::Container* list_window= dynamic_cast <Gtk::Container*>(main_xml->get_widget("listWindow"));
 	list_view = Gtk::manage(new BuddyView(*this));
 	list_window->add(*list_view);
 
@@ -193,10 +200,53 @@ void MainWindow::on_init()
 	this->hide();
 
 }
+
+void MainWindow::check_button_rememberme_clicked()
+{
+	cout << "The rememberme was clicked: state=" << (check_button_rememberMe->get_active() ? "true" : "false") << endl;
+	Glib::ustring username_t;
+	Glib::ustring password_t;
+	string password_t1;
+
+
+	if(check_button_rememberMe->get_active() == true && check_button_keeppasswd->get_active() == true){
+		username_t = entry_account->get_text();
+		password_t = entry_passwd->get_text();
+		dealconf.WriteXML(username_t, password_t);;
+	}
+	else if(check_button_rememberMe->get_active() == true && check_button_keeppasswd->get_active() == false){
+		username_t = entry_account->get_text();
+		password_t1.clear();
+		dealconf.WriteXML(username_t, password_t1);;
+	}
+}
+
+void MainWindow::check_button_keeppasswd_clicked()
+{
+	cout << "The keeppasswd was clicked: state=" << (check_button_keeppasswd->get_active() ? "true" : "false") << endl;
+
+	Glib::ustring username_t;
+        Glib::ustring password_t;
+	string username_t1;
+
+
+	if(check_button_keeppasswd->get_active() == true && check_button_rememberMe->get_active() == true){
+		username_t = entry_account->get_text();
+		password_t = entry_passwd->get_text();
+		dealconf.WriteXML(username_t, password_t);;
+	}
+	else if(check_button_keeppasswd->get_active() == true && check_button_rememberMe->get_active() == false){
+		password_t = entry_passwd->get_text();
+		username_t1.clear();
+		dealconf.WriteXML(username_t1, password_t);;
+	}
+}
+
 void MainWindow::on_login_emit()
 {
 	button_ok->clicked();
 }
+
 void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 {
         Glib::ustring name = entry_account->get_text();
@@ -205,19 +255,19 @@ void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
         if (name.empty() || passwd.empty())
                 return ;
         main_notebook->set_current_page(LOGIN_LOADING); //设置当前状态为登录中
+
         if (!(f_handler->*f_call)(name, passwd)) { // 登录失败
 		printf("login false\n");
+	}else{
+		check_button_rememberme_clicked();
+		check_button_keeppasswd_clicked();
 	}
 }
 
 
 void MainWindow::signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 {
-
-	button_ok->signal_clicked().connect(sigc::bind(
-				sigc::mem_fun(*this,&MainWindow::on_login),f_handler,f_call));
-
-
+	button_ok->signal_clicked().connect(sigc::bind(sigc::mem_fun(*this,&MainWindow::on_login),f_handler,f_call));
 }
 
 void MainWindow::on_quit()

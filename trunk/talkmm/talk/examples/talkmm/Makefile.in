@@ -53,7 +53,9 @@ am_talkmm_OBJECTS = talkmm-talkmm.$(OBJEXT) talkmm-main.$(OBJEXT) \
 	talkmm-chatclient.$(OBJEXT) talkmm-fileclient.$(OBJEXT) \
 	talkmm-MainWindow.$(OBJEXT) talkmm-MsgWindow.$(OBJEXT) \
 	talkmm-BuddyView.$(OBJEXT) talkmm-TreeModelDnd.$(OBJEXT) \
-	talkmm-TrayIcon.$(OBJEXT)
+	talkmm-TrayIcon.$(OBJEXT) talkmm-rwxml.$(OBJEXT) \
+	talkmm-tinystr.$(OBJEXT) talkmm-tinyxml.$(OBJEXT) \
+	talkmm-tinyxmlerror.$(OBJEXT) talkmm-tinyxmlparser.$(OBJEXT)
 talkmm_OBJECTS = $(am_talkmm_OBJECTS)
 am__DEPENDENCIES_1 =
 talkmm_DEPENDENCIES = $(top_srcdir)/talk/login/libcricketlogin.la \
@@ -229,7 +231,9 @@ talkmm_SOURCES = talkmm.cc main.cc callclient.cc console.cc chatclient.cc filecl
 		 MsgWindow.cc \
 		 BuddyView.cc \
 		 TreeModelDnd.cc \
-		 TrayIcon.cc 
+		 TrayIcon.cc \
+		 ./config/rwxml.cc  ./config/tinystr.cc  ./config/tinyxml.cc  \
+		 ./config/tinyxmlerror.cc  ./config/tinyxmlparser.cc
 
 noinst_HEADERS = talkmm.h callclient.h  console.h chatclient.h  fileclient.h \
 		 MVC.h \
@@ -335,7 +339,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-console.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-fileclient.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-rwxml.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-talkmm.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-tinystr.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-tinyxml.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-tinyxmlerror.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-tinyxmlparser.Po@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -511,6 +520,76 @@ talkmm-TrayIcon.obj: TrayIcon.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='TrayIcon.cc' object='talkmm-TrayIcon.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-TrayIcon.obj `if test -f 'TrayIcon.cc'; then $(CYGPATH_W) 'TrayIcon.cc'; else $(CYGPATH_W) '$(srcdir)/TrayIcon.cc'; fi`
+
+talkmm-rwxml.o: ./config/rwxml.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-rwxml.o -MD -MP -MF $(DEPDIR)/talkmm-rwxml.Tpo -c -o talkmm-rwxml.o `test -f './config/rwxml.cc' || echo '$(srcdir)/'`./config/rwxml.cc
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-rwxml.Tpo $(DEPDIR)/talkmm-rwxml.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='./config/rwxml.cc' object='talkmm-rwxml.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-rwxml.o `test -f './config/rwxml.cc' || echo '$(srcdir)/'`./config/rwxml.cc
+
+talkmm-rwxml.obj: ./config/rwxml.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-rwxml.obj -MD -MP -MF $(DEPDIR)/talkmm-rwxml.Tpo -c -o talkmm-rwxml.obj `if test -f './config/rwxml.cc'; then $(CYGPATH_W) './config/rwxml.cc'; else $(CYGPATH_W) '$(srcdir)/./config/rwxml.cc'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-rwxml.Tpo $(DEPDIR)/talkmm-rwxml.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='./config/rwxml.cc' object='talkmm-rwxml.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-rwxml.obj `if test -f './config/rwxml.cc'; then $(CYGPATH_W) './config/rwxml.cc'; else $(CYGPATH_W) '$(srcdir)/./config/rwxml.cc'; fi`
+
+talkmm-tinystr.o: ./config/tinystr.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-tinystr.o -MD -MP -MF $(DEPDIR)/talkmm-tinystr.Tpo -c -o talkmm-tinystr.o `test -f './config/tinystr.cc' || echo '$(srcdir)/'`./config/tinystr.cc
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-tinystr.Tpo $(DEPDIR)/talkmm-tinystr.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='./config/tinystr.cc' object='talkmm-tinystr.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-tinystr.o `test -f './config/tinystr.cc' || echo '$(srcdir)/'`./config/tinystr.cc
+
+talkmm-tinystr.obj: ./config/tinystr.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-tinystr.obj -MD -MP -MF $(DEPDIR)/talkmm-tinystr.Tpo -c -o talkmm-tinystr.obj `if test -f './config/tinystr.cc'; then $(CYGPATH_W) './config/tinystr.cc'; else $(CYGPATH_W) '$(srcdir)/./config/tinystr.cc'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-tinystr.Tpo $(DEPDIR)/talkmm-tinystr.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='./config/tinystr.cc' object='talkmm-tinystr.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-tinystr.obj `if test -f './config/tinystr.cc'; then $(CYGPATH_W) './config/tinystr.cc'; else $(CYGPATH_W) '$(srcdir)/./config/tinystr.cc'; fi`
+
+talkmm-tinyxml.o: ./config/tinyxml.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-tinyxml.o -MD -MP -MF $(DEPDIR)/talkmm-tinyxml.Tpo -c -o talkmm-tinyxml.o `test -f './config/tinyxml.cc' || echo '$(srcdir)/'`./config/tinyxml.cc
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-tinyxml.Tpo $(DEPDIR)/talkmm-tinyxml.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='./config/tinyxml.cc' object='talkmm-tinyxml.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-tinyxml.o `test -f './config/tinyxml.cc' || echo '$(srcdir)/'`./config/tinyxml.cc
+
+talkmm-tinyxml.obj: ./config/tinyxml.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-tinyxml.obj -MD -MP -MF $(DEPDIR)/talkmm-tinyxml.Tpo -c -o talkmm-tinyxml.obj `if test -f './config/tinyxml.cc'; then $(CYGPATH_W) './config/tinyxml.cc'; else $(CYGPATH_W) '$(srcdir)/./config/tinyxml.cc'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-tinyxml.Tpo $(DEPDIR)/talkmm-tinyxml.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='./config/tinyxml.cc' object='talkmm-tinyxml.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-tinyxml.obj `if test -f './config/tinyxml.cc'; then $(CYGPATH_W) './config/tinyxml.cc'; else $(CYGPATH_W) '$(srcdir)/./config/tinyxml.cc'; fi`
+
+talkmm-tinyxmlerror.o: ./config/tinyxmlerror.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-tinyxmlerror.o -MD -MP -MF $(DEPDIR)/talkmm-tinyxmlerror.Tpo -c -o talkmm-tinyxmlerror.o `test -f './config/tinyxmlerror.cc' || echo '$(srcdir)/'`./config/tinyxmlerror.cc
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-tinyxmlerror.Tpo $(DEPDIR)/talkmm-tinyxmlerror.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='./config/tinyxmlerror.cc' object='talkmm-tinyxmlerror.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-tinyxmlerror.o `test -f './config/tinyxmlerror.cc' || echo '$(srcdir)/'`./config/tinyxmlerror.cc
+
+talkmm-tinyxmlerror.obj: ./config/tinyxmlerror.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-tinyxmlerror.obj -MD -MP -MF $(DEPDIR)/talkmm-tinyxmlerror.Tpo -c -o talkmm-tinyxmlerror.obj `if test -f './config/tinyxmlerror.cc'; then $(CYGPATH_W) './config/tinyxmlerror.cc'; else $(CYGPATH_W) '$(srcdir)/./config/tinyxmlerror.cc'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-tinyxmlerror.Tpo $(DEPDIR)/talkmm-tinyxmlerror.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='./config/tinyxmlerror.cc' object='talkmm-tinyxmlerror.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-tinyxmlerror.obj `if test -f './config/tinyxmlerror.cc'; then $(CYGPATH_W) './config/tinyxmlerror.cc'; else $(CYGPATH_W) '$(srcdir)/./config/tinyxmlerror.cc'; fi`
+
+talkmm-tinyxmlparser.o: ./config/tinyxmlparser.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-tinyxmlparser.o -MD -MP -MF $(DEPDIR)/talkmm-tinyxmlparser.Tpo -c -o talkmm-tinyxmlparser.o `test -f './config/tinyxmlparser.cc' || echo '$(srcdir)/'`./config/tinyxmlparser.cc
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-tinyxmlparser.Tpo $(DEPDIR)/talkmm-tinyxmlparser.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='./config/tinyxmlparser.cc' object='talkmm-tinyxmlparser.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-tinyxmlparser.o `test -f './config/tinyxmlparser.cc' || echo '$(srcdir)/'`./config/tinyxmlparser.cc
+
+talkmm-tinyxmlparser.obj: ./config/tinyxmlparser.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-tinyxmlparser.obj -MD -MP -MF $(DEPDIR)/talkmm-tinyxmlparser.Tpo -c -o talkmm-tinyxmlparser.obj `if test -f './config/tinyxmlparser.cc'; then $(CYGPATH_W) './config/tinyxmlparser.cc'; else $(CYGPATH_W) '$(srcdir)/./config/tinyxmlparser.cc'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/talkmm-tinyxmlparser.Tpo $(DEPDIR)/talkmm-tinyxmlparser.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='./config/tinyxmlparser.cc' object='talkmm-tinyxmlparser.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-tinyxmlparser.obj `if test -f './config/tinyxmlparser.cc'; then $(CYGPATH_W) './config/tinyxmlparser.cc'; else $(CYGPATH_W) '$(srcdir)/./config/tinyxmlparser.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -696,6 +775,7 @@ uninstall-am: uninstall-binPROGRAMS
 	pdf pdf-am ps ps-am tags uninstall uninstall-am \
 	uninstall-binPROGRAMS
 
+		 ./config/rwxml.h  ./config/tinystr.h  ./config/tinyxml.h
 #AM_CPPFLAGS = -DPOSIX `pkg-config --cflags glibmm-2.4 gtkmm-2.4 libglademm-2.4`
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
