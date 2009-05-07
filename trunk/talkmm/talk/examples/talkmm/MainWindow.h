@@ -88,6 +88,8 @@ class MainWindow : public Gtk::Window {
 		Gtk::Button*				button_ok;
 		Gtk::CheckButton*			check_button_rememberMe;
 		Gtk::CheckButton* 			check_button_keeppasswd;
+		Gtk::Button* 				button_cancel;
+		Gtk::ProgressBar* 			progressbar_login;
 		TrayIcon				*tray_icon;
 		BuddyView*				list_view;
 		Session*				m_session;

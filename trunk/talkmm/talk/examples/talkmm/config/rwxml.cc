@@ -57,7 +57,9 @@ int DealConf::WriteXML(const string username, const string password)
 		InfoNode = InfoRoot->InsertEndChild(*element);
 	}
 
+#ifdef _DEBUG_LOGIN
 	doc.Print();	
+#endif
 	doc.SaveFile( "./config.xml" );
     
 	return 0 ;
@@ -81,8 +83,6 @@ int DealConf::ReadXML()
     {
         pNode = xmlRootElement->FirstChild("username");
 
-	cout << "pNode(username) : " << pNode << endl;
-
 	if(pNode != 0){
         	xmlSubElement = pNode->ToElement();
 		username_r = xmlSubElement->GetText();
@@ -99,8 +99,6 @@ int DealConf::ReadXML()
     if(xmlRootElement)
     {
         pNode = xmlRootElement->FirstChild("password");
-
-	cout << "pNode(password) : " << pNode << endl;
 
 	if(pNode != 0){
         	xmlSubElement = pNode->ToElement();

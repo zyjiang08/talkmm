@@ -116,12 +116,6 @@ MainWindow::MainWindow(Talkmm* f_parent):
         main_notebook->set_show_tabs(false);
 
 	/** first page */
-
-	/*
-        Gtk::Button * button_cancel = dynamic_cast < Gtk::Button * > (main_xml->get_widget("login_cancel"));
-        button_cancel->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_quit));
-	*/
-
 	check_button_rememberMe = dynamic_cast <Gtk::CheckButton*>(main_xml->get_widget("rememberMe"));
 	check_button_rememberMe->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::check_button_rememberme_clicked));
 	check_button_keeppasswd = dynamic_cast <Gtk::CheckButton*>(main_xml->get_widget("keeppasswd"));
@@ -146,6 +140,12 @@ MainWindow::MainWindow(Talkmm* f_parent):
 
 	tray_icon = new TrayIcon(*this);
 
+	/**second page*/
+        button_cancel = dynamic_cast <Gtk::Button *> (main_xml->get_widget("login_cancel"));
+        button_cancel->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_loginWindow_cancel));
+
+	progressbar_login = dynamic_cast <Gtk::ProgressBar*> (main_xml->get_widget("progressbar_login"));
+
 	/**third page*/
 	Gtk::Container* list_window= dynamic_cast <Gtk::Container*>(main_xml->get_widget("listWindow"));
 	list_view = Gtk::manage(new BuddyView(*this));
@@ -157,7 +157,6 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	this->set_size_request(240,576);
 	this->show_all();
 	this->resize(1,1);
-
 }
 
 MainWindow::~MainWindow()
@@ -184,21 +183,17 @@ bool MainWindow::on_key_press_event(GdkEventKey* ev)
 
 void MainWindow::on_loginWindow_cancel()
 {
-
-
+        main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
 }
 
 void MainWindow::on_signon()
 {
 	main_notebook->set_current_page(LOGIN_FINISH);
-
 }
 
 void MainWindow::on_init()
 {
-
 	this->hide();
-
 }
 
 void MainWindow::check_button_rememberme_clicked()
@@ -249,12 +244,23 @@ void MainWindow::on_login_emit()
 
 void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 {
+	const double max = 200;
+
         Glib::ustring name = entry_account->get_text();
         Glib::ustring passwd = entry_passwd->get_text();
 
         if (name.empty() || passwd.empty())
                 return ;
+
         main_notebook->set_current_page(LOGIN_LOADING); //设置当前状态为登录中
+
+	for(double i = 0; i <= max; ++i)
+        {
+		progressbar_login->set_fraction(i / max);
+	
+	        while(Gtk::Main::instance()->events_pending())
+	                 Gtk::Main::instance()->iteration();
+	}
 
         if (!(f_handler->*f_call)(name, passwd)) { // 登录失败
 		printf("login false\n");
@@ -272,7 +278,9 @@ void MainWindow::signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f
 
 void MainWindow::on_quit()
 {
+	
 }
+
 void MainWindow::on_roster_presence(const std::string& jid)
 {
 
