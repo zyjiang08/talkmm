@@ -26,17 +26,21 @@ Talkmm::Talkmm():m_roster(new RosterMap)
 		 ,m_presence_push(NULL)
 		 ,m_chatclient(NULL)
 {
-
 	if (debug)
 	    talk_base::LogMessage::LogToDebug(talk_base::LS_VERBOSE);
+
+	//Init SSL.
 	talk_base::InitializeSSL();
 
-	m_callclient = new CallClient(m_pump.client());
+	//Create thread and set it as the current thread.
 	main_thread = new talk_base::Thread(&m_ss);
 	talk_base::ThreadManager::SetCurrent(main_thread);
 
+	m_callclient = new CallClient(m_pump.client());
+
+	//Create the main window included three notebooks' tabs.
 	main_window = new MainWindow(this);
-	main_window->signal_on_login(this,&Talkmm::OnLogin);
+	main_window->signal_on_login(this, &Talkmm::OnLogin);
 
 	int port=0;
 	m_console = new Console(main_thread, m_callclient,main_window);
@@ -44,8 +48,6 @@ Talkmm::Talkmm():m_roster(new RosterMap)
 	console_thread = new talk_base::Thread(&m_ss);
 
 	m_pump.client()->SignalStateChange.connect(this, &Talkmm::OnStateChange);
-
-
 }
 
 Talkmm::~Talkmm()

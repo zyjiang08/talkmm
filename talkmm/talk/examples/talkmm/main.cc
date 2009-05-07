@@ -16,6 +16,7 @@
  * =====================================================================================
  */
 
+#include <stdio.h>
 #include <gtkmm/main.h>
 #include "talkmm.h"
 #ifdef HAVE_CONFIG_H
@@ -24,6 +25,15 @@
 
 
 using namespace std;
+
+void getPath()
+{
+	char buffer[256];
+	memset(buffer, 0, 256);
+	getcwd(buffer, 256);
+	printf( "The current directory is: %s\n",   buffer); 
+	printf("File: %s Line: %d\n", __FILE__, __LINE__);
+}
 
 int main(int argc, char* argv[])
 {
@@ -37,10 +47,11 @@ int main(int argc, char* argv[])
 
 	if (!g_thread_supported())
 		g_thread_init(NULL);
+
 	gdk_threads_init();
 	Gtk::Main kit(argc, argv);
 	Talkmm talkmm;
-	
+
 	gdk_threads_enter();
 	kit.run();
 	gdk_threads_leave();

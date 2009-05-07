@@ -5,7 +5,9 @@ talkmm_SOURCES = talkmm.cc main.cc callclient.cc console.cc chatclient.cc filecl
 		 MsgWindow.cc \
 		 BuddyView.cc \
 		 TreeModelDnd.cc \
-		 TrayIcon.cc 
+		 TrayIcon.cc \
+		 ./config/rwxml.cc  ./config/tinystr.cc  ./config/tinyxml.cc  \
+		 ./config/tinyxmlerror.cc  ./config/tinyxmlparser.cc
 noinst_HEADERS = talkmm.h callclient.h  console.h chatclient.h  fileclient.h \
 		 MVC.h \
 		 MainWindow.h \
@@ -13,6 +15,7 @@ noinst_HEADERS = talkmm.h callclient.h  console.h chatclient.h  fileclient.h \
 		 BuddyView.h \
 		 TreeModelDnd.h \
 		 TrayIcon.h
+		 ./config/rwxml.h  ./config/tinystr.h  ./config/tinyxml.h
 talkmm_LDADD =  \
 	       $(top_srcdir)/talk/login/libcricketlogin.la \
 	       $(top_srcdir)/talk/session/phone/libcricketsessionphone.la \

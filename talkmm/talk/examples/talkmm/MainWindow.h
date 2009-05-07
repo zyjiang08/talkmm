@@ -22,12 +22,14 @@
 
 
 #include <gtkmm.h>
+#include <gtkmm/checkbutton.h>
 #include <sigc++/connection.h>
 #include <libglademm/xml.h>
 #include <glib/gi18n.h>
 #include <map>
 #include "TrayIcon.h"
 #include "MVC.h"
+#include "./config/rwxml.h"
 
 #define main_ui "./main_window.glade"
 typedef Glib::RefPtr <Gnome::Glade::Xml> GlademmXML;
@@ -56,10 +58,16 @@ class MainWindow : public Gtk::Window {
 		void on_incoming_call(const std::string& from);
 		void on_init();
 		void on_quit();
+
+		void check_button_rememberme_clicked();
+		void check_button_keeppasswd_clicked();
+
 		void on_loginWindow_cancel();
 		void on_login_emit();
 		void on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
+
+		DealConf dealconf;
 
 	protected:
 		bool on_delete_event(GdkEventAny* event);
@@ -78,6 +86,8 @@ class MainWindow : public Gtk::Window {
 		Gtk::Entry*				entry_account;
 		Gtk::Entry*				entry_passwd;
 		Gtk::Button*				button_ok;
+		Gtk::CheckButton*			check_button_rememberMe;
+		Gtk::CheckButton* 			check_button_keeppasswd;
 		TrayIcon				*tray_icon;
 		BuddyView*				list_view;
 		Session*				m_session;
