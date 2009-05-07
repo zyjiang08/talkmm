@@ -49,7 +49,8 @@ class BuddyView:public Gtk::TreeView {
 
 	/**添加好友进列表*/
 
-	void add(const std::string & jid);
+	//void add(const std::string & jid);
+	void add(const std::string & jid,const std::string& name);
 
 	/**删除列表中的好友显示*/
 	bool remove(const Glib::ustring & id);
