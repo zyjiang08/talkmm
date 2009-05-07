@@ -38,6 +38,7 @@ struct RosterItem {
   buzz::Jid jid;
   buzz::Status::Show show;
   std::string status;
+  bool online;
   bool file_cap;
   bool phone_cap;
     
@@ -51,6 +52,7 @@ class Talkmm : public sigslot::has_slots<> {
 		bool OnLogin(const std::string& f_username,const std::string& f_pass);
 
 	public:
+		const RosterItem& GetRoster(const std::string& f_jid);
 		void OnStateChange(buzz::XmppEngine::State state);
 		void OnStatusUpdate(const buzz::Status& status);
 		void InitPresence();

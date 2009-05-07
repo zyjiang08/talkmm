@@ -152,8 +152,6 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	list_window->add(*list_view);
 
 	add(*main_notebook);
-	//this->set_size_request(200,400);
-	//this->set_size_request(256,641);
 	this->set_size_request(240,576);
 	this->show_all();
 	this->resize(1,1);
@@ -283,8 +281,11 @@ void MainWindow::on_quit()
 
 void MainWindow::on_roster_presence(const std::string& jid)
 {
+	const RosterItem& item = m_parent->GetRoster(jid);
+	std::string name = item.jid.node();
 
-	list_view->add(jid);
+	if(item.online)
+		list_view->add(jid,name);
 }
 
 void MainWindow::on_receive_message(const std::string& from,const std::string& message)

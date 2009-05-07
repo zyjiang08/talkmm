@@ -131,11 +131,21 @@ RosterItem Talkmm::FindRoster(const std::string& f_jid)
 */
 
 
+const RosterItem& Talkmm::GetRoster(const std::string& f_jid)
+{
+
+    RosterMap::const_iterator iter = m_roster->find(f_jid);
+    if (iter != m_roster->end()){
+	return (*iter).second;
+    }
+
+}
 void Talkmm::OnStatusUpdate(const buzz::Status& status)
 {
 	RosterItem item;
   	item.jid = status.jid();
   	item.show = status.show();
+	item.online = status.available();
   	item.status = status.status();
   	item.file_cap = status.fileshare_capability()?1:0;
   	item.phone_cap = status.phone_capability()?1:0;
@@ -143,11 +153,17 @@ void Talkmm::OnStatusUpdate(const buzz::Status& status)
   	std::string key = item.jid.Str();
   	/** i want to change a method to insert roster, please fixed me */
   	(*m_roster)[key] = item;
+	m_console->RosterPresence(key);
+
+
+#if 0
+    RosterMap::iterator iter = m_roster->find(key);
+    if (iter != m_roster->end()){
 	printf("add buddy %s presence\n",key.c_str());
 	if(status.available())
 		m_console->RosterPresence(key);
+    }
 
-#if 0
   size_t pos = key.find("/");
   std::string str = key.substr(0, pos);;
   str += status.available()?"<online\n":"<offline\n";

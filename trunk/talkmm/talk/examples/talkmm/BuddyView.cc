@@ -72,11 +72,15 @@ bool BuddyView::remove(const Glib::ustring & id)
 	return false;
 }
 
-void BuddyView::add(const std::string & jid_str) 
+//void BuddyView::add(const std::string & jid_str) 
+void BuddyView::add(const std::string & jid_str,const std::string& name) 
 {
         Gtk::TreeModel::iterator listiter = m_treestore->append();
 	(*listiter)[buddyColumns.id] = jid_str;
-	(*listiter)[buddyColumns.nickname] = jid_str;
+	(*listiter)[buddyColumns.nickname] = name;
+
+        (*listiter)[buddyColumns.icon] = Gdk::Pixbuf::create_from_file("./status.png", 16, 16);
+	//(*listiter)[buddyColumns.audioicon] = Gdk::Pixbuf::create_from_file("./call.png",24,24);
 	this->expand_all();
 }
 
