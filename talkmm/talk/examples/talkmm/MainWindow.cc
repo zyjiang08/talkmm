@@ -290,20 +290,12 @@ void MainWindow::on_roster_presence(const std::string& jid)
 
 void MainWindow::on_receive_message(const std::string& from,const std::string& message)
 {
-#if 0
-	MsgWindow* msg_window=NULL;
-	Session::iterator iter = m_session->find(from);
-	if(iter != m_session->end()){
-		msg_window = iter->second;
-	}
-	else{
-		msg_window =new MsgWindow(this,from);
-		(*m_session)[from]=msg_window;
-	}
-#endif
+
 	MsgWindow* msg_window = open_session(from);
 
-	std::string utext = from +" : "+message+"\n";
+	  size_t pos = from.find("@");
+	  std::string str = from.substr(0, pos);;
+	std::string utext = str +" : "+message+"\n";
 	msg_window->show_message(utext);
 
 }
@@ -324,6 +316,16 @@ MsgWindow* MainWindow::open_session(const std::string& from)
 	return msg_window;
 }
 
+void MainWindow::close_session(const std::string& from)
+{
+
+	Session::iterator iter = m_session->find(from);
+	if(iter == m_session->end())
+		return;
+	m_session->erase(iter);
+
+
+}
 void MainWindow::on_send_message(const std::string& to,const std::string& message)
 {
 	m_parent->SendTexte(to,message);

@@ -49,6 +49,7 @@ class MainWindow : public Gtk::Window {
 		void hide_window();
 		void show_window();
 		MsgWindow* open_session(const std::string& from);
+		void close_session(const std::string& from);
 		/** finsh login*/
 		void on_signon();
 		void on_roster_presence(const std::string& jid);
@@ -67,7 +68,6 @@ class MainWindow : public Gtk::Window {
 		void on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 
-		DealConf dealconf;
 
 	protected:
 		bool on_delete_event(GdkEventAny* event);
@@ -79,6 +79,7 @@ class MainWindow : public Gtk::Window {
 		
 
 	private:
+		DealConf dealconf;
 		typedef std::map<std::string,MsgWindow*> Session;
 		Talkmm*					m_parent;
 		Gtk::Notebook*				main_notebook;
