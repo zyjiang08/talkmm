@@ -40,6 +40,12 @@ MsgWindow::~MsgWindow()
 
 }
 
+bool MsgWindow::on_delete_event(GdkEventAny* event)
+{
+	m_parent->close_session(m_jid);
+	delete this;
+
+}
 void MsgWindow::show_message(const std::string& msg)
 {
 	textview_msg->set_wrap_mode(Gtk::WRAP_WORD);
