@@ -279,10 +279,14 @@ void Talkmm::SendTexte(const std::string& name, const std::string& texte)
 void Talkmm::AnswerFile(bool accept)
 {
 	m_callclient->OnAnswerFile(accept);
-
 }
 
 void Talkmm::AnswerCall(bool accept)
 {
 	m_callclient->OnAnswerCall(accept);
+}
+
+void Talkmm::SendFile(const std::string& to,const std::string& filename)
+{
+	m_callclient->SendFile(to,filename);
 }

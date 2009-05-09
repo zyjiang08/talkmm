@@ -107,7 +107,6 @@ private:
   //void OnStateChange(buzz::XmppEngine::State state);
   //void OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte);
   void SendTexte(const std::string& name, const std::string& texte);
-  void SendFile(const std::string& name, const std::string& texte);
   void OnFileReceived(const std::string& from, const std::string& file, const std::string& no_use);
   void OnFileTransferStatue(const std::string& type, const std::string& statue, const std::string& no_use);
   void OnJingleInfo(const std::string &relay_token, const std::vector<std::string> &relay_hosts, 
@@ -124,6 +123,7 @@ public:
                       cricket::Session::State state);
   void OnAnswerFile(bool accept);
   void OnAnswerCall(bool accept);
+  void SendFile(const std::string& name, const std::string& texte);
 
   void InitPresence();
   //void OnStatusUpdate(const buzz::Status& status);

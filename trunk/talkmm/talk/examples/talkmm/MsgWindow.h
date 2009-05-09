@@ -33,6 +33,8 @@ class MsgWindow: public Gtk::Window
 		~MsgWindow();
 		void show_message(const std::string& msg);
 		void send_message();
+		void on_send_file();
+		void on_button_call();
 	protected:
 		bool on_delete_event(GdkEventAny* event);
 	private:
