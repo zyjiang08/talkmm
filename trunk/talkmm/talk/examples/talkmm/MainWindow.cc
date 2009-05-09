@@ -6,11 +6,11 @@
  *    Description:  程序的主窗口
  *
  *        Version:  1.0
- *        Created:  2007年11月25日 13时00分30秒 CST
+ *        Created:  2009年4月25日 13时00分30秒 CST
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  wind (xihe), xihels@gmail.com
+ *         Author:  lerosua@gmail.com
  *        Company:  cyclone
  *
  k* =====================================================================================
@@ -138,6 +138,7 @@ MainWindow::MainWindow(Talkmm* f_parent):
 
 	tray_icon = new TrayIcon(*this);
 
+	tray_pop_menu = dynamic_cast<Gtk::Menu* >(main_xml->get_widget("tray_menu"));
 	/**second page*/
         button_cancel = dynamic_cast <Gtk::Button *> (main_xml->get_widget("login_cancel"));
         button_cancel->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_loginWindow_cancel));

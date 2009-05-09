@@ -39,12 +39,10 @@ TrayIcon::~TrayIcon()
 
 void TrayIcon::on_popup_menu(guint button, guint32 activate_time)
 {
-	/*
 	Gtk::Menu* pop_menu = 
-			main_wnd_.get_try_pop_menu();
+			main_wnd_.get_tray_pop_menu();
 		if (pop_menu)
 			pop_menu->popup(button, activate_time);
-			*/
 }
 
 void TrayIcon::active_main_wnd()

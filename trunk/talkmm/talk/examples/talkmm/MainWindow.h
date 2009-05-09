@@ -50,6 +50,7 @@ class MainWindow : public Gtk::Window {
 		void show_window();
 		MsgWindow* open_session(const std::string& from);
 		void close_session(const std::string& from);
+		Gtk::Menu* get_tray_pop_menu() { return tray_pop_menu;}
 		/** finsh login*/
 		void on_signon();
 		void on_roster_presence(const std::string& jid);
@@ -69,10 +70,6 @@ class MainWindow : public Gtk::Window {
 		void on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 
-		GlademmXML				main_xml;
-		Gtk::Notebook*				main_notebook;
-
-		enum{ LOGIN_INIT=0,LOGIN_LOADING,LOGIN_FINISH};
 
 	protected:
 		bool on_delete_event(GdkEventAny* event);
@@ -94,9 +91,14 @@ class MainWindow : public Gtk::Window {
 		Gtk::CheckButton* 			check_button_keeppasswd;
 		Gtk::Button* 				button_cancel;
 		Gtk::ProgressBar* 			progressbar_login;
-		TrayIcon				*tray_icon;
+		TrayIcon*				tray_icon;
+		Gtk::Menu*				tray_pop_menu;
 		BuddyView*				list_view;
 		Session*				m_session;
+		GlademmXML				main_xml;
+		Gtk::Notebook*				main_notebook;
+
+		enum{ LOGIN_INIT=0,LOGIN_LOADING,LOGIN_FINISH};
 		//ConfWindow*			confwindow;
 		int					window_width;
 		int					window_height;

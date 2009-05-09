@@ -115,8 +115,8 @@ void Talkmm::OnStateChange(buzz::XmppEngine::State state) {
     m_console->Send("loggedout\n");
     //cout << "logged out...hia hia." << strerror(error) << endl;
     
-    main_window->main_notebook = dynamic_cast < Gtk::Notebook * > (main_window->main_xml->get_widget("main_notebook"));
-    main_window->main_notebook->set_current_page(main_window->LOGIN_INIT); //设置当前状态为登录
+    //main_window->main_notebook = dynamic_cast < Gtk::Notebook * > (main_window->main_xml->get_widget("main_notebook"));
+    //main_window->main_notebook->set_current_page(main_window->LOGIN_INIT); //设置当前状态为登录
    
     //talk_base::Thread *thread = talk_base::ThreadManager::CurrentThread();
     //thread->Stop();
