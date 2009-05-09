@@ -148,6 +148,10 @@ class Task {
   // Called inside the task to signal that the task may be unblocked
   void Wake();
 
+  ///////////////////////////////////////////////////
+  virtual void Stop();
+  ///////////////////////////////////////////////////
+
  protected:
 
   enum {
@@ -167,7 +171,11 @@ class Task {
 
   virtual std::string GetStateName(int state) const;
   virtual int Process(int state);
-  virtual void Stop();
+
+  /////////////////////////////////////////////
+  //virtual void Stop();
+  /////////////////////////////////////////////
+  
   virtual int ProcessStart() = 0;
   virtual int ProcessResponse() { return STATE_DONE; }
 
