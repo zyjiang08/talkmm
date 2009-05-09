@@ -43,11 +43,8 @@ struct LockMutex {
 };
 
 Console::Console(talk_base::Thread * thread, CallClient * client, MainWindow * win):
-client_thread_(thread), client_(client), prompt_(std::string("talkmm")),
-prompting_(true)
-    , main_window(win)
+client_thread_(thread), client_(client), prompt_(std::string("talkmm")), prompting_(true), main_window(win)
 {
-
 
 }
 

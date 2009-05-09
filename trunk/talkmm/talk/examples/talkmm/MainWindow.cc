@@ -31,8 +31,6 @@
 
 using namespace std;
 
-enum{ LOGIN_INIT=0,LOGIN_LOADING,LOGIN_FINISH};
-
 void MainWindow::show_window()
 {
 	this->show();
@@ -182,6 +180,13 @@ bool MainWindow::on_key_press_event(GdkEventKey* ev)
 void MainWindow::on_loginWindow_cancel()
 {
         main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
+	//Here something need to be done.
+	
+	//m_pump.client()->Stop();
+	/*
+	talk_base::Thread *thread_t = talk_base::ThreadManager::CurrentThread();
+	thread_t->Stop();
+	*/
 }
 
 void MainWindow::on_signon()
@@ -200,7 +205,6 @@ void MainWindow::check_button_rememberme_clicked()
 	Glib::ustring username_t;
 	Glib::ustring password_t;
 	string password_t1;
-
 
 	if(check_button_rememberMe->get_active() == true && check_button_keeppasswd->get_active() == true){
 		username_t = entry_account->get_text();
@@ -222,7 +226,6 @@ void MainWindow::check_button_keeppasswd_clicked()
         Glib::ustring password_t;
 	string username_t1;
 
-
 	if(check_button_keeppasswd->get_active() == true && check_button_rememberMe->get_active() == true){
 		username_t = entry_account->get_text();
 		password_t = entry_passwd->get_text();
@@ -242,7 +245,9 @@ void MainWindow::on_login_emit()
 
 void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 {
-	const double max = 200;
+	const double max = 50;
+	//const double max_t = 200;
+	double i;
 
         Glib::ustring name = entry_account->get_text();
         Glib::ustring passwd = entry_passwd->get_text();
@@ -252,17 +257,28 @@ void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 
         main_notebook->set_current_page(LOGIN_LOADING); //设置当前状态为登录中
 
-	for(double i = 0; i <= max; ++i)
-        {
-		progressbar_login->set_fraction(i / max);
-	
-	        while(Gtk::Main::instance()->events_pending())
-	                 Gtk::Main::instance()->iteration();
-	}
 
         if (!(f_handler->*f_call)(name, passwd)) { // 登录失败
 		printf("login false\n");
 	}else{
+		for(i = 0; i <= max; ++i)
+        	{
+			usleep(100000);
+			progressbar_login->pulse();
+
+	       		while(Gtk::Main::instance()->events_pending())
+	              		Gtk::Main::instance()->iteration();
+		}
+		
+		/*
+		for(i = 0; i <= max_t; ++i)
+        	{
+			progressbar_login->set_fraction(i / max);
+	
+	        	while(Gtk::Main::instance()->events_pending())
+	                 	Gtk::Main::instance()->iteration();
+		}
+		*/
 		check_button_rememberme_clicked();
 		check_button_keeppasswd_clicked();
 	}
@@ -307,6 +323,7 @@ MsgWindow* MainWindow::open_session(const std::string& from)
 {
 	MsgWindow* msg_window=NULL;
 	Session::iterator iter = m_session->find(from);
+
 	if(iter != m_session->end()){
 		msg_window = iter->second;
 	}
@@ -316,6 +333,7 @@ MsgWindow* MainWindow::open_session(const std::string& from)
 	}
 
 	msg_window->show();
+
 	return msg_window;
 }
 

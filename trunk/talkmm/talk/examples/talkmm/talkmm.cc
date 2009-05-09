@@ -87,9 +87,6 @@ bool Talkmm::OnLogin(const std::string& f_username,const std::string& f_pass)
 	
 	return true;
 }
-	
-
-
 
 void Talkmm::OnStateChange(buzz::XmppEngine::State state) {
   switch (state) {
@@ -112,11 +109,19 @@ void Talkmm::OnStateChange(buzz::XmppEngine::State state) {
     break;
 
   case buzz::XmppEngine::STATE_CLOSED:
-    buzz::XmppEngine::Error error = m_pump.client()->GetError(NULL);
+    //buzz::XmppEngine::Error error = m_pump.client()->GetError(NULL);
+    //m_pump.client()->Stop();
     //m_console->Print("logged out..." + strerror(error));
     m_console->Send("loggedout\n");
-    exit(0);
+    //cout << "logged out...hia hia." << strerror(error) << endl;
     
+    main_window->main_notebook = dynamic_cast < Gtk::Notebook * > (main_window->main_xml->get_widget("main_notebook"));
+    main_window->main_notebook->set_current_page(main_window->LOGIN_INIT); //设置当前状态为登录
+   
+    //talk_base::Thread *thread = talk_base::ThreadManager::CurrentThread();
+    //thread->Stop();
+    //break;
+    //exit(0);
   }
 }
 

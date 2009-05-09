@@ -68,6 +68,10 @@ class MainWindow : public Gtk::Window {
 		void on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 
+		GlademmXML				main_xml;
+		Gtk::Notebook*				main_notebook;
+
+		enum{ LOGIN_INIT=0,LOGIN_LOADING,LOGIN_FINISH};
 
 	protected:
 		bool on_delete_event(GdkEventAny* event);
@@ -82,8 +86,6 @@ class MainWindow : public Gtk::Window {
 		DealConf dealconf;
 		typedef std::map<std::string,MsgWindow*> Session;
 		Talkmm*					m_parent;
-		Gtk::Notebook*				main_notebook;
-		GlademmXML				main_xml;
 		Gtk::Entry*				entry_account;
 		Gtk::Entry*				entry_passwd;
 		Gtk::Button*				button_ok;
