@@ -29,10 +29,15 @@ MsgWindow::MsgWindow(MainWindow* f_parent,const std::string& f_jid):m_parent(f_p
 	textview_msg = dynamic_cast<Gtk::TextView*> (msg_xml->get_widget("textview_msg"));
 
 	entry_send->signal_activate().connect(sigc::mem_fun(*this,&MsgWindow::send_message));
+	Gtk::Button* button_send_file = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_send_file"));
+	Gtk::Button* button_call = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_call"));
+	button_send_file->signal_clicked().connect(sigc::mem_fun(*this,&MsgWindow::on_send_file));
+	button_call->signal_clicked().connect(sigc::mem_fun(*this,&MsgWindow::on_button_call));
 
 	add(*vbox_main);
 	//this->set_size_request(400,300);
-	this->set_size_request(294,233);
+	this->set_size_request(350,270);
+	this->set_title(m_jid);
 	this->show_all();
 }
 MsgWindow::~MsgWindow()
@@ -74,5 +79,80 @@ void MsgWindow::send_message()
 	show_message(utext);
 	show_message("\n");
 	entry_send->set_text("");
+
+}
+
+void MsgWindow::on_send_file()
+{
+
+        Gtk::FileChooserDialog dialog(_("Please select a file"),
+                                      Gtk::FILE_CHOOSER_ACTION_OPEN);
+
+        dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+
+        dialog.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
+
+        Gtk::FileFilter filter_png;
+
+        filter_png.set_name("PNG files");
+
+        filter_png.add_mime_type("image/png");
+
+        dialog.add_filter(filter_png);
+
+        Gtk::FileFilter filter_jpg;
+
+        filter_jpg.set_name("JPG files");
+
+        filter_jpg.add_mime_type("image/jpg");
+
+        dialog.add_filter(filter_jpg);
+
+        Gtk::FileFilter filter_gif;
+
+        filter_gif.set_name("GIF files");
+
+        filter_gif.add_mime_type("image/gif");
+
+        dialog.add_filter(filter_gif);
+
+
+        Gtk::FileFilter filter_any;
+
+        filter_any.set_name("Any files");
+
+        filter_any.add_mime_type("*");
+
+        dialog.add_filter(filter_any);
+
+        std::string filename ;
+
+        //dialog.set_current_folder("~/Desktop");
+        int result = dialog.run();
+
+        switch (result) {
+        case (Gtk::RESPONSE_OK): {
+                        filename = dialog.get_filename(); //注意：这里取回的并不是Glib::ustring, 而是std::string.
+
+                        break;
+                }
+
+        case (Gtk::RESPONSE_CANCEL):
+                        std::cout << "Cannel choose icon" << std::endl;
+                        return ;
+
+        default:
+
+                        std::cout << "Cannel choose icon" << std::endl;
+                        return ;
+        }
+
+	m_parent->on_send_file(m_jid,filename);
+
+}
+
+void MsgWindow::on_button_call()
+{
+
 
 }

@@ -278,7 +278,33 @@ CallClient::~CallClient() {
 
 void CallClient::SendFile(const std::string& to, const std::string& file)
 {
+	buzz::Jid found_jid = buzz::Jid(to);
 
+    console_->Printf("send file '%s' to friend '%s'", file.c_str(), found_jid.Str().c_str());
+
+    /**peut etre ici on doit indiquer que le manifest_ est null car apparament il le supprime automatiquement 
+      ** après la termine de transfer. Je ne vois pas que le manifest_ devient null, mais c'est vrais que je ne 
+      ** peux plus l'utiliser... bug...
+      **/
+    cricket::FileShareManifest *manifest = new cricket::FileShareManifest();//_current_sending_fileclient->getFileShareManifest();
+
+    manifest->clear();
+    if (talk_base::Filesystem::IsFolder(file)) {
+      manifest->AddFolder(file, get_dir_size(file.c_str()));
+    } else {
+      size_t size = 0;
+      talk_base::Filesystem::GetFileSize(file, &size);
+      manifest->AddFile(file, size);
+    }//else
+
+    _current_sending_fileclient->setManifest(manifest);
+    _current_sending_fileclient->setSendToJid(found_jid);
+
+    if(!b_first_time_send_file_){
+      /**rien à faire ici, seulement pour tester...
+      **/
+    }
+    _current_sending_fileclient->SendFile(/*found_jid.Str(), manifest*/);
 #if 0
   bool found = false;
   buzz::Jid found_jid;

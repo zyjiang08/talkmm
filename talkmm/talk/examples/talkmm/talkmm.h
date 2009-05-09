@@ -57,7 +57,8 @@ class Talkmm : public sigslot::has_slots<> {
 		void OnStatusUpdate(const buzz::Status& status);
 		void InitPresence();
 		void OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte);
-		void SendTexte(const std::string& name, const std::string& texte);
+		void SendTexte(const std::string& to, const std::string& texte);
+		void SendFile(const std::string& to, const std::string& file);
 		void AnswerFile(bool accept=true);
 		void AnswerCall(bool accept=true);
 	private:
