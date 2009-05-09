@@ -284,8 +284,11 @@ void MainWindow::on_roster_presence(const std::string& jid)
 	const RosterItem& item = m_parent->GetRoster(jid);
 	std::string name = item.jid.node();
 
+	list_view->refreshBuddyStatus(jid,name,item.phone_cap);
+	/*
 	if(item.online)
-		list_view->add(jid,name);
+		list_view->add(jid,name,item.phone_cap);
+		*/
 }
 
 void MainWindow::on_receive_message(const std::string& from,const std::string& message)
