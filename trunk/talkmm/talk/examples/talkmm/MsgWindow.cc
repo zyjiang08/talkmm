@@ -30,15 +30,18 @@ MsgWindow::MsgWindow(MainWindow* f_parent,const std::string& f_jid):m_parent(f_p
 
 	entry_send->signal_activate().connect(sigc::mem_fun(*this,&MsgWindow::send_message));
 	Gtk::Button* button_send_file = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_send_file"));
-	Gtk::Button* button_call = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_call"));
+	button_call = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_call"));
 	button_send_file->signal_clicked().connect(sigc::mem_fun(*this,&MsgWindow::on_send_file));
 	button_call->signal_clicked().connect(sigc::mem_fun(*this,&MsgWindow::on_button_call));
+
+	vbox_file = dynamic_cast<Gtk::VBox*>(msg_xml->get_widget("vbox_file"));
 
 	add(*vbox_main);
 	//this->set_size_request(400,300);
 	this->set_size_request(350,270);
 	this->set_title(m_jid);
 	this->show_all();
+	vbox_file->hide();
 }
 MsgWindow::~MsgWindow()
 {
@@ -156,3 +159,17 @@ void MsgWindow::on_button_call()
 
 
 }
+void MsgWindow::file_tranfer_start()
+{
+	vbox_file->show();
+
+
+}
+
+void MsgWindow::file_tranfer_end()
+{
+	vbox_file->hide();
+
+}
+
+

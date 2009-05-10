@@ -123,7 +123,8 @@ public:
                       cricket::Session::State state);
   void OnAnswerFile(bool accept);
   void OnAnswerCall(bool accept);
-  void SendFile(const std::string& name, const std::string& texte);
+  void SendFile(const buzz::Jid& name, const std::string& texte);
+  //void SendFile(const std::string& name, const std::string& texte);
 
   void InitPresence();
   //void OnStatusUpdate(const buzz::Status& status);

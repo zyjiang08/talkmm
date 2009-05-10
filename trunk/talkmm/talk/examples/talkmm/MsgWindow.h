@@ -35,6 +35,8 @@ class MsgWindow: public Gtk::Window
 		void send_message();
 		void on_send_file();
 		void on_button_call();
+		void file_tranfer_start();
+		void file_tranfer_end();
 	protected:
 		bool on_delete_event(GdkEventAny* event);
 	private:
@@ -43,6 +45,8 @@ class MsgWindow: public Gtk::Window
 		GlademmXML				msg_xml;
 		Gtk::Entry*				entry_send;
 		Gtk::TextView*				textview_msg;
+		Gtk::Button*				button_call;
+		Gtk::VBox*				vbox_file;
 
 
 };

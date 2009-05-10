@@ -161,7 +161,7 @@ void CallClient::ParseLine(const std::string& line) {
 	message += words[2];
 	message += "\n";
 	console_->Send(message);
-	SendFile(words[1], words[2]);
+	//SendFile(words[1], words[2]);
 	return;
   }else if((words.size() == 1) && words[0] == "receive"){
     if(incoming_file_){
@@ -276,9 +276,10 @@ CallClient::~CallClient() {
 
 }
 
-void CallClient::SendFile(const std::string& to, const std::string& file)
+//void CallClient::SendFile(const std::string& to, const std::string& file)
+void CallClient::SendFile(const buzz::Jid& found_jid, const std::string& file)
 {
-	buzz::Jid found_jid = buzz::Jid(to);
+	//buzz::Jid found_jid = buzz::Jid(to);
 
     console_->Printf("send file '%s' to friend '%s'", file.c_str(), found_jid.Str().c_str());
 
