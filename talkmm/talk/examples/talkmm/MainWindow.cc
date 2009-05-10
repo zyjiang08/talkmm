@@ -300,13 +300,13 @@ void MainWindow::on_roster_presence(const std::string& jid)
 {
 	const RosterItem& item = m_parent->GetRoster(jid);
 	std::string name = item.jid.node();
-
-	list_view->refreshBuddyStatus(jid,name,item.show,item.phone_cap);
-	//list_view->refreshBuddyStatus(jid,name,item.phone_cap);
-	/*
+	int status;
 	if(item.online)
-		list_view->add(jid,name,item.phone_cap);
-		*/
+		status= item.show;
+	else
+		status=1;
+
+	list_view->refreshBuddyStatus(jid,name,status,item.phone_cap);
 }
 
 void MainWindow::on_receive_message(const std::string& from,const std::string& message)
@@ -385,7 +385,7 @@ void MainWindow::on_send_file(   const std::string& to,  const std::string& file
 {
 	const RosterItem& item = m_parent->GetRoster(to);
 	if(item.file_cap)
-		m_parent->SendFile(to,filename);
+		m_parent->SendFile(item.jid,filename);
 	else
 		std::cout<<to<<" does not support file translate with jingle"<<std::endl;
 }
@@ -403,6 +403,8 @@ void MainWindow::on_file_receive(const std::string& from,const std::string& file
         switch (result) {
         case (Gtk::RESPONSE_OK): {
 					 m_parent->AnswerFile(true);
+					MsgWindow* msg_window = open_session(from);
+					msg_window->file_tranfer_start();
 					 break;
 				 }
         case (Gtk::RESPONSE_CANCEL): {

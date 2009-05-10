@@ -286,7 +286,8 @@ void Talkmm::AnswerCall(bool accept)
 	m_callclient->OnAnswerCall(accept);
 }
 
-void Talkmm::SendFile(const std::string& to,const std::string& filename)
+//void Talkmm::SendFile(const std::string& to,const std::string& filename)
+void Talkmm::SendFile(const buzz::Jid& to,const std::string& filename)
 {
 	m_callclient->SendFile(to,filename);
 }

@@ -69,7 +69,14 @@ Gtk::TreeModel::iterator BuddyView::getListIter(Gtk::TreeModel::Children childre
 
 bool BuddyView::remove(const Glib::ustring & id) 
 {
-	return false;
+        Gtk::TreeModel::Children children = m_treestore->children();
+        Gtk::TreeModel::iterator listiter;
+	listiter = getListIter(children,id);
+	printf("remove %s \n",id.c_str());
+	if(listiter != children.end()){
+		m_treestore->erase(*listiter);
+	}
+	return true;
 }
 
 void BuddyView::add(const std::string & jid_str,const std::string& name,int status,bool call) 
@@ -87,8 +94,6 @@ void BuddyView::add(const std::string & jid_str,const std::string& name,int stat
 	this->expand_all();
 }
 
-//void BuddyView::refreshBuddyStatus(const Glib::ustring & jid_ctr)
-//void BuddyView::refreshBuddyStatus(const std::string & jid,const std::string& name,bool call)
 void BuddyView::refreshBuddyStatus(const std::string & jid,const std::string& name,int status,bool call)
 {
 	Gtk::TreeModel::Children children = m_treestore->children();
@@ -97,6 +102,11 @@ void BuddyView::refreshBuddyStatus(const std::string & jid,const std::string& na
 
 	if(iter == children.end()){
 		add(jid,name,status,call);
+	}
+
+	if(status==1){
+		remove(jid);
+		return;
 	}
 	if(status>=5)
 		(*iter)[buddyColumns.icon] = Gdk::Pixbuf::create_from_file("./image/online.png", 16, 16);
