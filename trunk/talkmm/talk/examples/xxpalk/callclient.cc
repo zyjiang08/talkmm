@@ -484,17 +484,10 @@ void CallClient::InitPhone(/*cricket::SessionManager* s*/) {
   worker_thread_ = new talk_base::Thread();
 
   port_allocator_ = new cricket::HttpPortAllocator(&network_manager_, "pcp");
-
-  session_manager_ = new cricket::SessionManager(
-      port_allocator_, worker_thread_);
-
-  session_manager_->SignalRequestSignaling.connect(
-      this, &CallClient::OnRequestSignaling);
+  session_manager_ = new cricket::SessionManager(port_allocator_, worker_thread_);
+  session_manager_->SignalRequestSignaling.connect(this, &CallClient::OnRequestSignaling);
   session_manager_->OnSignalingReady();
-
-
-  session_manager_task_ =
-      new cricket::SessionManagerTask(xmpp_client_, session_manager_);
+  session_manager_task_ = new cricket::SessionManagerTask(xmpp_client_, session_manager_);
   session_manager_task_->EnableOutgoingMessages();
   session_manager_task_->Start();
 
@@ -504,8 +497,7 @@ void CallClient::InitPhone(/*cricket::SessionManager* s*/) {
   jit->SignalJingleInfo.connect(_current_sending_fileclient, &FileShareClient::OnJingleInfo);
   jit->Start();
 	  
-  phone_client_ = new cricket::PhoneSessionClient(
-      xmpp_client_->jid(),session_manager_);
+  phone_client_ = new cricket::PhoneSessionClient(xmpp_client_->jid(),session_manager_);
   phone_client_->SignalCallCreate.connect(this, &CallClient::OnCallCreate);
 
 //  const std::string type("http://www.google.com/session/phone");
@@ -584,9 +576,7 @@ void CallClient::OnSessionState(cricket::Call* call,
     console_->Print("other side hung up");
     console_->Send("otherhangup###\n");
   }
- }
-
-
+}
 
 void CallClient::OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte){
 	std::string str;

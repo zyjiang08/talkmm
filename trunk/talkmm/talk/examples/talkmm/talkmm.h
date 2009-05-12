@@ -61,6 +61,7 @@ class Talkmm : public sigslot::has_slots<> {
 		//void SendFile(const std::string& to, const std::string& file);
 		void SendFile(const buzz::Jid& to, const std::string& file);
 		void AnswerFile(bool accept=true);
+		void SendCall(const std::string&name);
 		void AnswerCall(bool accept=true);
 	private:
 		typedef std::map<std::string,RosterItem> RosterMap;
@@ -79,17 +80,6 @@ class Talkmm : public sigslot::has_slots<> {
 		buzz::PresencePushTask* m_presence_push;
 		buzz::ChatClient* m_chatclient;
 		MainWindow* main_window;
-
-
-
-
-
-
-
-
-
-
-
 };
 
 

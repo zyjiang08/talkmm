@@ -323,15 +323,15 @@ void MainWindow::on_receive_message(const std::string& from,const std::string& m
 
 MsgWindow* MainWindow::open_session(const std::string& from)
 {
-	MsgWindow* msg_window=NULL;
+	MsgWindow* msg_window = NULL;
 	Session::iterator iter = m_session->find(from);
 
 	if(iter != m_session->end()){
 		msg_window = iter->second;
 	}
 	else{
-		msg_window =new MsgWindow(this,from);
-		(*m_session)[from]=msg_window;
+		msg_window =new MsgWindow(this, from);
+		(*m_session)[from] = msg_window;
 	}
 
 	msg_window->show();
@@ -352,6 +352,11 @@ void MainWindow::close_session(const std::string& from)
 void MainWindow::on_send_message(const std::string& to,const std::string& message)
 {
 	m_parent->SendTexte(to,message);
+}
+
+void MainWindow::send_call_to(const std::string& to)
+{
+	m_parent->SendCall(to);
 }
 
 void MainWindow::on_incoming_call(const std::string& from)

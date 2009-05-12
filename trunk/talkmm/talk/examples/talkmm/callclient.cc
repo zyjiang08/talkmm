@@ -19,6 +19,7 @@
  */
 
 #include <string>
+#include <iostream>
 #include <vector>
 
 #include "talk/xmpp/constants.h"
@@ -395,7 +396,7 @@ void CallClient::OnFileReceived(const std::string& from, const std::string& file
    str += "' to you...";
    console_->Print(str);
    incoming_file_ = true;
-   console_->OnFileRecu(from,file);
+   console_->OnFileRecu(from, file);
     
 }
 
@@ -711,9 +712,10 @@ void CallClient::SendTexte(const std::string& name, const std::string& texte)
 void CallClient::MakeCallTo(const std::string& name) {
 
   buzz::Jid callto_jid = buzz::Jid(name);
-	/*
+  std::cout << "Callclient::MakeCallTo " << name << std::endl;
+
   bool found = false;
-  buzz::Jid found_jid;
+  /*buzz::Jid found_jid;
   buzz::Jid callto_jid = buzz::Jid(name);
   RosterMap::iterator iter = roster_->begin();
   while (iter != roster_->end()) {
@@ -724,24 +726,27 @@ void CallClient::MakeCallTo(const std::string& name) {
     }
     ++iter;
   }
+  */
 
+  //if (found) {
+    //console_->Printf("Found online friend '%s'", callto_jid.Str().c_str());
+    phone_client()->SignalCallDestroy.connect(this, &CallClient::OnCallDestroy);
 
-  if (found) {
-    console_->Printf("Found online friend '%s'", found_jid.Str().c_str());
-    phone_client()->SignalCallDestroy.connect(
-        this, &CallClient::OnCallDestroy);
     if (!call_) {
       call_ = phone_client()->CreateCall();
-	  console_->SetPrompt(found_jid.Str().c_str());
+      //console_->SetPrompt(callto_jid.Str().c_str());
       call_->SignalSessionState.connect(this, &CallClient::OnSessionState);
-      session_ = call_->InitiateSession(found_jid, NULL);
+      session_ = call_->InitiateSession(callto_jid, NULL);
     }
+
     phone_client()->SetFocus(call_);
+    /*
   } else {
     console_->Printf("Could not find online friend '%s'", name.c_str());
     console_->Send("callnotanswered###\n");
   } 
   */
+  
 }
 
 
@@ -750,12 +755,12 @@ void CallClient::OnAnswerCall(bool accept)
 
     if (call_ && incoming_call_) {
 	if(accept){
-		      console_->Send("accept call\n");
-		      assert(call_->sessions().size() == 1);
-		      call_->AcceptSession(call_->sessions()[0]);
-		      phone_client()->SetFocus(call_);
-		      incoming_call_ = false;
-	    }
+	      console_->Send("accept call\n");
+	      assert(call_->sessions().size() == 1);
+	      call_->AcceptSession(call_->sessions()[0]);
+	      phone_client()->SetFocus(call_);
+	      incoming_call_ = false;
+	}
 	else{
 		call_->RejectSession(call_->sessions()[0]);
 		incoming_call_ = false;
@@ -767,12 +772,10 @@ void CallClient::OnAnswerFile(bool accept)
 {
     if(incoming_file_){
 	if(accept)
-		      _current_sending_fileclient->acceptFile();
+	      _current_sending_fileclient->acceptFile();
 	else{
-		      _current_sending_fileclient->Cancel();
-		      incoming_file_=false;
+	      _current_sending_fileclient->Cancel();
+	      incoming_file_=false;
 	}
-	
     }
-
 }

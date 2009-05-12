@@ -46,7 +46,8 @@ class MsgWindow: public Gtk::Window
 		Gtk::Entry*				entry_send;
 		Gtk::TextView*				textview_msg;
 		Gtk::Button*				button_call;
-		Gtk::VBox*				vbox_file;
+		//Gtk::VBox*				vbox_file;
+		Gtk::Frame*				progress_frame;
 
 
 };

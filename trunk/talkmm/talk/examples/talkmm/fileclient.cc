@@ -22,22 +22,26 @@
 #include <stdio.h>
 
 
-  FileShareClient::FileShareClient(buzz::XmppClient *xmppclient, const buzz::Jid &send_to, cricket::FileShareManifest *manifest, std::string root_dir) :
-    xmpp_client_(xmppclient),
-    root_dir_(root_dir),
-    send_to_jid_(send_to),
-    waiting_for_file_(send_to == buzz::JID_EMPTY),  
-    manifest_(manifest) {
+FileShareClient::FileShareClient(buzz::XmppClient *xmppclient, 
+				 const buzz::Jid &send_to, 
+				 cricket::FileShareManifest *manifest, 
+				 std::string root_dir) :
+    				 xmpp_client_(xmppclient),
+    				 root_dir_(root_dir),
+    				 send_to_jid_(send_to),
+    				 waiting_for_file_(send_to == buzz::JID_EMPTY),  
+    				 manifest_(manifest) 
+{
       
-  }
+}
 
-  bool FileShareClient::isFileSender()
-  {
+bool FileShareClient::isFileSender()
+{
     return session_->is_sender();
-  }
+}
 
-  void FileShareClient::SendFile(/*const std::string& to,*/ /*const std::string& file*/)
-  {
+void FileShareClient::SendFile(/*const std::string& to,*/ /*const std::string& file*/)
+{
  //   buzz::Jid sendto_jid = buzz::Jid(to);
 //    OnSignon();
     cricket::FileShareSession* share = file_share_session_client_->CreateFileShareSession();
@@ -46,19 +50,19 @@
 //    std::cout<<"after share"<<std::endl;
   }
 
-  void FileShareClient::acceptFile()
-  {
-    	session_->Accept();
+void FileShareClient::acceptFile()
+{
+	session_->Accept();
 //	waiting_for_file_ = false;
-  }
+}
 
-  void FileShareClient::Cancel()
-  {
-    session_->Cancel();
-  }
+void FileShareClient::Cancel()
+{
+	session_->Cancel();
+}
 
-  void FileShareClient::OnStateChange(buzz::XmppEngine::State state) {
-
+void FileShareClient::OnStateChange(buzz::XmppEngine::State state) 
+{
 //    std::cout << "on state changed "<<std::endl;
     switch (state) {
     case buzz::XmppEngine::STATE_START:
@@ -79,16 +83,18 @@
     }
   }
 
-  void FileShareClient::OnJingleInfo(const std::string & relay_token,
-                    const std::vector<std::string> &relay_addresses,
-                    const std::vector<talk_base::SocketAddress> &stun_addresses) {
+void FileShareClient::OnJingleInfo(const std::string & relay_token,
+                    		   const std::vector<std::string> &relay_addresses,
+                    		   const std::vector<talk_base::SocketAddress> &stun_addresses) 
+{
     port_allocator_->SetStunHosts(stun_addresses);
     port_allocator_->SetRelayHosts(relay_addresses);
     port_allocator_->SetRelayToken(relay_token);
-  }
+}
 							
   
-  void FileShareClient::OnStatusUpdate(const buzz::Status &status) {
+void FileShareClient::OnStatusUpdate(const buzz::Status &status) 
+{
     if (status.available() && status.fileshare_capability()) {
 
       // A contact's status has changed. If the person we're looking for is online and able to receive
@@ -100,18 +106,19 @@
 //	std::cout<<"shared..."<<std::endl;
 //	send_to_jid_ = buzz::Jid("");
       }
-      
     }
-  }
+}
   
-  void FileShareClient::OnMessage(talk_base::Message *m) {
+void FileShareClient::OnMessage(talk_base::Message *m) 
+{
     ASSERT(m->message_id == MSG_STOP);
     talk_base::Thread *thread = talk_base::ThreadManager::CurrentThread();
     delete session_;
     thread->Stop();
-  }
+}
 
-  std::string FileShareClient::filesize_to_string(unsigned int size) {
+std::string FileShareClient::filesize_to_string(unsigned int size) 
+{
     double size_display;
     std::string format;
     std::stringstream ret;

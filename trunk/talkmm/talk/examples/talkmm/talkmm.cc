@@ -42,7 +42,7 @@ Talkmm::Talkmm():m_roster(new RosterMap)
 	main_window = new MainWindow(this);
 	main_window->signal_on_login(this, &Talkmm::OnLogin);
 
-	int port=0;
+	int port = 0;
 	m_console = new Console(main_thread, m_callclient,main_window);
 	m_callclient->SetConsole(m_console);
 	console_thread = new talk_base::Thread(&m_ss);
@@ -218,11 +218,9 @@ void Talkmm::OnStatusUpdate(const buzz::Status& status)
 
 void Talkmm::InitPresence() 
 {
-  
   buzz::XmppClient* xmpp_client_ = m_pump.client();
   m_presence_push = new buzz::PresencePushTask(xmpp_client_);
-  m_presence_push->SignalStatusUpdate.connect(
-    this, &Talkmm::OnStatusUpdate);
+  m_presence_push->SignalStatusUpdate.connect(this, &Talkmm::OnStatusUpdate);
   //m_presence_push->SignalStatusUpdate.connect(
   //  _current_sending_fileclient, &FileShareClient::OnStatusUpdate);
   m_presence_push->Start();
@@ -238,8 +236,7 @@ void Talkmm::InitPresence()
   my_status.set_is_google_client(true);
   my_status.set_version("1.0.0.66");
 
-  buzz::PresenceOutTask* presence_out_ =
-      new buzz::PresenceOutTask(xmpp_client_);
+  buzz::PresenceOutTask* presence_out_ = new buzz::PresenceOutTask(xmpp_client_);
   presence_out_->Send(my_status);
   presence_out_->Start();
 
@@ -266,19 +263,21 @@ void Talkmm::OnTexteRecu(const std::string& iconset, const std::string& from, co
 	message += "\n";
 	this->m_console->Print(message);
 	m_console->RecuMessage(from,texte);
-	
-
 }
 
 void Talkmm::SendTexte(const std::string& name, const std::string& texte)
 {
     m_chatclient->envoyerTexte(name, texte);
-
 }
 
 void Talkmm::AnswerFile(bool accept)
 {
 	m_callclient->OnAnswerFile(accept);
+}
+
+void Talkmm::SendCall(const std::string& name)
+{
+	m_callclient->MakeCallTo(name);
 }
 
 void Talkmm::AnswerCall(bool accept)
