@@ -177,16 +177,17 @@
       if (session_->is_sender()) {
         std::cout << "Offering " << manifest_description.str()  << " to " << send_to_jid_.Str() << std::endl;
       } else/* if (waiting_for_file_) */{
-	std::cout << "Receiving " << manifest_description.str() << " from " << session_->jid().BareJid().Str() << std::endl;
+	std::cout << "Receiving " << manifest_description.str() << " from " << session_->jid().Str() << std::endl;
 	
 	std::string message = "incomingfile###";
 	message += session_->jid().Str();
 	message +="###";
 	message += manifest_description.str();
 	message += "\n";
-	console_->Send(message);
+	console_->Print(message);
 
-	SignalFileReceived(session_->jid().BareJid().Str(), manifest_description.str(), "");
+	//SignalFileReceived(session_->jid().BareJid().Str(), manifest_description.str(), "");
+	SignalFileReceived(session_->jid().Str(), manifest_description.str(), "");
 // 	session_->Accept();
  	waiting_for_file_ = false;
 	
@@ -221,13 +222,13 @@
     case cricket::FS_TRANSFER:
 //      std::cout << "File transfer started." << std::endl;
       this->SignalFileTransferStatue(type, "started", "");
-      console_->Send("filetransferstarted###\n");
+      console_->Print("filetransferstarted###\n");
       waiting_for_file_ = false;
       break;
     case cricket::FS_COMPLETE:
 //      thread->Post(this, MSG_STOP);
 //      std::cout << std::endl << "File transfer completed." << std::endl;
-      console_->Send("filetransfercompleted###\n");
+      console_->Print("filetransfercompleted###\n");
       waiting_for_file_ = true;
       this->SignalFileTransferStatue(type, "completed", "");
 //      delete this->manifest_;
@@ -238,9 +239,10 @@
       **/
       break;
     case cricket::FS_LOCAL_CANCEL:
+      console_->Print("file local cancel ..............###\n");
     case cricket::FS_REMOTE_CANCEL:
       //std::cout << std::endl << "File transfer cancelled." << std::endl;
-      console_->Send("filetransferfailed###\n");
+      console_->Print("filetransferfailed###\n");
       waiting_for_file_ = true;
       this->SignalFileTransferStatue(type, "canceled", "");
       
@@ -248,7 +250,7 @@
       break;
     case cricket::FS_FAILURE:
       //std::cout << std::endl << "File transfer failed." << std::endl;
-      console_->Send("filetransferfailed###\n");
+      console_->Print("filetransferfailed###\n");
       waiting_for_file_ = true;
       this->SignalFileTransferStatue(type, "failed", "");
 //      thread->Post(this, MSG_STOP);
@@ -278,7 +280,7 @@
       std::string message= "progress###";
       message += buffer;
       message += "\n";
-      console_->Send(message);
+      console_->Print(message);
       unsigned int progressbar_width = (width * 4) / 5;
       
       const char *filename = itemname.c_str();

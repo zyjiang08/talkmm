@@ -390,7 +390,7 @@ void CallClient::OnFileReceived(const std::string& from, const std::string& file
 {
    std::string str;
    str += from;
-   str += " want to send file '";
+   str += " want to send file ";
    str += file;
    str += "' to you...";
    console_->Print(str);
@@ -520,6 +520,7 @@ void CallClient::InitPhone(/*cricket::SessionManager* s*/) {
 //  _current_sending_fileclient->OnSignon(port_allocator_, session_manager_, jit);
 //  _current_waiting_fileclient->OnSignon(port_allocator_, session_manager_, jit);
 
+  _current_sending_fileclient->OnSignon(port_allocator_, session_manager_, NULL, session_manager_task_);
   worker_thread_->Start();
 }
 
@@ -552,7 +553,7 @@ void CallClient::InitPresence() {
 
   //_chatclient = new buzz::ChatClient(this->xmpp_client_);
   //_chatclient->SignalTexteRecu.connect(this, &CallClient::OnTexteRecu);
-  _current_sending_fileclient->OnSignon(port_allocator_, session_manager_, NULL, session_manager_task_);
+  //_current_sending_fileclient->OnSignon(port_allocator_, session_manager_, NULL, session_manager_task_);
 }
 
 
