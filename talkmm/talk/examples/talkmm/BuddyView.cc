@@ -102,6 +102,7 @@ void BuddyView::refreshBuddyStatus(const std::string & jid,const std::string& na
 
 	if(iter == children.end()){
 		add(jid,name,status,call);
+		return;
 	}
 
 	if(status==1){

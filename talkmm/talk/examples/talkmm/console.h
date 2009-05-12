@@ -33,6 +33,7 @@ class MainWindow;
 enum {
 	MSG_START,
 	MSG_INPUT,
+	MSG_CALL,
 };
 
 class Console:public talk_base::MessageHandler {
@@ -65,6 +66,7 @@ class Console:public talk_base::MessageHandler {
 	void OnFileRecu(const std::string& from, const std::string& file);
 	void SendCallTo(const std::string& to);
 	void OnIncomingCall(const std::string& from);
+	void MakeCallTo(const std::string& to);
 
       private:
 	CallClient * client_;
