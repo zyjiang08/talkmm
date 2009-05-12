@@ -145,7 +145,7 @@ void MsgWindow::on_send_file()
 void MsgWindow::on_button_call()
 {
 	m_parent->send_call_to(m_jid);
-	cout << "call someone" << endl;
+	cout << "call " <<m_jid<<std::endl;
 }
 void MsgWindow::file_tranfer_start()
 {

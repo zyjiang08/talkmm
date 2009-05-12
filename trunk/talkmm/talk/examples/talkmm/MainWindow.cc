@@ -356,7 +356,11 @@ void MainWindow::on_send_message(const std::string& to,const std::string& messag
 
 void MainWindow::send_call_to(const std::string& to)
 {
-	m_parent->SendCall(to);
+	const RosterItem& item = m_parent->GetRoster(to);
+	if(item.phone_cap)
+		m_parent->SendCall(to);
+	else
+		std::cout<<to<<" does not support call  with jingle"<<std::endl;
 }
 
 void MainWindow::on_incoming_call(const std::string& from)

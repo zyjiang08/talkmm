@@ -246,7 +246,7 @@ std::string FileShareClient::filesize_to_string(unsigned int size)
       **/
       break;
     case cricket::FS_LOCAL_CANCEL:
-      console_->Print("file local cancel ..............###\n");
+      console_->Print("local-cancel###\n");
     case cricket::FS_REMOTE_CANCEL:
       //std::cout << std::endl << "File transfer cancelled." << std::endl;
       console_->Print("filetransferfailed###\n");

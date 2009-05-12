@@ -42,7 +42,6 @@ Talkmm::Talkmm():m_roster(new RosterMap)
 	main_window = new MainWindow(this);
 	main_window->signal_on_login(this, &Talkmm::OnLogin);
 
-	int port = 0;
 	m_console = new Console(main_thread, m_callclient,main_window);
 	m_callclient->SetConsole(m_console);
 	console_thread = new talk_base::Thread(&m_ss);
@@ -80,7 +79,7 @@ bool Talkmm::OnLogin(const std::string& f_username,const std::string& f_pass)
 	m_xcs.set_server(talk_base::SocketAddress("talk.google.com", 5222));
 	printf("Logging in as %s\n", m_jid.Str().c_str());
 	console_thread->Start();
-	console_thread->Post(m_console, MSG_START);
+	//console_thread->Post(m_console, MSG_START);
 	m_pump.DoLogin(m_xcs, new XmppSocket(true), NULL);
 	main_thread->Start();
 	//main_thread->Run();
@@ -104,7 +103,7 @@ void Talkmm::OnStateChange(buzz::XmppEngine::State state) {
     m_console->Send("loggedin\n");
     m_callclient->InitPhone();
     this->InitPresence();
-    m_callclient->InitPresence();
+    //m_callclient->InitPresence();
     m_console->OnSignOn();
     break;
 
@@ -143,6 +142,7 @@ const RosterItem& Talkmm::GetRoster(const std::string& f_jid)
     if (iter != m_roster->end()){
 	return (*iter).second;
     }
+    //return buzz::JID_EMPTY;
 
 }
 void Talkmm::OnStatusUpdate(const buzz::Status& status)
@@ -277,7 +277,8 @@ void Talkmm::AnswerFile(bool accept)
 
 void Talkmm::SendCall(const std::string& name)
 {
-	m_callclient->MakeCallTo(name);
+	main_thread->Post(m_console,MSG_CALL, 
+			new talk_base::TypedMessageData<std::string>(name));
 }
 
 void Talkmm::AnswerCall(bool accept)

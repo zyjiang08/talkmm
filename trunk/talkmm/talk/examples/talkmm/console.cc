@@ -84,15 +84,18 @@ void Console::Close()
 
 void Console::OnMessage(talk_base::Message * msg)
 {
+		talk_base::TypedMessageData < std::string > *data =
+		    static_cast < talk_base::TypedMessageData <
+		    std::string > *>(msg->pdata);
 	switch (msg->message_id) {
 	case MSG_START:
 		StartConsole();
 		break;
 	case MSG_INPUT:
-		talk_base::TypedMessageData < std::string > *data =
-		    static_cast < talk_base::TypedMessageData <
-		    std::string > *>(msg->pdata);
 		client_->ParseLine(data->data());
+		break;
+	case MSG_CALL:
+		client_->MakeCallTo(data->data());
 		break;
 	}
 }
@@ -160,4 +163,10 @@ void Console::RecuMessage(const std::string& from,const std::string& message)
 	LockMutex locked;
 	main_window->on_receive_message(from,message);
 
+}
+
+void Console::MakeCallTo(const std::string& name)
+{
+	client_->MakeCallTo(name);
+	return;
 }
