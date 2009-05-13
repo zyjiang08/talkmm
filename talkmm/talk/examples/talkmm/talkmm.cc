@@ -79,7 +79,7 @@ bool Talkmm::OnLogin(const std::string& f_username,const std::string& f_pass)
 	m_xcs.set_server(talk_base::SocketAddress("talk.google.com", 5222));
 	printf("Logging in as %s\n", m_jid.Str().c_str());
 	console_thread->Start();
-	//console_thread->Post(m_console, MSG_START);
+	console_thread->Post(m_console, MSG_START);
 	m_pump.DoLogin(m_xcs, new XmppSocket(true), NULL);
 	main_thread->Start();
 	//main_thread->Run();
