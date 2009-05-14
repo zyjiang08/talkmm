@@ -59,8 +59,11 @@ class Talkmm : public sigslot::has_slots<> {
 		void OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte);
 		void SendTexte(const std::string& to, const std::string& texte);
 		//void SendFile(const std::string& to, const std::string& file);
+		//void CancelSendFile(const buzz::Jid&, const std::string&);
+		void CancelSendFile(const buzz::Jid&);
 		void SendFile(const buzz::Jid& to, const std::string& file);
 		void AnswerFile(bool accept=true);
+		void CancelCall(const std::string& name);
 		void SendCall(const std::string&name);
 		void AnswerCall(bool accept=true);
 	private:

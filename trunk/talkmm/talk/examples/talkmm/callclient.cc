@@ -279,6 +279,14 @@ CallClient::~CallClient() {
 
 }
 
+void CallClient::CancelSendFile(const buzz::Jid& found_jid)
+{
+	std::cout << "CancelSendFile is called" << std::endl;
+	//session_->Cancel();
+	_current_sending_fileclient->Cancel();
+	session_ = NULL;
+}
+
 //void CallClient::SendFile(const std::string& to, const std::string& file)
 void CallClient::SendFile(const buzz::Jid& found_jid, const std::string& file)
 {
@@ -301,10 +309,10 @@ void CallClient::SendFile(const buzz::Jid& found_jid, const std::string& file)
       char* str2;
       char* dir;
       char* file_name;
-      str=strdup(file.c_str());
-      str2=strdup(file.c_str());
+      str = strdup(file.c_str());
+      str2 = strdup(file.c_str());
       dir = dirname(str);
-      file_name=basename(str2);
+      file_name = basename(str2);
       std::string s_dir(dir);
       std::string s_file(file_name);
       //std::cout<<"set root dir = "<<s_dir<<std::endl;
@@ -448,13 +456,21 @@ const std::string CallClient::strerror(buzz::XmppEngine::Error err) {
 }
 
 void CallClient::OnCallDestroy(cricket::Call* call) {
-//  if (call == call_) {
+  if (call == call_) {
+	call_->Terminate();
+	call_ = NULL;
+        session_ = NULL;
+    	console_->Print("call destroyed");
+  }
+
+	/*
 	console_->SetPrompt(NULL);
-    console_->Print("call destroyed");
-    console_->Send("otherhangup###\n");
-    call_ = NULL;
+    	console_->Print("call destroyed");
+    	console_->Send("otherhangup###\n");
+    	call_ = NULL;
 	session_ = NULL;
 //  }
+	*/
 }
 
 void CallClient::OnJingleInfo(const std::string &relay_token,
@@ -727,15 +743,29 @@ void CallClient::SendTexte(const std::string& name, const std::string& texte)
 #endif
 }
 
-void CallClient::MakeCallTo(const std::string& name) {
+void CallClient::CancelCallTo(const std::string& name) 
+{
+  buzz::Jid callto_jid = buzz::Jid(name);
+  std::cout << "Cancel CallClient::CancelCallTo " << name << std::endl;
 
-	//talk_base::ThreadManager::SetCurrent(worker_thread_);
+  if ( call_) {
+	  console_->Printf("Found online friend '%s'", callto_jid.Str().c_str());
+	  //phone_client()->SignalCallDestroy.connect(this, &CallClient::OnCallDestroy);
+    	  phone_client()->SetFocus(call_);
+	  OnCallDestroy(call_);
+  } 
+  else {
+	  console_->Send("not found the calling person\n");
+  } 
+}
+
+void CallClient::MakeCallTo(const std::string& name) 
+{
   buzz::Jid callto_jid = buzz::Jid(name);
   std::cout << "Callclient::MakeCallTo " << name << std::endl;
 
+  /*
   bool found = false;
-  /*buzz::Jid found_jid;
-  buzz::Jid callto_jid = buzz::Jid(name);
   RosterMap::iterator iter = roster_->begin();
   while (iter != roster_->end()) {
     if (iter->second.jid.BareEquals(callto_jid)) {
@@ -748,24 +778,20 @@ void CallClient::MakeCallTo(const std::string& name) {
   */
 
   //if (found) {
-    //console_->Printf("Found online friend '%s'", callto_jid.Str().c_str());
+    console_->Printf("Found online friend '%s'", callto_jid.Str().c_str());
     phone_client()->SignalCallDestroy.connect(this, &CallClient::OnCallDestroy);
 
     if (!call_) {
       call_ = phone_client()->CreateCall();
-      //console_->SetPrompt(callto_jid.Str().c_str());
       call_->SignalSessionState.connect(this, &CallClient::OnSessionState);
       session_ = call_->InitiateSession(callto_jid, NULL);
     }
 
     phone_client()->SetFocus(call_);
-    /*
-  } else {
-    console_->Printf("Could not find online friend '%s'", name.c_str());
-    console_->Send("callnotanswered###\n");
-  } 
-  */
-  
+  //} else {
+  //  console_->Printf("Could not find online friend '%s'", name.c_str());
+  //  console_->Send("callnotanswered###\n");
+  //} 
 }
 
 

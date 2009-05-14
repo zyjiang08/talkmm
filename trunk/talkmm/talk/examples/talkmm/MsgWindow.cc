@@ -145,10 +145,11 @@ void MsgWindow::on_button_send_file()
                         return ;
         }
 
-
 	hbox_cancel->show();
+	button_send_file->show();
+	button_cancel_send_file->show();
 	button_cancel_call->hide();
-	m_parent->on_send_file(m_jid,filename);
+	m_parent->on_send_file(m_jid, filename);
 }
 
 void MsgWindow::on_button_cancel_send_file()
@@ -156,11 +157,14 @@ void MsgWindow::on_button_cancel_send_file()
 	//m_parent->on_cancel_send_file(m_jid);
 	cout << "on_button_cancel_send_file" << endl;
 	hbox_cancel->hide();
+	m_parent->on_cancel_send_file(m_jid);
 }
 
 void MsgWindow::on_button_call()
 {
 	hbox_cancel->show();
+	button_call->show();
+	button_send_file->show();
 	button_cancel_send_file->hide();
 	m_parent->send_call_to(m_jid);
 }
@@ -176,8 +180,10 @@ void MsgWindow::file_tranfer_start()
 	progress_frame->show();
 }
 
+/*
 void MsgWindow::file_tranfer_end()
 {
 	hbox_cancel->hide();
 	progress_frame->hide();
 }
+*/

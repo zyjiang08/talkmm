@@ -63,7 +63,7 @@ class MainWindow : public Gtk::Window {
 		void on_incoming_call(const std::string& from);
 
 		void on_send_file(const std::string& to,const std::string& filename);
-		void on_cancel_send_file(const std::string& to,const std::string& filename);
+		void on_cancel_send_file(const std::string& to);
 
 		void on_init();
 		void on_quit();
