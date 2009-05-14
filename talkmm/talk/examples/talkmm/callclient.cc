@@ -21,6 +21,8 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <cstring>
+#include <libgen.h>
 
 #include "talk/xmpp/constants.h"
 #include "talk/base/helpers.h"
@@ -295,8 +297,24 @@ void CallClient::SendFile(const buzz::Jid& found_jid, const std::string& file)
       manifest->AddFolder(file, get_dir_size(file.c_str()));
     } else {
       size_t size = 0;
+      char* str;
+      char* str2;
+      char* dir;
+      char* file_name;
+      str=strdup(file.c_str());
+      str2=strdup(file.c_str());
+      dir = dirname(str);
+      file_name=basename(str2);
+      std::string s_dir(dir);
+      std::string s_file(file_name);
+      //std::cout<<"set root dir = "<<s_dir<<std::endl;
+      //std::cout<<"set file = "<<s_file<<std::endl;
+      _current_sending_fileclient->setRootDir(s_dir);
+      free(str);
+      free(str2);
       talk_base::Filesystem::GetFileSize(file, &size);
-      manifest->AddFile(file, size);
+      //manifest->AddFile(file, size);
+      manifest->AddFile(s_file, size);
     }//else
 
     _current_sending_fileclient->setManifest(manifest);
@@ -711,6 +729,7 @@ void CallClient::SendTexte(const std::string& name, const std::string& texte)
 
 void CallClient::MakeCallTo(const std::string& name) {
 
+	//talk_base::ThreadManager::SetCurrent(worker_thread_);
   buzz::Jid callto_jid = buzz::Jid(name);
   std::cout << "Callclient::MakeCallTo " << name << std::endl;
 
