@@ -33,8 +33,10 @@ class MsgWindow: public Gtk::Window
 		~MsgWindow();
 		void show_message(const std::string& msg);
 		void send_message();
-		void on_send_file();
+		void on_button_send_file();
+		void on_button_cancel_send_file();
 		void on_button_call();
+		void on_button_cancel_call();
 		void file_tranfer_start();
 		void file_tranfer_end();
 	protected:
@@ -45,7 +47,11 @@ class MsgWindow: public Gtk::Window
 		GlademmXML				msg_xml;
 		Gtk::Entry*				entry_send;
 		Gtk::TextView*				textview_msg;
+		Gtk::HBox* 				hbox_cancel;
 		Gtk::Button*				button_call;
+		Gtk::Button* 				button_send_file;
+		Gtk::Button* 				button_cancel_send_file;
+		Gtk::Button* 				button_cancel_call;
 		//Gtk::VBox*				vbox_file;
 		Gtk::Frame*				progress_frame;
 

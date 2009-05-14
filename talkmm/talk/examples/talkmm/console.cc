@@ -162,7 +162,6 @@ void Console::RecuMessage(const std::string& from,const std::string& message)
 {
 	LockMutex locked;
 	main_window->on_receive_message(from,message);
-
 }
 
 void Console::MakeCallTo(const std::string& name)
