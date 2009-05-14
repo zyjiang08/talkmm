@@ -115,12 +115,14 @@ private:
 public:
   void InitPhone();
   void OnRequestSignaling();
+  void CancelCallTo(const std::string& name);
   void OnCallCreate(cricket::Call* call);
   void OnCallDestroy(cricket::Call* call);
   const std::string strerror(buzz::XmppEngine::Error err);
   void OnSessionState(cricket::Call* call, cricket::Session* session, cricket::Session::State state);
   void OnAnswerFile(bool accept);
   void OnAnswerCall(bool accept);
+  void CancelSendFile(const buzz::Jid& found_jid);
   void SendFile(const buzz::Jid& name, const std::string& texte);
   //void SendFile(const std::string& name, const std::string& texte);
 

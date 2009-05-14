@@ -152,6 +152,13 @@ void Console::SendCallTo(const std::string& to)
 	main_window->send_call_to(to);
 }
 
+void Console::CancelCallTo(const std::string& to)
+{
+	LockMutex locked;
+	main_window->on_cancel_call(to);
+}
+
+
 void Console::OnIncomingCall(const std::string& from)
 {
 	LockMutex locked;

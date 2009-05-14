@@ -277,13 +277,22 @@ void Talkmm::AnswerFile(bool accept)
 
 void Talkmm::SendCall(const std::string& name)
 {
-	main_thread->Post(m_console,MSG_CALL, 
-			new talk_base::TypedMessageData<std::string>(name));
+	main_thread->Post(m_console, MSG_CALL, new talk_base::TypedMessageData<std::string>(name));
+}
+
+void Talkmm::CancelCall(const std::string& name)
+{
+	m_callclient->CancelCallTo(name);
 }
 
 void Talkmm::AnswerCall(bool accept)
 {
 	m_callclient->OnAnswerCall(accept);
+}
+
+void Talkmm::CancelSendFile(const buzz::Jid& to)
+{
+	m_callclient->CancelSendFile(to);
 }
 
 //void Talkmm::SendFile(const std::string& to,const std::string& filename)

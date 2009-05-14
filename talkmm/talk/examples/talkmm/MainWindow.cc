@@ -365,12 +365,10 @@ void MainWindow::send_call_to(const std::string& to)
 
 void MainWindow::on_cancel_call(const std::string& to)
 {
-	/*
 	const RosterItem& item = m_parent->GetRoster(to);
 	if(item.phone_cap)
-		m_parent->SendCall(to);
+		m_parent->CancelCall(to);
 	else
-	*/
 		std::cout<<to<<"on cancel call"<<std::endl;
 }
 
@@ -399,6 +397,15 @@ void MainWindow::on_incoming_call(const std::string& from)
                 }
 	}
 
+}
+
+void MainWindow::on_cancel_send_file(const std::string& to)
+{
+	const RosterItem& item = m_parent->GetRoster(to);
+	if(item.file_cap)
+		m_parent->CancelSendFile(item.jid);
+	else
+		std::cout<<to<<" does not support file translate with jingle"<<std::endl;
 }
 
 void MainWindow::on_send_file(   const std::string& to,  const std::string& filename)
