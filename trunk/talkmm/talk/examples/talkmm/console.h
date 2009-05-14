@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include "talk/base/thread.h"
 #include "talk/base/messagequeue.h"
+#include "talk/login/status.h"
 
 
 class CallClient;
@@ -43,7 +44,7 @@ class Console:public talk_base::MessageHandler {
 	virtual void OnMessage(talk_base::Message * msg);
 	void SetPrompt(const char *prompt) {
 		prompt_ =
-		    prompt ? std::string(prompt) : std::string("xxpalk");
+		    prompt ? std::string(prompt) : std::string("talkmm");
 	} void SetPrompting(bool prompting) {
 		prompting_ = prompting;
 		if (prompting)
@@ -61,14 +62,24 @@ class Console:public talk_base::MessageHandler {
 	void Print(const std::string & str);
 	void Printf(const char *format, ...);
 	void OnSignOn();
-	void RosterPresence(const std::string& jid);
-	void RecuMessage(const std::string& from,const std::string& message);
-	void OnFileRecu(const std::string& from, const std::string& file);
-	void SendCallTo(const std::string& to);
-	void CancelCallTo(const std::string&);
-	void OnIncomingCall(const std::string& from);
-	void MakeCallTo(const std::string& to);
+	//void RosterPresence(const std::string& jid);
+	void OnRosterPresence(const buzz::Status & status_);
+	void OnRecuMessage(const std::string & from,
+			   const std::string & message);
+	void SendMessage(const std::string & to,
+			 const std::string & message);
+	void OnFileRecu(const std::string & from,
+			const std::string & file);
+	void OnIncomingCall(const std::string & from);
+	void OnHangupCall(const std::string & from);
 
+	void AnswerFile(bool accept = true);
+	void AnswerCall(bool accept = true);
+	void MakeCallTo(const std::string & to);
+	void HangupCall(const std::string & to);
+
+	void SendFile(const std::string & to, const std::string & file);
+	void CancelSendFile(const buzz::Jid & to);
       private:
 	CallClient * client_;
 	MainWindow *main_window;

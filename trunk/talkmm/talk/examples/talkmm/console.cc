@@ -43,7 +43,8 @@ struct LockMutex {
 };
 
 Console::Console(talk_base::Thread * thread, CallClient * client, MainWindow * win):
-client_thread_(thread), client_(client), prompt_(std::string("talkmm")), prompting_(true), main_window(win)
+client_thread_(thread), client_(client), prompt_(std::string("talkmm")),
+prompting_(true), main_window(win)
 {
 
 }
@@ -84,9 +85,9 @@ void Console::Close()
 
 void Console::OnMessage(talk_base::Message * msg)
 {
-		talk_base::TypedMessageData < std::string > *data =
-		    static_cast < talk_base::TypedMessageData <
-		    std::string > *>(msg->pdata);
+	talk_base::TypedMessageData < std::string > *data =
+	    static_cast < talk_base::TypedMessageData <
+	    std::string > *>(msg->pdata);
 	switch (msg->message_id) {
 	case MSG_START:
 		StartConsole();
@@ -134,45 +135,81 @@ void Console::OnSignOn()
 	main_window->on_signon();
 }
 
-void Console::RosterPresence(const std::string& jid)
+void Console::OnRosterPresence(const buzz::Status & status_)
 {
 	LockMutex locked;
-	main_window->on_roster_presence(jid);
+	main_window->on_roster_presence(status_);
 }
 
-void Console::OnFileRecu(const std::string& from, const std::string& file)
+void Console::OnFileRecu(const std::string & from,
+			 const std::string & file)
 {
 	LockMutex locked;
-	main_window->on_file_receive(from,file);
+	main_window->on_file_receive(from, file);
 }
 
-void Console::SendCallTo(const std::string& to)
-{
-	LockMutex locked;
-	main_window->send_call_to(to);
-}
-
+/*
 void Console::CancelCallTo(const std::string& to)
 {
 	LockMutex locked;
 	main_window->on_cancel_call(to);
 }
+*/
 
+void Console::OnHangupCall(const std::string & from)
+{
+	LockMutex locked;
+	main_window->on_hangup_call(from);
+}
 
-void Console::OnIncomingCall(const std::string& from)
+void Console::OnIncomingCall(const std::string & from)
 {
 	LockMutex locked;
 	main_window->on_incoming_call(from);
 }
 
-void Console::RecuMessage(const std::string& from,const std::string& message)
+void Console::OnRecuMessage(const std::string & from,
+			    const std::string & message)
 {
 	LockMutex locked;
-	main_window->on_receive_message(from,message);
+	main_window->on_receive_message(from, message);
 }
 
-void Console::MakeCallTo(const std::string& name)
+void Console::SendMessage(const std::string & to,
+			  const std::string & message)
+{
+	client_->SendTexte(to, message);
+
+}
+
+void Console::MakeCallTo(const std::string & name)
 {
 	client_->MakeCallTo(name);
 	return;
+}
+
+void Console::SendFile(const std::string & to, const std::string & file)
+{
+	client_->SendFile(to, file);
+}
+
+
+void Console::AnswerCall(bool accept)
+{
+	client_->OnAnswerCall(accept);
+}
+
+void Console::AnswerFile(bool accept)
+{
+	client_->OnAnswerFile(accept);
+}
+
+void Console::CancelSendFile(const buzz::Jid & to)
+{
+	client_->CancelSendFile(to);
+}
+
+void Console::HangupCall(const std::string & to)
+{
+	client_->CancelCallTo(to);
 }

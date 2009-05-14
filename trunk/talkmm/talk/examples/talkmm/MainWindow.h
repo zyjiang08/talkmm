@@ -27,6 +27,7 @@
 #include <libglademm/xml.h>
 #include <glib/gi18n.h>
 #include <map>
+#include "talk/login/status.h"
 #include "TrayIcon.h"
 #include "MVC.h"
 #include "./config/rwxml.h"
@@ -38,7 +39,17 @@ typedef Glib::RefPtr <Gnome::Glade::Xml> GlademmXML;
 class Talkmm;
 class BuddyView;
 class MsgWindow;
+class Console;
 
+struct RosterItem {
+  buzz::Jid jid;
+  buzz::Status::Show show;
+  std::string status;
+  bool online;
+  bool file_cap;
+  bool phone_cap;
+    
+};
 
 class MainWindow : public Gtk::Window {
 	public:
@@ -52,14 +63,16 @@ class MainWindow : public Gtk::Window {
 		void close_session(const std::string& from);
 		Gtk::Menu* get_tray_pop_menu() { return tray_pop_menu;}
 		/** finsh login*/
+		const RosterItem& get_roster(const std::string& f_jid);
 		void on_signon();
-		void on_roster_presence(const std::string& jid);
+		//void on_roster_presence(const std::string& jid);
+		void on_roster_presence(const buzz::Status& status_);
 		void on_receive_message(const std::string& from,const std::string& message);
 		void on_send_message(const std::string& to,const std::string& message);
 		void on_file_receive(const std::string& from,const std::string& file);
 
 		void send_call_to(const std::string& to);
-		void on_cancel_call(const std::string& to);
+		void on_hangup_call(const std::string& to);
 		void on_incoming_call(const std::string& from);
 
 		void on_send_file(const std::string& to,const std::string& filename);
@@ -75,6 +88,7 @@ class MainWindow : public Gtk::Window {
 		void on_login_emit();
 		void on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
+		void set_console(Console* f_console){m_console = f_console;};
 
 
 	protected:
@@ -87,9 +101,12 @@ class MainWindow : public Gtk::Window {
 		
 
 	private:
+		typedef std::map<std::string,RosterItem> RosterMap;
 		DealConf dealconf;
 		typedef std::map<std::string,MsgWindow*> Session;
+		RosterMap*				m_roster;
 		Talkmm*					m_parent;
+		Console*				m_console;
 		Gtk::Entry*				entry_account;
 		Gtk::Entry*				entry_passwd;
 		Gtk::Button*				button_ok;

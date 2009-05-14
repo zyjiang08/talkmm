@@ -172,7 +172,7 @@ void MsgWindow::on_button_call()
 void MsgWindow::on_button_cancel_call()
 {
 	hbox_cancel->hide();
-	m_parent->on_cancel_call(m_jid);
+	m_parent->on_hangup_call(m_jid);
 }
 
 void MsgWindow::file_tranfer_start()

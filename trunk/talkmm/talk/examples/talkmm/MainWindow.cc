@@ -22,12 +22,13 @@
 #include "talkmm.h"
 #include "MainWindow.h"
 //#include "ConfWindow.h"
-#include <glib/gi18n.h>
+//#include <glib/gi18n.h>
 #include <stdio.h>
 #include <string.h>
-#include "./config/rwxml.h"
+//#include "./config/rwxml.h"
 #include "BuddyView.h"
 #include "MsgWindow.h"
+#include "console.h"
 
 using namespace std;
 
@@ -107,6 +108,7 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	,tray_icon(NULL)
 	,m_parent(f_parent)
 	,m_session(new Session)
+	,m_roster(new RosterMap)
 {
         main_xml = Gnome::Glade::Xml::create(main_ui, "main_notebook");
         main_notebook = dynamic_cast < Gtk::Notebook * > (main_xml->get_widget("main_notebook"));
@@ -296,17 +298,37 @@ void MainWindow::on_quit()
 	
 }
 
-void MainWindow::on_roster_presence(const std::string& jid)
+const RosterItem& MainWindow::get_roster(const std::string& f_jid)
 {
-	const RosterItem& item = m_parent->GetRoster(jid);
-	std::string name = item.jid.node();
-	int status;
-	if(item.online)
-		status= item.show;
-	else
-		status=1;
+    RosterMap::const_iterator iter = m_roster->find(f_jid);
+    if (iter != m_roster->end()){
+	return (*iter).second;
+    }
+}
 
-	list_view->refreshBuddyStatus(jid,name,status,item.phone_cap);
+//void MainWindow::on_roster_presence(const std::string& jid)
+void MainWindow::on_roster_presence(const buzz::Status& status)
+{
+
+	RosterItem item;
+  	item.jid = status.jid();
+  	item.show = status.show();
+  	item.status = status.status();
+  	item.status = status.status();
+  	item.file_cap = status.fileshare_capability()?1:0;
+  	item.phone_cap = status.phone_capability()?1:0;
+
+
+  	std::string key = item.jid.Str();
+	std::string name = item.jid.node();
+  	(*m_roster)[key] = item;
+	int status_;
+	if(item.online)
+		status_= item.show;
+	else
+		status_=1;
+
+	list_view->refreshBuddyStatus(key,name,status_,item.phone_cap);
 }
 
 void MainWindow::on_receive_message(const std::string& from,const std::string& message)
@@ -351,23 +373,23 @@ void MainWindow::close_session(const std::string& from)
 }
 void MainWindow::on_send_message(const std::string& to,const std::string& message)
 {
-	m_parent->SendTexte(to,message);
+	m_console->SendMessage(to,message);
 }
 
 void MainWindow::send_call_to(const std::string& to)
 {
-	const RosterItem& item = m_parent->GetRoster(to);
+	const RosterItem& item = this->get_roster(to);
 	if(item.phone_cap)
-		m_parent->SendCall(to);
+		m_console->MakeCallTo(to);
 	else
 		std::cout<<to<<" does not support call  with jingle"<<std::endl;
 }
 
-void MainWindow::on_cancel_call(const std::string& to)
+void MainWindow::on_hangup_call(const std::string& to)
 {
-	const RosterItem& item = m_parent->GetRoster(to);
+	const RosterItem& item = this->get_roster(to);
 	if(item.phone_cap)
-		m_parent->CancelCall(to);
+		m_console->HangupCall(to);
 	else
 		std::cout<<to<<"on cancel call"<<std::endl;
 }
@@ -384,15 +406,15 @@ void MainWindow::on_incoming_call(const std::string& from)
         int result = dialog.run();
         switch (result) {
         case (Gtk::RESPONSE_OK): {
-					 m_parent->AnswerCall(true);
+					 m_console->AnswerCall(true);
 					 break;
 				 }
         case (Gtk::RESPONSE_CANCEL): {
-					 m_parent->AnswerCall(false);
+					 m_console->AnswerCall(false);
                         break;
                 }
         default: {
-					 m_parent->AnswerCall(false);
+					 m_console->AnswerCall(false);
                         break;
                 }
 	}
@@ -401,18 +423,18 @@ void MainWindow::on_incoming_call(const std::string& from)
 
 void MainWindow::on_cancel_send_file(const std::string& to)
 {
-	const RosterItem& item = m_parent->GetRoster(to);
+	const RosterItem& item = this->get_roster(to);
 	if(item.file_cap)
-		m_parent->CancelSendFile(item.jid);
+		m_console->CancelSendFile(item.jid);
 	else
 		std::cout<<to<<" does not support file translate with jingle"<<std::endl;
 }
 
 void MainWindow::on_send_file(   const std::string& to,  const std::string& filename)
 {
-	const RosterItem& item = m_parent->GetRoster(to);
+	const RosterItem& item = this->get_roster(to);
 	if(item.file_cap)
-		m_parent->SendFile(item.jid,filename);
+		m_console->SendFile(to,filename);
 	else
 		std::cout<<to<<" does not support file translate with jingle"<<std::endl;
 }
@@ -429,17 +451,17 @@ void MainWindow::on_file_receive(const std::string& from,const std::string& file
         int result = dialog.run();
         switch (result) {
         case (Gtk::RESPONSE_OK): {
-					 m_parent->AnswerFile(true);
+					 m_console->AnswerFile(true);
 					MsgWindow* msg_window = open_session(from);
 					msg_window->file_tranfer_start();
 					 break;
 				 }
         case (Gtk::RESPONSE_CANCEL): {
-					 m_parent->AnswerFile(false);
+					 m_console->AnswerFile(false);
                         break;
                 }
         default: {
-					 m_parent->AnswerFile(false);
+					 m_console->AnswerFile(false);
                         break;
                 }
 	}

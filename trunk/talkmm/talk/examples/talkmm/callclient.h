@@ -34,100 +34,108 @@
 #include "talk/examples/talkmm/fileclient.h"
 
 namespace buzz {
-class PresencePushTask;
-class Status;
+	class PresencePushTask;
+	class Status;
+} namespace talk_base {
+	class Thread;
+	class NetworkManager;
+} namespace cricket {
+	class PortAllocator;
+	class PhoneSessionClient;
+	class Receiver;
+	class Call;
+	class SessionManagerTask;
 }
-
-namespace talk_base {
-class Thread;
-class NetworkManager;
-}
-
-namespace cricket {
-class PortAllocator;
-class PhoneSessionClient;
-class Receiver;
-class Call;
-class SessionManagerTask;
-}
-
-/*
+#if 0
 struct RosterItem {
-  buzz::Jid jid;
-  buzz::Status::Show show;
-  std::string status;
-    
+	buzz::Jid jid;
+	buzz::Status::Show show;
+	std::string status;
+	bool online;
+	bool file_cap;
+	bool phone_cap;
+
 };
-*/
+#endif
 
-class CallClient: public sigslot::has_slots<> {
-public:
-  CallClient(buzz::XmppClient* xmpp_client);
-  ~CallClient();
+class CallClient:public sigslot::has_slots <> {
+      public:
+	CallClient(buzz::XmppClient * xmpp_client);
+	~CallClient();
 
-  cricket::PhoneSessionClient* phone_client() const { return phone_client_; }
+	cricket::PhoneSessionClient * phone_client() const {
+		return phone_client_;
+	}
+	//void PrintRoster();//void PrintOLRoster();
+	    void MakeCallTo(const std::string & name);
+	void SetConsole(Console * console) {
+		console_ = console;
+		_current_sending_fileclient->setConsole(this->console_);
+	} void ParseLine(const std::string & str);
 
-  //void PrintRoster();
-  //void PrintOLRoster();
-  void MakeCallTo(const std::string& name);
-  void SetConsole(Console *console) {console_ = console;
-    _current_sending_fileclient->setConsole(this->console_);
-  }
-  void ParseLine(const std::string &str);
+      private:
+	//typedef std::map<std::string,RosterItem> RosterMap;
 
-private:
-  //typedef std::map<std::string,RosterItem> RosterMap;
+	bool b_first_time_send_file_;
+	Console *console_;
+	buzz::XmppClient * xmpp_client_;
+	buzz::ChatClient * _chatclient;
+	FileShareClient *_current_waiting_fileclient;
+	FileShareClient *_current_sending_fileclient;
+	talk_base::Thread * worker_thread_;
+	talk_base::NetworkManager network_manager_;
+	talk_base::AutoDetectProxy * proxy_detect_;
+	cricket::HttpPortAllocator * port_allocator_;
+	cricket::SessionManager * session_manager_;
+	cricket::SessionManagerTask * session_manager_task_;
+	cricket::PhoneSessionClient * phone_client_;
 
-  bool b_first_time_send_file_;
-  Console *console_;
-  buzz::XmppClient* xmpp_client_;
-  //buzz::ChatClient* _chatclient;
-  FileShareClient* _current_waiting_fileclient;
-  FileShareClient* _current_sending_fileclient;
-  talk_base::Thread* worker_thread_;
-  talk_base::NetworkManager network_manager_;
-  talk_base::AutoDetectProxy *proxy_detect_;
-  cricket::HttpPortAllocator* port_allocator_;
-  cricket::SessionManager* session_manager_;
-  cricket::SessionManagerTask* session_manager_task_;
-  cricket::PhoneSessionClient* phone_client_;
-  
-  cricket::Call* call_; 
-  cricket::Session *session_;
-  bool incoming_call_;
-  bool incoming_file_;
-  bool sending_file_;
+	cricket::Call * call_;
+	cricket::Session * session_;
+	bool incoming_call_;
+	bool incoming_file_;
+	bool sending_file_;
 
-  //buzz::PresencePushTask* presence_push_;
-  //RosterMap* roster_;
-  //RosterMap* file_roster_;
-  //RosterMap* enligne_roster_;
-  //RosterMap* all_roster_;
+	buzz::PresencePushTask * presence_push_;
+	//RosterMap* roster_;
+	//RosterMap* file_roster_;
+	//RosterMap* enligne_roster_;
+	//RosterMap* all_roster_;
 
-  //void OnStateChange(buzz::XmppEngine::State state);
-  //void OnTexteRecu(const std::string& iconset, const std::string& from, const std::string& texte);
-  void SendTexte(const std::string& name, const std::string& texte);
-  void OnFileReceived(const std::string& from, const std::string& file, const std::string& no_use);
-  void OnFileTransferStatue(const std::string& type, const std::string& statue, const std::string& no_use);
-  void OnJingleInfo(const std::string &relay_token, const std::vector<std::string> &relay_hosts, 
-		    const std::vector<talk_base::SocketAddress> &stun_hosts);
-  void OnProxyDetect(talk_base::SignalThread *thread);
-public:
-  void InitPhone();
-  void OnRequestSignaling();
-  void CancelCallTo(const std::string& name);
-  void OnCallCreate(cricket::Call* call);
-  void OnCallDestroy(cricket::Call* call);
-  const std::string strerror(buzz::XmppEngine::Error err);
-  void OnSessionState(cricket::Call* call, cricket::Session* session, cricket::Session::State state);
-  void OnAnswerFile(bool accept);
-  void OnAnswerCall(bool accept);
-  void CancelSendFile(const buzz::Jid& found_jid);
-  void SendFile(const buzz::Jid& name, const std::string& texte);
-  //void SendFile(const std::string& name, const std::string& texte);
+	void OnStateChange(buzz::XmppEngine::State state);
+	void OnTexteRecu(const std::string & iconset,
+			 const std::string & from,
+			 const std::string & texte);
+	void OnFileReceived(const std::string & from,
+			    const std::string & file,
+			    const std::string & no_use);
+	void OnFileTransferStatue(const std::string & type,
+				  const std::string & statue,
+				  const std::string & no_use);
+	void OnJingleInfo(const std::string & relay_token,
+			  const std::vector < std::string > &relay_hosts,
+			  const std::vector < talk_base::SocketAddress >
+			  &stun_hosts);
+	void OnProxyDetect(talk_base::SignalThread * thread);
+      public:
+	void InitPhone();
+	void InitPresence();
+	void OnRequestSignaling();
+	void CancelCallTo(const std::string & name);
+	void OnCallCreate(cricket::Call * call);
+	void OnCallDestroy(cricket::Call * call);
+	const std::string strerror(buzz::XmppEngine::Error err);
+	void OnSessionState(cricket::Call * call,
+			    cricket::Session * session,
+			    cricket::Session::State state);
+	void OnAnswerFile(bool accept);
+	void OnAnswerCall(bool accept);
+	void CancelSendFile(const buzz::Jid & found_jid);
+	void SendFile(const std::string & to, const std::string & texte);
+	void SendTexte(const std::string & name,
+		       const std::string & texte);
 
-  void InitPresence();
-  //void OnStatusUpdate(const buzz::Status& status);
+	void OnStatusUpdate(const buzz::Status & status);
 };
 
-#endif // CRICKET_EXAMPLES_CALL_CALLCLIENT_H__
+#endif				// CRICKET_EXAMPLES_CALL_CALLCLIENT_H__
