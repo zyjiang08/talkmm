@@ -118,9 +118,7 @@ public:
   void OnCallCreate(cricket::Call* call);
   void OnCallDestroy(cricket::Call* call);
   const std::string strerror(buzz::XmppEngine::Error err);
-  void OnSessionState(cricket::Call* call,
-                      cricket::Session* session,
-                      cricket::Session::State state);
+  void OnSessionState(cricket::Call* call, cricket::Session* session, cricket::Session::State state);
   void OnAnswerFile(bool accept);
   void OnAnswerCall(bool accept);
   void SendFile(const buzz::Jid& name, const std::string& texte);
