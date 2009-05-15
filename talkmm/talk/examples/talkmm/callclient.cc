@@ -489,8 +489,8 @@ void CallClient::OnStateChange(buzz::XmppEngine::State state)
 		    xmpp_client_->GetError(NULL);
 		console_->Print("logged out..." + strerror(error));
 		console_->Send("loggedout\n");
-//    console_->Close();
-		exit(0);
+		console_->OnSignError(strerror(error));
+		//exit(0);
 
 	}
 }

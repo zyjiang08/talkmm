@@ -45,7 +45,9 @@ Talkmm::Talkmm()
 	main_window->set_console(m_console);
 	console_thread = new talk_base::Thread(&m_ss);
 
-	//m_pump.client()->SignalStateChange.connect(this, &Talkmm::OnStateChange);
+	console_thread->Start();
+	console_thread->Post(m_console, MSG_START);
+	//main_thread->Start();
 }
 
 Talkmm::~Talkmm()
@@ -58,6 +60,11 @@ Talkmm::~Talkmm()
 
 }
 
+void Talkmm::DisConnect()
+{
+	//main_thread->Stop();
+	
+}
 bool Talkmm::OnLogin(const std::string& f_username,const std::string& f_pass)
 {
 	m_jid = buzz::Jid(f_username);
@@ -75,8 +82,8 @@ bool Talkmm::OnLogin(const std::string& f_username,const std::string& f_pass)
 	m_xcs.set_pass(talk_base::CryptString(m_pass));
 	m_xcs.set_server(talk_base::SocketAddress("talk.google.com", 5222));
 	printf("Logging in as %s\n", m_jid.Str().c_str());
-	console_thread->Start();
-	console_thread->Post(m_console, MSG_START);
+	//console_thread->Start();
+	//console_thread->Post(m_console, MSG_START);
 	m_pump.DoLogin(m_xcs, new XmppSocket(true), NULL);
 	main_thread->Start();
 	//main_thread->Run();

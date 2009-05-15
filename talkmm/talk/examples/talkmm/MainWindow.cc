@@ -161,6 +161,7 @@ MainWindow::MainWindow(Talkmm* f_parent):
 MainWindow::~MainWindow()
 {
 	delete m_session;
+	delete m_roster;
 }
 
 bool MainWindow::on_key_press_event(GdkEventKey* ev)
@@ -180,8 +181,21 @@ bool MainWindow::on_key_press_event(GdkEventKey* ev)
 	return true;
 }
 
+void MainWindow::on_login_error(const std::string& error)
+{
+
+        Gtk::MessageDialog dialog(*this, _("Login error"), false,
+                                  Gtk::MESSAGE_INFO,
+                                  Gtk::BUTTONS_OK);
+        dialog.set_secondary_text(error);
+        dialog.run();
+	m_parent->DisConnect();
+        main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
+}
+
 void MainWindow::on_loginWindow_cancel()
 {
+	m_parent->DisConnect();
         main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
 	//Here something need to be done.
 	

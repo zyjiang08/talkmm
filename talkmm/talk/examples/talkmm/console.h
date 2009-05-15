@@ -62,6 +62,7 @@ class Console:public talk_base::MessageHandler {
 	void Print(const std::string & str);
 	void Printf(const char *format, ...);
 	void OnSignOn();
+	void OnSignError(const std::string& error);
 	//void RosterPresence(const std::string& jid);
 	void OnRosterPresence(const buzz::Status & status_);
 	void OnRecuMessage(const std::string & from,
