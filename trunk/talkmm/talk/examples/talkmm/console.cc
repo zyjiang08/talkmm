@@ -135,6 +135,13 @@ void Console::OnSignOn()
 	main_window->on_signon();
 }
 
+void Console::OnSignError(const std::string& error)
+{
+	LockMutex locked;
+	main_window->on_login_error(error);
+
+}
+
 void Console::OnRosterPresence(const buzz::Status & status_)
 {
 	LockMutex locked;
@@ -148,13 +155,6 @@ void Console::OnFileRecu(const std::string & from,
 	main_window->on_file_receive(from, file);
 }
 
-/*
-void Console::CancelCallTo(const std::string& to)
-{
-	LockMutex locked;
-	main_window->on_cancel_call(to);
-}
-*/
 
 void Console::OnHangupCall(const std::string & from)
 {
@@ -184,7 +184,9 @@ void Console::SendMessage(const std::string & to,
 
 void Console::MakeCallTo(const std::string & name)
 {
-	client_->MakeCallTo(name);
+	client_thread_->Post(this, MSG_CALL,
+		     new talk_base::TypedMessageData <
+		     std::string > (name));
 	return;
 }
 

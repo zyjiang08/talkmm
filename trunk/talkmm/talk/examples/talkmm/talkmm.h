@@ -41,6 +41,7 @@ class Talkmm
 		Talkmm();
 		~Talkmm();
 		bool OnLogin(const std::string& f_username,const std::string& f_pass);
+		void DisConnect();
 
 	private:
 		XmppPump m_pump;

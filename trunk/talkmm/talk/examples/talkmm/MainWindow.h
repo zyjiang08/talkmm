@@ -85,6 +85,7 @@ class MainWindow : public Gtk::Window {
 		void check_button_keeppasswd_clicked();
 
 		void on_loginWindow_cancel();
+		void on_login_error(const std::string& error);
 		void on_login_emit();
 		void on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
