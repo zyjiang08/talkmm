@@ -59,13 +59,13 @@ class MainWindow : public Gtk::Window {
 		bool on_key_press_event(GdkEventKey* ev);
 		void hide_window();
 		void show_window();
+		void on_menu_pref_activate();
 		MsgWindow* open_session(const std::string& from);
 		void close_session(const std::string& from);
 		Gtk::Menu* get_tray_pop_menu() { return tray_pop_menu;}
 		/** finsh login*/
 		const RosterItem& get_roster(const std::string& f_jid);
 		void on_signon();
-		//void on_roster_presence(const std::string& jid);
 		void on_roster_presence(const buzz::Status& status_);
 		void on_receive_message(const std::string& from,const std::string& message);
 		void on_send_message(const std::string& to,const std::string& message);
@@ -120,6 +120,8 @@ class MainWindow : public Gtk::Window {
 		BuddyView*				list_view;
 		Session*				m_session;
 		GlademmXML				main_xml;
+		//Glib::RefPtr<Gtk::UIManager>	ui_manager;
+		//Glib::RefPtr<Gtk::ActionGroup> 	action_group;
 		Gtk::Notebook*				main_notebook;
 
 		enum{ LOGIN_INIT=0,LOGIN_LOADING,LOGIN_FINISH};
