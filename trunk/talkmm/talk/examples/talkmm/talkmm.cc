@@ -47,7 +47,7 @@ Talkmm::Talkmm()
 
 	console_thread->Start();
 	console_thread->Post(m_console, MSG_START);
-	//main_thread->Start();
+	main_thread->Start();
 }
 
 Talkmm::~Talkmm()
@@ -62,6 +62,7 @@ Talkmm::~Talkmm()
 
 void Talkmm::DisConnect()
 {
+	//printf("stop main_thread\n");
 	//main_thread->Stop();
 	
 }
@@ -85,7 +86,7 @@ bool Talkmm::OnLogin(const std::string& f_username,const std::string& f_pass)
 	//console_thread->Start();
 	//console_thread->Post(m_console, MSG_START);
 	m_pump.DoLogin(m_xcs, new XmppSocket(true), NULL);
-	main_thread->Start();
+	//main_thread->Start();
 	//main_thread->Run();
 	
 	return true;

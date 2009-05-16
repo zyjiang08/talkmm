@@ -691,5 +691,59 @@
   </widget>
   <widget class="GtkMenu" id="tray_menu">
     <property name="visible">True</property>
+    <child>
+      <widget class="GtkCheckMenuItem" id="menu_show">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">Show Buddy List</property>
+        <property name="use_underline">True</property>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkImageMenuItem" id="menu_pref">
+        <property name="label">gtk-preferences</property>
+        <property name="visible">True</property>
+        <property name="use_underline">True</property>
+        <property name="use_stock">True</property>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkMenuItem" id="menu_status">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">menuitem1</property>
+        <property name="use_underline">True</property>
+        <child>
+          <widget class="GtkMenu" id="menu1">
+            <property name="visible">True</property>
+            <child>
+              <widget class="GtkMenuItem" id="menu_online">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">online</property>
+                <property name="use_underline">True</property>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkMenuItem" id="menu_dnd">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">dnd</property>
+                <property name="use_underline">True</property>
+              </widget>
+            </child>
+          </widget>
+        </child>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkSeparatorMenuItem" id="menuitem1">
+        <property name="visible">True</property>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkImageMenuItem" id="menu_quit">
+        <property name="label">gtk-quit</property>
+        <property name="visible">True</property>
+        <property name="use_underline">True</property>
+        <property name="use_stock">True</property>
+      </widget>
+    </child>
   </widget>
 </glade-interface>

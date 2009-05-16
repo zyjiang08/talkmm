@@ -285,12 +285,11 @@ sending_file_(false)
 
 CallClient::~CallClient()
 {
-	//delete roster_;
-	//delete enligne_roster_;
-	//delete all_roster_;
 	delete _chatclient;
 	delete _current_waiting_fileclient;
 	delete _current_sending_fileclient;
+	delete presence_out_;
+	delete presence_push_;
 
 }
 
@@ -565,7 +564,7 @@ void CallClient::InitPresence()
 		    &FileShareClient::OnStatusUpdate);
 	presence_push_->Start();
 
-	buzz::Status my_status;
+	//buzz::Status my_status;
 	my_status.set_jid(xmpp_client_->jid());
 	my_status.set_available(true);
 	my_status.set_show(buzz::Status::SHOW_ONLINE);
@@ -576,7 +575,8 @@ void CallClient::InitPresence()
 	my_status.set_is_google_client(true);
 	my_status.set_version("1.0.0.66");
 
-	buzz::PresenceOutTask * presence_out_ =
+	//buzz::PresenceOutTask * presence_out_ =
+	 presence_out_ =
 	    new buzz::PresenceOutTask(xmpp_client_);
 	presence_out_->Send(my_status);
 	presence_out_->Start();
@@ -587,7 +587,13 @@ void CallClient::InitPresence()
 	//_current_sending_fileclient->OnSignon(port_allocator_, session_manager_, NULL, session_manager_task_);
 }
 
+void CallClient::SetPresence(buzz::Status::Show f_show,const std::string&  f_status)
+{
 
+	my_status.set_show(f_show);
+	my_status.set_status(f_status);
+	presence_out_->Send(my_status);
+}
 
 void CallClient::OnRequestSignaling()
 {

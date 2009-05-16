@@ -97,6 +97,8 @@ class CallClient:public sigslot::has_slots <> {
 	bool sending_file_;
 
 	buzz::PresencePushTask * presence_push_;
+	buzz::PresenceOutTask * presence_out_ ;
+	buzz::Status my_status;
 	//RosterMap* roster_;
 	//RosterMap* file_roster_;
 	//RosterMap* enligne_roster_;
@@ -136,6 +138,7 @@ class CallClient:public sigslot::has_slots <> {
 		       const std::string & texte);
 
 	void OnStatusUpdate(const buzz::Status & status);
+	void SetPresence(buzz::Status::Show f_show,const std::string& f_status);
 };
 
 #endif				// CRICKET_EXAMPLES_CALL_CALLCLIENT_H__
