@@ -140,7 +140,7 @@ MainWindow::MainWindow(Talkmm* f_parent):
 
 	tray_icon = new TrayIcon(*this);
 
-	//tray_pop_menu = dynamic_cast<Gtk::Menu* >(main_xml->get_widget("tray_menu"));
+	tray_pop_menu = dynamic_cast<Gtk::Menu* >(main_xml->get_widget("tray_menu"));
 	/**second page*/
         button_cancel = dynamic_cast <Gtk::Button *> (main_xml->get_widget("login_cancel"));
         button_cancel->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_loginWindow_cancel));
