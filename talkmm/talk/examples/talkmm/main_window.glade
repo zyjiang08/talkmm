@@ -704,12 +704,13 @@
         <property name="visible">True</property>
         <property name="use_underline">True</property>
         <property name="use_stock">True</property>
+        <signal name="activate" handler="on_menu_pref_activate"/>
       </widget>
     </child>
     <child>
       <widget class="GtkMenuItem" id="menu_status">
         <property name="visible">True</property>
-        <property name="label" translatable="yes">menuitem1</property>
+        <property name="label" translatable="yes">change status</property>
         <property name="use_underline">True</property>
         <child>
           <widget class="GtkMenu" id="menu1">
@@ -743,6 +744,7 @@
         <property name="visible">True</property>
         <property name="use_underline">True</property>
         <property name="use_stock">True</property>
+        <signal name="activate" handler="gtk_main_quit"/>
       </widget>
     </child>
   </widget>

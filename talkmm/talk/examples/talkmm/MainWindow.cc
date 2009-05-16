@@ -140,7 +140,10 @@ MainWindow::MainWindow(Talkmm* f_parent):
 
 	tray_icon = new TrayIcon(*this);
 
-	tray_pop_menu = dynamic_cast<Gtk::Menu* >(main_xml->get_widget("tray_menu"));
+	GlademmXML menu_xml = Gnome::Glade::Xml::create(main_ui,"tray_menu");
+	tray_pop_menu = dynamic_cast<Gtk::Menu* >(menu_xml->get_widget("tray_menu"));
+	Gtk::MenuItem* menu_quit = dynamic_cast<Gtk::MenuItem*>(menu_xml->get_widget("menu_quit"));
+	menu_quit->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::on_quit));
 	/**second page*/
         button_cancel = dynamic_cast <Gtk::Button *> (main_xml->get_widget("login_cancel"));
         button_cancel->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_loginWindow_cancel));
@@ -153,6 +156,8 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	list_window->add(*list_view);
 
 	add(*main_notebook);
+
+
 	this->set_size_request(240,576);
 	this->show_all();
 	this->resize(1,1);
@@ -309,6 +314,8 @@ void MainWindow::signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f
 
 void MainWindow::on_quit()
 {
+	Gtk::Main::quit();
+	exit(0);
 	
 }
 
@@ -479,4 +486,11 @@ void MainWindow::on_file_receive(const std::string& from,const std::string& file
                         break;
                 }
 	}
+}
+
+
+void MainWindow::on_menu_pref_activate()
+{
+	printf("pref window activate\n");
+
 }
