@@ -62,7 +62,7 @@ Talkmm::~Talkmm()
 
 void Talkmm::DisConnect()
 {
-	m_pump.DisConnect():
+	m_pump.DoDisconnect();
 	//printf("stop main_thread\n");
 	//main_thread->Stop();
 	

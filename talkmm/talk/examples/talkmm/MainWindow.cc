@@ -310,8 +310,8 @@ void MainWindow::signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f
 
 void MainWindow::on_quit()
 {
-	m_parent->DisConnect();
 	Gtk::Main::quit();
+	//m_parent->DisConnect();
 	exit(0);
 	
 }
