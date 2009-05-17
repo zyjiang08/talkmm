@@ -336,9 +336,9 @@
                       <widget class="GtkHBox" id="hbox32">
                         <property name="visible">True</property>
                         <child>
-                          <widget class="GtkTextView" id="textview2">
+                          <widget class="GtkLabel" id="label1">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="label" translatable="yes">       </property>
                           </widget>
                           <packing>
                             <property name="position">0</property>
@@ -359,13 +359,7 @@
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkTextView" id="textview3">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                          </widget>
-                          <packing>
-                            <property name="position">2</property>
-                          </packing>
+                          <placeholder/>
                         </child>
                       </widget>
                       <packing>
@@ -375,13 +369,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkTextView" id="textview1">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                      </widget>
-                      <packing>
-                        <property name="position">2</property>
-                      </packing>
+                      <placeholder/>
                     </child>
                   </widget>
                 </child>
@@ -496,16 +484,6 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label1">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">stringtang</property>
-                  </widget>
-                  <packing>
-                    <property name="top_attach">1</property>
-                    <property name="bottom_attach">2</property>
-                  </packing>
-                </child>
-                <child>
                   <widget class="GtkHBox" id="hbox5">
                     <property name="visible">True</property>
                     <child>
@@ -535,6 +513,43 @@
                   <packing>
                     <property name="left_attach">2</property>
                     <property name="right_attach">3</property>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkVBox" id="vbox2">
+                    <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <widget class="GtkLabel" id="label_name">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">set name</property>
+                      </widget>
+                      <packing>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkComboBox" id="combobox_status">
+                        <property name="visible">True</property>
+                        <property name="has_frame">False</property>
+                        <property name="items" translatable="yes" comments="&#x5728;&#x7EBF;&#10;&#x5520;&#x53FC;&#10;&#x6682;&#x65F6;&#x79BB;&#x5F00;&#10;&#x8BF7;&#x52FF;&#x6253;&#x6270;&#10;&#x8FDC;&#x8FDC;&#x79BB;&#x5F00;&#10;&#x79BB;&#x7EBF;&#10;&#x65B0;&#x72B6;&#x6001;">Available
+Chat
+Away
+DND
+XA
+Unavailable
+New status</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
                     <property name="top_attach">1</property>
                     <property name="bottom_attach">2</property>
                   </packing>

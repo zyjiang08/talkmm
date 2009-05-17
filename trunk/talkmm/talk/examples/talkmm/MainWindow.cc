@@ -194,7 +194,7 @@ void MainWindow::on_login_error(const std::string& error)
                                   Gtk::BUTTONS_OK);
         dialog.set_secondary_text(error);
         dialog.run();
-	m_parent->DisConnect();
+	//m_parent->DisConnect();
         main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
 }
 
@@ -216,10 +216,6 @@ void MainWindow::on_signon()
 	main_notebook->set_current_page(LOGIN_FINISH);
 }
 
-void MainWindow::on_init()
-{
-	this->hide();
-}
 
 void MainWindow::check_button_rememberme_clicked()
 {
@@ -314,6 +310,7 @@ void MainWindow::signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f
 
 void MainWindow::on_quit()
 {
+	m_parent->DisConnect();
 	Gtk::Main::quit();
 	exit(0);
 	
@@ -327,14 +324,12 @@ const RosterItem& MainWindow::get_roster(const std::string& f_jid)
     }
 }
 
-//void MainWindow::on_roster_presence(const std::string& jid)
 void MainWindow::on_roster_presence(const buzz::Status& status)
 {
 
 	RosterItem item;
   	item.jid = status.jid();
   	item.show = status.show();
-  	item.status = status.status();
   	item.status = status.status();
   	item.file_cap = status.fileshare_capability()?1:0;
   	item.phone_cap = status.phone_capability()?1:0;
@@ -343,13 +338,13 @@ void MainWindow::on_roster_presence(const buzz::Status& status)
   	std::string key = item.jid.Str();
 	std::string name = item.jid.node();
   	(*m_roster)[key] = item;
-	int status_;
+	int show_;
 	if(item.online)
-		status_= item.show;
+		show_= item.show;
 	else
-		status_=1;
+		show_=1;
 
-	list_view->refreshBuddyStatus(key,name,status_,item.phone_cap);
+	list_view->refreshBuddyStatus(key,name,item.status,show_,item.phone_cap);
 }
 
 void MainWindow::on_receive_message(const std::string& from,const std::string& message)

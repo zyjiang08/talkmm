@@ -42,6 +42,9 @@ m_parent(f_parent)
 	Gtk::TreeView::Column * col = Gtk::manage(new Gtk::TreeView::Column("iCalk"));
 	col->pack_start(m_rendtext);
 
+#ifdef GLIBMM_PROPERTIES_ENABLED
+        m_rendtext.property_ellipsize() = Pango::ELLIPSIZE_END;
+#endif
 	col->add_attribute(m_rendtext.property_markup(), buddyColumns.nickname);
 	col->set_resizable(true);
 	col->set_expand();
@@ -79,40 +82,61 @@ bool BuddyView::remove(const Glib::ustring & id)
 	return true;
 }
 
-void BuddyView::add(const std::string & jid_str,const std::string& name,int status,bool call) 
+void BuddyView::add(const std::string & jid_str,const std::string& name,const std::string& status,int show,bool call) 
 {
         Gtk::TreeModel::iterator listiter = m_treestore->append();
 	(*listiter)[buddyColumns.id] = jid_str;
-	(*listiter)[buddyColumns.nickname] = name;
 
-	if(status>=5)
+	if(show>=5)
 		(*listiter)[buddyColumns.icon] = Gdk::Pixbuf::create_from_file("./image/online.png", 16, 16);
 	else
 		(*listiter)[buddyColumns.icon] = Gdk::Pixbuf::create_from_file("./image/dnd.png", 16, 16);
 	if(call)
 		(*listiter)[buddyColumns.audioicon] = Gdk::Pixbuf::create_from_file("./image/call.png",24,24);
+
+
+	if(!status.empty()){
+		char* marktext = g_markup_printf_escaped(
+				"%s\n<span color='dim grey'><small>%s</small></span>",
+				name.c_str(),status.c_str());
+		(*listiter)[buddyColumns.nickname] = marktext;
+		g_free(marktext);
+	}
+	else
+		(*listiter)[buddyColumns.nickname] = name;
+
+
 	this->expand_all();
 }
 
-void BuddyView::refreshBuddyStatus(const std::string & jid,const std::string& name,int status,bool call)
+void BuddyView::refreshBuddyStatus(const std::string & jid,const std::string& name,const std::string& status,int show,bool call)
 {
 	Gtk::TreeModel::Children children = m_treestore->children();
 	Gtk::TreeModel::iterator iter ;
 	iter = getListIter(children, jid);
 
 	if(iter == children.end()){
-		add(jid,name,status,call);
+		add(jid,name,status,show,call);
 		return;
 	}
 
-	if(status==1){
+	if(1==show){
 		remove(jid);
 		return;
 	}
-	if(status>=5)
+	if(show>=5)
 		(*iter)[buddyColumns.icon] = Gdk::Pixbuf::create_from_file("./image/online.png", 16, 16);
 	else
 		(*iter)[buddyColumns.icon] = Gdk::Pixbuf::create_from_file("./image/dnd.png", 16, 16);
+
+	if(!status.empty()){
+		char* marktext = g_markup_printf_escaped(
+				"%s\n<span color='dim grey'><small>%s</small></span>",
+				name.c_str(),status.c_str());
+		(*iter)[buddyColumns.nickname] = marktext;
+		g_free(marktext);
+	}
+
 }
 
 bool BuddyView::on_button_press_event(GdkEventButton * ev)
