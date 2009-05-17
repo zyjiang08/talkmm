@@ -196,7 +196,7 @@ void MainWindow::on_login_error(const std::string& error)
                                   Gtk::BUTTONS_OK);
         dialog.set_secondary_text(error);
         dialog.run();
-	//m_parent->DisConnect();
+	m_parent->DisConnect();
         main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
 }
 
