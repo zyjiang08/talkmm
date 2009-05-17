@@ -155,6 +155,8 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	list_view = Gtk::manage(new BuddyView(*this));
 	list_window->add(*list_view);
 
+	combobox_status = dynamic_cast<Gtk::ComboBox*>(main_xml->get_widget("combobox_status"));
+	combobox_status->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::on_combox_status_change));
 	add(*main_notebook);
 
 
@@ -488,4 +490,36 @@ void MainWindow::on_menu_pref_activate()
 {
 	printf("pref window activate\n");
 
+}
+
+void MainWindow::on_combox_status_change()
+{
+	int show = combobox_status->get_active_row_number();
+	int tshow;
+	switch(show){
+		case 0:
+			tshow=5;
+			break;
+		case 1:
+			tshow=6;
+			break;
+		case 2:
+			tshow=3;
+			break;
+		case 3:
+			tshow=4;
+			break;
+		case 4:
+			tshow=2;
+			break;
+		case 5:
+			tshow=1;
+			break;
+		default:
+			tshow=5;
+			break;
+	};
+	std::string status= "";
+	m_console->SendStatus(tshow,status);
+	
 }

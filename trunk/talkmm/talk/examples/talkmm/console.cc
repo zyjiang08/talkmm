@@ -190,6 +190,12 @@ void Console::MakeCallTo(const std::string & name)
 	return;
 }
 
+void Console::SendStatus(int show,const std::string& status)
+{
+	buzz::Status::Show show_ = (buzz::Status::Show) show;
+	client_->SetPresence(show_,status);
+}
+
 void Console::SendFile(const std::string & to, const std::string & file)
 {
 	client_->SendFile(to, file);
