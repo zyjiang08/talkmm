@@ -19,6 +19,7 @@
 #include <gtkmm/textbuffer.h>
 #include "MainWindow.h"
 #include "MsgWindow.h"
+#include "MsgBox.h"
 
 MsgWindow::MsgWindow(MainWindow* f_parent,
 		     const std::string& f_jid):m_parent(f_parent),
@@ -30,7 +31,10 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 	entry_send = dynamic_cast<Gtk::Entry*> (msg_xml->get_widget("entry_send"));
 	entry_send->signal_activate().connect(sigc::mem_fun(*this, &MsgWindow::send_message));
 
-	textview_msg = dynamic_cast<Gtk::TextView*> (msg_xml->get_widget("textview_msg"));
+	textview_msg = Gtk::manage(new class MsgBox);
+	Gtk::ScrolledWindow* scroll_msg = dynamic_cast<Gtk::ScrolledWindow*>(msg_xml->get_widget("scrolled_msg_show"));
+	scroll_msg->add(*textview_msg);
+	//textview_msg = dynamic_cast<Gtk::TextView*> (msg_xml->get_widget("textview_msg"));
 
 	hbox_cancel = dynamic_cast < Gtk::HBox * > (msg_xml->get_widget("hbox_cancel"));
 
@@ -66,6 +70,13 @@ bool MsgWindow::on_delete_event(GdkEventAny* event)
 	delete this;
 
 }
+void MsgWindow::show_message(const std::string& sender,const std::string& msg,bool self)
+{
+	textview_msg->showTitle(sender,self);
+	textview_msg->showMessage(msg);
+
+}
+/*
 void MsgWindow::show_message(const std::string& msg)
 {
 	textview_msg->set_wrap_mode(Gtk::WRAP_WORD);
@@ -84,14 +95,17 @@ void MsgWindow::show_message(const std::string& msg)
                 textview_msg->scroll_to_mark(buffer->get_insert(), 0); // 插入文本后也要向下滚动，使最后一行继续可见
 
 }
+*/
 
 void MsgWindow::send_message()
 {
 	std::string text = entry_send->get_text();
 	m_parent->on_send_message(m_jid,text);
-	std::string utext="me : "+ text ;
-	show_message(utext);
-	show_message("\n");
+	//std::string utext="me : "+ text ;
+	  size_t pos = m_jid.find("@");
+	  std::string str = m_jid.substr(0, pos);;
+	show_message(str,text,true);
+	//show_message("\n");
 	entry_send->set_text("");
 
 }
@@ -102,6 +116,7 @@ void MsgWindow::on_button_send_file()
         dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
         dialog.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
 
+	/*
         Gtk::FileFilter filter_png;
 
         filter_png.set_name("PNG files");
@@ -125,6 +140,7 @@ void MsgWindow::on_button_send_file()
         filter_any.add_mime_type("*");
 
         dialog.add_filter(filter_any);
+	*/
 
         std::string filename ;
 
