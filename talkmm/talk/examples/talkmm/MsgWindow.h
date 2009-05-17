@@ -22,9 +22,8 @@
 #include <gtkmm.h>
 
 #define msg_ui "./msg_window.glade"
-//#define msg_ui "./msg_window_t.glade"
-//typedef Glib::RefPtr <Gnome::Glade::Xml> GlademmXML;
 
+class MsgBox;
 class MainWindow;
 class MsgWindow: public Gtk::Window
 {
@@ -32,6 +31,7 @@ class MsgWindow: public Gtk::Window
 		MsgWindow(MainWindow* f_parent,const std::string& f_jid);
 		~MsgWindow();
 		void show_message(const std::string& msg);
+		void show_message(const std::string& sender,const std::string& msg,bool self=false);
 		void send_message();
 		void on_button_send_file();
 		void on_button_cancel_send_file();
@@ -46,7 +46,8 @@ class MsgWindow: public Gtk::Window
 		std::string				m_jid;
 		GlademmXML				msg_xml;
 		Gtk::Entry*				entry_send;
-		Gtk::TextView*				textview_msg;
+		//Gtk::TextView*				textview_msg;
+		MsgBox*					textview_msg;
 		Gtk::HBox* 				hbox_cancel;
 		Gtk::Button*				button_call;
 		Gtk::Button* 				button_send_file;

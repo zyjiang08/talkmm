@@ -356,8 +356,8 @@ void MainWindow::on_receive_message(const std::string& from,const std::string& m
 
 	  size_t pos = from.find("@");
 	  std::string str = from.substr(0, pos);;
-	std::string utext = str +" : "+message+"\n";
-	msg_window->show_message(utext);
+	//std::string utext = str +" : "+message+"\n";
+	msg_window->show_message(str,message);
 
 }
 
