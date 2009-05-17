@@ -90,6 +90,7 @@ class MainWindow : public Gtk::Window {
 		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 		void set_console(Console* f_console){m_console = f_console;};
 
+		void on_combox_status_change();
 
 	protected:
 		bool on_delete_event(GdkEventAny* event);
@@ -114,6 +115,7 @@ class MainWindow : public Gtk::Window {
 		Gtk::CheckButton* 			check_button_keeppasswd;
 		Gtk::Button* 				button_cancel;
 		Gtk::ProgressBar* 			progressbar_login;
+		Gtk::ComboBox*				combobox_status;
 		TrayIcon*				tray_icon;
 		Gtk::Menu*				tray_pop_menu;
 		BuddyView*				list_view;

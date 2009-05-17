@@ -66,8 +66,7 @@ class CallClient:public sigslot::has_slots <> {
 	cricket::PhoneSessionClient * phone_client() const {
 		return phone_client_;
 	}
-	//void PrintRoster();//void PrintOLRoster();
-	    void MakeCallTo(const std::string & name);
+	void MakeCallTo(const std::string & name);
 	void SetConsole(Console * console) {
 		console_ = console;
 		_current_sending_fileclient->setConsole(this->console_);
@@ -97,7 +96,6 @@ class CallClient:public sigslot::has_slots <> {
 	bool sending_file_;
 
 	buzz::PresencePushTask * presence_push_;
-	buzz::PresenceOutTask * presence_out_ ;
 	buzz::Status my_status;
 	//RosterMap* roster_;
 	//RosterMap* file_roster_;
