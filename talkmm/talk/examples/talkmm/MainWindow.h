@@ -78,7 +78,6 @@ class MainWindow : public Gtk::Window {
 		void on_send_file(const std::string& to,const std::string& filename);
 		void on_cancel_send_file(const std::string& to);
 
-		void on_init();
 		void on_quit();
 
 		void check_button_rememberme_clicked();
@@ -120,8 +119,6 @@ class MainWindow : public Gtk::Window {
 		BuddyView*				list_view;
 		Session*				m_session;
 		GlademmXML				main_xml;
-		//Glib::RefPtr<Gtk::UIManager>	ui_manager;
-		//Glib::RefPtr<Gtk::ActionGroup> 	action_group;
 		Gtk::Notebook*				main_notebook;
 
 		enum{ LOGIN_INIT=0,LOGIN_LOADING,LOGIN_FINISH};
