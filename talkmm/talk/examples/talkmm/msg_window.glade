@@ -47,9 +47,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkComboBox" id="combobox1">
-                <property name="visible">True</property>
-              </widget>
+              <widget class="GtkComboBox" id="combobox1"/>
               <packing>
                 <property name="expand">False</property>
                 <property name="position">3</property>
@@ -130,7 +128,7 @@
         </child>
         <child>
           <widget class="GtkFrame" id="progress_frame">
-            <property name="height_request">15</property>
+            <property name="height_request">18</property>
             <property name="visible">True</property>
             <property name="label_xalign">0.5</property>
             <child>

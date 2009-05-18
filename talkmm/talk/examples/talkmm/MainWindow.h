@@ -94,7 +94,9 @@ class MainWindow : public Gtk::Window {
 		void on_combox_status_change();
 		void on_filetranser_statue(const std::string& jid,const std::string& statue);
 		void on_calling_statue(const std::string& jid,const std::string& statue);
-		void on_file_update_progress(const std::string& jid, const std::string& file,float percent);
+		//void on_file_update_progress(const std::string& jid, const std::string& file,float percent);
+		void on_file_update_progress(const std::string& jid, const std::string& file,
+					     float percent, const std::string& describe);
 
 	protected:
 		bool on_delete_event(GdkEventAny* event);

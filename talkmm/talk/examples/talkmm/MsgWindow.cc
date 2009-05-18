@@ -214,10 +214,9 @@ void MsgWindow::file_transfer_end()
 	progress_frame->hide();
 }
 
-void MsgWindow::update_file_progress(const std::string& file,float percent)
+void MsgWindow::update_file_progress(const std::string& file, float percent, const std::string& describe)
 {
 	progressbar_send_file->set_fraction(percent);
-	progressbar_send_file->set_text(file);
-
+	progressbar_send_file->set_text(file + describe);
 }
 

@@ -556,12 +556,11 @@ void MainWindow::on_filetranser_statue(const std::string& jid,const std::string&
 		msg_window->file_transfer_start();
 	}
 	else if("failed" == statue){
-
 		msg_window->show_notify_msg("file transfer failed");
 		msg_window->file_transfer_end();
 	}
 	else if("local-canceled" == statue){
-		msg_window->show_notify_msg("file transfer canncel by myself");
+		msg_window->show_notify_msg("file transfer canncel by local");
 		msg_window->file_transfer_end();
 	}
 	else if("canceled" == statue){
@@ -572,9 +571,8 @@ void MainWindow::on_filetranser_statue(const std::string& jid,const std::string&
 		msg_window->show_notify_msg("file transfer completed");
 		msg_window->file_transfer_end();
 	}
-
-
 }
+
 void MainWindow::on_calling_statue(const std::string& jid,const std::string& statue)
 {
 	MsgWindow* msg_window = open_session(jid);
@@ -594,9 +592,9 @@ void MainWindow::on_calling_statue(const std::string& jid,const std::string& sta
 
 }
 
-void MainWindow::on_file_update_progress(const std::string& jid, const std::string& file,float percent)
+void MainWindow::on_file_update_progress(const std::string& jid, const std::string& file,
+					 float percent, const std::string& describe)
 {
 	MsgWindow* msg_window = open_session(jid);
-	msg_window->update_file_progress(file,percent);
-
+	msg_window->update_file_progress(file, percent, describe);
 }
