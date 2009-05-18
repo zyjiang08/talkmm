@@ -104,4 +104,13 @@ bool Talkmm::OnLogin(const std::string& f_username,const std::string& f_pass)
 	return true;
 }
 
+std::string Talkmm::GetUserName()
+{
+	std::string m_jid_t = m_jid.Str();
+	size_t pos = m_jid_t.find("@");
+	std::string user_name = m_jid_t.substr(0, pos);	 
+
+	return user_name;
+}
+
 

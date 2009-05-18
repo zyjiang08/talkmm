@@ -151,9 +151,13 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	progressbar_login = dynamic_cast <Gtk::ProgressBar*> (main_xml->get_widget("progressbar_login"));
 
 	/**third page*/
-	Gtk::Container* list_window= dynamic_cast <Gtk::Container*>(main_xml->get_widget("listWindow"));
+	label_user_name = dynamic_cast <Gtk::Label*>(main_xml->get_widget("label_user_name"));
+	//label_user_name->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::set_label_user_name));
+
+	Gtk::Container* list_window = dynamic_cast <Gtk::Container*>(main_xml->get_widget("listWindow"));
 	list_view = Gtk::manage(new BuddyView(*this));
 	list_window->add(*list_view);
+
 
 	combobox_status = dynamic_cast<Gtk::ComboBox*>(main_xml->get_widget("combobox_status"));
 	combobox_status->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::on_combox_status_change));
@@ -302,6 +306,10 @@ void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 		check_button_rememberme_clicked();
 		check_button_keeppasswd_clicked();
 	}
+
+	string user_name = m_parent->GetUserName();
+
+	label_user_name->set_text(user_name);
 }
 
 
@@ -316,6 +324,10 @@ void MainWindow::on_quit()
 	//m_parent->DisConnect();
 	exit(0);
 	
+}
+void MainWindow::set_label_user_name(const std::string& f_jid)
+{
+	cout << "set_label_user_name" << endl;
 }
 
 const RosterItem& MainWindow::get_roster(const std::string& f_jid)
@@ -424,7 +436,7 @@ void MainWindow::on_incoming_call(const std::string& from)
         int result = dialog.run();
         switch (result) {
         case (Gtk::RESPONSE_OK): {
-					 m_console->AnswerCall("true");
+				 	m_console->AnswerCall("true");
 					MsgWindow* msg_window = open_session(from);
 					msg_window->raise();
 					 break;
