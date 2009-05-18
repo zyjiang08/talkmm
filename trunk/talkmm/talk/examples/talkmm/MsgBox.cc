@@ -107,7 +107,7 @@ void MsgBox::showSimpleMessage(const Glib::ustring & msg_)
 
 void MsgBox::showSystemMsg(const std::string& msg_)
 {
-        showGrayMsg("\t\t\t\t");
+        showGrayMsg("\t\t");
         showGrayMsg(msg_);
         showGrayMsg("\n");
 }

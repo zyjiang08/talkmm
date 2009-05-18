@@ -109,6 +109,8 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	,m_parent(f_parent)
 	,m_session(new Session)
 	,m_roster(new RosterMap)
+	,m_name("talkmm")
+	,combobox_status(NULL)
 {
         main_xml = Gnome::Glade::Xml::create(main_ui, "main_notebook");
         main_notebook = dynamic_cast < Gtk::Notebook * > (main_xml->get_widget("main_notebook"));
@@ -160,6 +162,7 @@ MainWindow::MainWindow(Talkmm* f_parent):
 
 
 	combobox_status = dynamic_cast<Gtk::ComboBox*>(main_xml->get_widget("combobox_status"));
+	combobox_status->set_active(0);
 	combobox_status->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::on_combox_status_change));
 	add(*main_notebook);
 
@@ -225,7 +228,7 @@ void MainWindow::on_signon()
 
 void MainWindow::check_button_rememberme_clicked()
 {
-	cout << "The rememberme was clicked: state=" << (check_button_rememberMe->get_active() ? "true" : "false") << endl;
+	//cout << "The rememberme was clicked: state=" << (check_button_rememberMe->get_active() ? "true" : "false") << endl;
 	Glib::ustring username_t;
 	Glib::ustring password_t;
 	string password_t1;
@@ -244,7 +247,7 @@ void MainWindow::check_button_rememberme_clicked()
 
 void MainWindow::check_button_keeppasswd_clicked()
 {
-	cout << "The keeppasswd was clicked: state=" << (check_button_keeppasswd->get_active() ? "true" : "false") << endl;
+	//cout << "The keeppasswd was clicked: state=" << (check_button_keeppasswd->get_active() ? "true" : "false") << endl;
 
 	Glib::ustring username_t;
         Glib::ustring password_t;
@@ -307,9 +310,9 @@ void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 		check_button_keeppasswd_clicked();
 	}
 
-	string user_name = m_parent->GetUserName();
+	m_name = m_parent->GetUserName();
 
-	label_user_name->set_text(user_name);
+	label_user_name->set_text(m_name);
 }
 
 
@@ -415,7 +418,14 @@ void MainWindow::send_call_to(const std::string& to)
 		std::cout<<to<<" does not support call  with jingle"<<std::endl;
 }
 
-void MainWindow::on_hangup_call(const std::string& to)
+void MainWindow::on_hangup_call(const std::string& from)
+{
+	MsgWindow* msg_window = open_session(from);
+	msg_window->on_call_hangup();
+	msg_window->show_notify_msg("romete hangup the call");
+
+}
+void MainWindow::hangup_call(const std::string& to)
 {
 	const RosterItem& item = this->get_roster(to);
 	if(item.phone_cap)
