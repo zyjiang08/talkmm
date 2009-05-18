@@ -296,8 +296,11 @@ void CallClient::CancelSendFile(const buzz::Jid & found_jid)
 {
 	std::cout << "CancelSendFile is called" << std::endl;
 	//session_->Cancel();
-	_current_sending_fileclient->Cancel();
-	session_ = NULL;
+	//if(session_){
+	if(_current_sending_fileclient){
+		_current_sending_fileclient->Cancel();
+		session_ = NULL;
+	}
 }
 
 void CallClient::SendFile(const std::string & to, const std::string & file)

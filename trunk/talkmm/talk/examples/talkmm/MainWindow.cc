@@ -412,6 +412,12 @@ void MainWindow::on_hangup_call(const std::string& to)
 		std::cout<<to<<"on cancel call"<<std::endl;
 }
 
+void MainWindow::file_transfer(const std::string& from)
+{
+	MsgWindow* msg_window = open_session(from);
+	msg_window->file_transfer_end();
+}
+
 void MainWindow::on_incoming_call(const std::string& from)
 {
 
@@ -442,8 +448,11 @@ void MainWindow::on_incoming_call(const std::string& from)
 void MainWindow::on_cancel_send_file(const std::string& to)
 {
 	const RosterItem& item = this->get_roster(to);
-	if(item.file_cap)
+	if(item.file_cap){
+		MsgWindow* msg_window = open_session(to);
+		msg_window->file_transfer_end();
 		m_console->CancelSendFile(item.jid);
+	}
 	else
 		std::cout<<to<<" does not support file translate with jingle"<<std::endl;
 }
@@ -451,8 +460,11 @@ void MainWindow::on_cancel_send_file(const std::string& to)
 void MainWindow::on_send_file(   const std::string& to,  const std::string& filename)
 {
 	const RosterItem& item = this->get_roster(to);
-	if(item.file_cap)
+	if(item.file_cap){
+		MsgWindow* msg_window = open_session(to);
+		msg_window->file_transfer_start();
 		m_console->SendFile(to,filename);
+	}
 	else
 		std::cout<<to<<" does not support file translate with jingle"<<std::endl;
 }
@@ -469,9 +481,9 @@ void MainWindow::on_file_receive(const std::string& from,const std::string& file
         int result = dialog.run();
         switch (result) {
         case (Gtk::RESPONSE_OK): {
-					 m_console->AnswerFile(true);
+					m_console->AnswerFile(true);
 					MsgWindow* msg_window = open_session(from);
-					msg_window->file_tranfer_start();
+					msg_window->file_transfer_start();
 					 break;
 				 }
         case (Gtk::RESPONSE_CANCEL): {

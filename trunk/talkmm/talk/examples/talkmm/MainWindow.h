@@ -90,6 +90,7 @@ class MainWindow : public Gtk::Window {
 		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 		void set_console(Console* f_console){m_console = f_console;};
 
+		void file_transfer(const std::string& );
 		void on_combox_status_change();
 
 	protected:

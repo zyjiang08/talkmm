@@ -81,8 +81,9 @@ class Console:public talk_base::MessageHandler {
 
 	void SendFile(const std::string & to, const std::string & file);
 	void CancelSendFile(const buzz::Jid & to);
-
+	void RefreshMsgBoard(const std::string&);
 	void SendStatus(int,const std::string& status);
+
       private:
 	CallClient * client_;
 	MainWindow *main_window;

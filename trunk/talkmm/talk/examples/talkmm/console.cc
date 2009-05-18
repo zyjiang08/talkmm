@@ -184,9 +184,8 @@ void Console::SendMessage(const std::string & to,
 
 void Console::MakeCallTo(const std::string & name)
 {
-	client_thread_->Post(this, MSG_CALL,
-		     new talk_base::TypedMessageData <
-		     std::string > (name));
+	//client_->MakeCallTo(name);
+	client_thread_->Post(this, MSG_CALL, new talk_base::TypedMessageData < std::string > (name));
 	return;
 }
 
@@ -210,6 +209,11 @@ void Console::AnswerCall(bool accept)
 void Console::AnswerFile(bool accept)
 {
 	client_->OnAnswerFile(accept);
+}
+
+void Console::RefreshMsgBoard(const std::string & from)
+{
+	main_window->file_transfer(from);
 }
 
 void Console::CancelSendFile(const buzz::Jid & to)
