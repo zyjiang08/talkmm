@@ -128,9 +128,9 @@ class CallClient:public sigslot::has_slots <> {
 	void OnSessionState(cricket::Call * call,
 			    cricket::Session * session,
 			    cricket::Session::State state);
-	void OnAnswerFile(bool accept);
-	void OnAnswerCall(bool accept);
-	void CancelSendFile(const buzz::Jid & found_jid);
+	void OnAnswerFile(const std::string& accept);
+	void OnAnswerCall(const std::string& accept);
+	void CancelSendFile(const std::string& to);
 	void SendFile(const std::string & to, const std::string & texte);
 	void SendTexte(const std::string & name,
 		       const std::string & texte);

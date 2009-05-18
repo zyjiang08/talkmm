@@ -30,8 +30,9 @@ class MsgWindow: public Gtk::Window
 	public:
 		MsgWindow(MainWindow* f_parent,const std::string& f_jid);
 		~MsgWindow();
-		void show_message(const std::string& msg);
+		//void show_message(const std::string& msg);
 		void show_message(const std::string& sender,const std::string& msg,bool self=false);
+		void show_notify_msg(const std::string& msg);
 		void send_message();
 		void on_button_send_file();
 		void on_button_cancel_send_file();

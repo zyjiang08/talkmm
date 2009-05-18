@@ -412,12 +412,6 @@ void MainWindow::on_hangup_call(const std::string& to)
 		std::cout<<to<<"on cancel call"<<std::endl;
 }
 
-void MainWindow::file_transfer(const std::string& from)
-{
-	MsgWindow* msg_window = open_session(from);
-	msg_window->file_transfer_end();
-}
-
 void MainWindow::on_incoming_call(const std::string& from)
 {
 
@@ -430,15 +424,17 @@ void MainWindow::on_incoming_call(const std::string& from)
         int result = dialog.run();
         switch (result) {
         case (Gtk::RESPONSE_OK): {
-					 m_console->AnswerCall(true);
+					 m_console->AnswerCall("true");
+					MsgWindow* msg_window = open_session(from);
+					msg_window->raise();
 					 break;
 				 }
         case (Gtk::RESPONSE_CANCEL): {
-					 m_console->AnswerCall(false);
+					 m_console->AnswerCall("false");
                         break;
                 }
         default: {
-					 m_console->AnswerCall(false);
+					 m_console->AnswerCall("false");
                         break;
                 }
 	}
@@ -448,13 +444,17 @@ void MainWindow::on_incoming_call(const std::string& from)
 void MainWindow::on_cancel_send_file(const std::string& to)
 {
 	const RosterItem& item = this->get_roster(to);
+	MsgWindow* msg_window = open_session(to);
 	if(item.file_cap){
-		MsgWindow* msg_window = open_session(to);
-		msg_window->file_transfer_end();
-		m_console->CancelSendFile(item.jid);
+		//msg_window->file_transfer_end();
+		//m_console->CancelSendFile(item.jid);
+		m_console->CancelSendFile(to);
 	}
-	else
-		std::cout<<to<<" does not support file translate with jingle"<<std::endl;
+	else{
+		std::string msg = to +"does not support file translate with jingle";
+		std::cout<<msg<<std::endl;
+		msg_window->show_notify_msg(msg);
+	}
 }
 
 void MainWindow::on_send_file(   const std::string& to,  const std::string& filename)
@@ -462,7 +462,7 @@ void MainWindow::on_send_file(   const std::string& to,  const std::string& file
 	const RosterItem& item = this->get_roster(to);
 	if(item.file_cap){
 		MsgWindow* msg_window = open_session(to);
-		msg_window->file_transfer_start();
+		//msg_window->file_transfer_start();
 		m_console->SendFile(to,filename);
 	}
 	else
@@ -481,17 +481,16 @@ void MainWindow::on_file_receive(const std::string& from,const std::string& file
         int result = dialog.run();
         switch (result) {
         case (Gtk::RESPONSE_OK): {
-					m_console->AnswerFile(true);
+					m_console->AnswerFile("true");
 					MsgWindow* msg_window = open_session(from);
-					msg_window->file_transfer_start();
 					 break;
 				 }
         case (Gtk::RESPONSE_CANCEL): {
-					 m_console->AnswerFile(false);
+					 m_console->AnswerFile("false");
                         break;
                 }
         default: {
-					 m_console->AnswerFile(false);
+					 m_console->AnswerFile("false");
                         break;
                 }
 	}
@@ -534,4 +533,51 @@ void MainWindow::on_combox_status_change()
 	std::string status= "";
 	m_console->SendStatus(tshow,status);
 	
+}
+
+void MainWindow::on_filetranser_statue(const std::string& jid,const std::string& statue)
+{
+	MsgWindow* msg_window = open_session(jid);
+
+	if("started" == statue){
+		msg_window->show_notify_msg("file tranfser start");
+		msg_window->file_transfer_start();
+	}
+	else if("failed" == statue){
+
+		msg_window->show_notify_msg("file transfer failed");
+		msg_window->file_transfer_end();
+	}
+	else if("local-canceled" == statue){
+		msg_window->show_notify_msg("file transfer canncel by myself");
+		msg_window->file_transfer_end();
+	}
+	else if("canceled" == statue){
+		msg_window->show_notify_msg("file transfer canncel by remote");
+		msg_window->file_transfer_end();
+	}
+	else if("completed" == statue){
+		msg_window->show_notify_msg("file transfer completed");
+		msg_window->file_transfer_end();
+	}
+
+
+}
+void MainWindow::on_calling_statue(const std::string& jid,const std::string& statue)
+{
+	MsgWindow* msg_window = open_session(jid);
+	if("answer"==statue){
+		msg_window->show_notify_msg("please start talk");
+
+	}
+	else if("noanswer" == statue){
+		msg_window->show_notify_msg("romte no answer");
+	}
+	else if("calling" == statue){
+		msg_window->show_notify_msg("calling...");
+	}
+	else if("talking" == statue){
+
+	}
+
 }

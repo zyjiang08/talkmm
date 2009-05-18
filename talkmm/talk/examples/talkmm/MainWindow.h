@@ -90,8 +90,9 @@ class MainWindow : public Gtk::Window {
 		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 		void set_console(Console* f_console){m_console = f_console;};
 
-		void file_transfer(const std::string& );
 		void on_combox_status_change();
+		void on_filetranser_statue(const std::string& jid,const std::string& statue);
+		void on_calling_statue(const std::string& jid,const std::string& statue);
 
 	protected:
 		bool on_delete_event(GdkEventAny* event);

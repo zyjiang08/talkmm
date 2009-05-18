@@ -53,6 +53,7 @@ class Talkmm
 		Console* m_console;
 		talk_base::Thread* main_thread;
 		talk_base::Thread* console_thread;
+		bool relogin;
 
 		MainWindow* main_window;
 };
