@@ -51,6 +51,8 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 	progress_frame = dynamic_cast<Gtk::Frame*>(msg_xml->get_widget("progress_frame"));
 	progressbar_send_file = dynamic_cast<Gtk::ProgressBar*>(msg_xml->get_widget("progressbar_send_file"));
 	//progressbar_send_file->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_send_file));
+	
+	combobox_functions = dynamic_cast<Gtk::ComboBox*>(msg_xml->get_widget("combobox_functions"));
 
 	add(*vbox_main);
 	this->set_size_request(350,270);
@@ -58,6 +60,7 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 	this->show_all();
 	progress_frame->hide();
 	hbox_cancel->hide();
+	combobox_functions->hide();
 }
 MsgWindow::~MsgWindow()
 {

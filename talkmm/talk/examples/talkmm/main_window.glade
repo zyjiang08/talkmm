@@ -338,7 +338,6 @@
                         <child>
                           <widget class="GtkLabel" id="label1">
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">       </property>
                           </widget>
                           <packing>
                             <property name="position">0</property>
@@ -359,7 +358,12 @@
                           </packing>
                         </child>
                         <child>
-                          <placeholder/>
+                          <widget class="GtkLabel" id="label4">
+                            <property name="visible">True</property>
+                          </widget>
+                          <packing>
+                            <property name="position">2</property>
+                          </packing>
                         </child>
                       </widget>
                       <packing>
@@ -369,7 +373,12 @@
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <widget class="GtkLabel" id="label5">
+                        <property name="visible">True</property>
+                      </widget>
+                      <packing>
+                        <property name="position">2</property>
+                      </packing>
                     </child>
                   </widget>
                 </child>
