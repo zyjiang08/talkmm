@@ -58,109 +58,115 @@
 #if defined(_MSC_VER) && (_MSC_VER < 1400)
 // The following are necessary to properly link when compiling STL without
 // /EHsc, otherwise known as C++ exceptions.
-void __cdecl std::_Throw(const std::exception &) {}
+void __cdecl std::_Throw(const std::exception &)
+{
+}
+
 std::_Prhand std::_Raise_handler = 0;
 #endif
 
-class FileShareClient : public sigslot::has_slots<>, public talk_base::MessageHandler {
- public:
-  FileShareClient(buzz::XmppClient *xmppclient, const buzz::Jid &send_to, cricket::FileShareManifest *manifest, std::string root_dir);
-  bool isFileSender();
+class FileShareClient:public sigslot::has_slots <>,
+    public talk_base::MessageHandler {
+      public:
+	FileShareClient(buzz::XmppClient * xmppclient,
+			const buzz::Jid & send_to,
+			cricket::FileShareManifest * manifest,
+			std::string root_dir);
+	bool isFileSender();
 
-  void SendFile(/*const std::string& to, const std::string& file cricket::FileShareManifest *manifest*/);
-  void acceptFile();
-  cricket::FileShareManifest* getFileShareManifest()
-  {
-    return manifest_;
-  }
-  void Cancel();
-  void OnStateChange(buzz::XmppEngine::State state); 
-  void OnStatusUpdate(const buzz::Status &status);
-  void OnJingleInfo(const std::string & relay_token,
-                    const std::vector<std::string> &relay_addresses,
-                    const std::vector<talk_base::SocketAddress> &stun_addresses);
-  void setRootDir(const std::string& str){
-    root_dir_ = str;
-  }
-  void setSendToJid(const buzz::Jid & send_to){
-    send_to_jid_ = send_to;
-  }
-  void setSender(bool isSender){
-    waiting_for_file_ = !isSender;
+	void SendFile( /*const std::string& to, const std::string& file cricket::FileShareManifest *manifest */ );
+	void acceptFile();
+	cricket::FileShareManifest * getFileShareManifest() {
+		return manifest_;
+	} void Cancel();
+	void OnStateChange(buzz::XmppEngine::State state);
+	void OnStatusUpdate(const buzz::Status & status);
+	void OnJingleInfo(const std::string & relay_token,
+			  const std::vector < std::string >
+			  &relay_addresses,
+			  const std::vector < talk_base::SocketAddress >
+			  &stun_addresses);
+	void setRootDir(const std::string & str) {
+		root_dir_ = str;
+	}
+	void setSendToJid(const buzz::Jid & send_to) {
+		send_to_jid_ = send_to;
+	}
+	void setSender(bool isSender) {
+		waiting_for_file_ = !isSender;
 //    if(!isSender)
 //      OnSignon();
-  }
+	}
 
-  void setManifest(cricket::FileShareManifest *manifest){
+	void setManifest(cricket::FileShareManifest * manifest) {
 //      if(manifest_ != NULL)
-//	delete manifest_;
-      manifest_ = manifest;
-  }
+//      delete manifest_;
+		manifest_ = manifest;
+	}
 
-  void setConsole(Console* console){
-    console_ = console;
-  }
-  
-  void OnSignon(cricket::HttpPortAllocator* port_allocator, 
-				 cricket::SessionManager* session_manager,
-				 buzz::JingleInfoTask* jingle_info_task,/*pas utile*/
-				 cricket::SessionManagerTask* tast);
+	void setConsole(Console * console) {
+		console_ = console;
+	}
 
-  private:
+	void OnSignon(cricket::HttpPortAllocator * port_allocator, cricket::SessionManager * session_manager, buzz::JingleInfoTask * jingle_info_task,	/*pas utile */
+		      cricket::SessionManagerTask * tast);
 
-  enum {
-    MSG_STOP,
-  };
- 
-  void OnMessage(talk_base::Message *m);
-  std::string filesize_to_string(unsigned int size);
-  void OnSessionState(cricket::FileShareState state); 
-  void OnUpdateProgress(cricket::FileShareSession *sess); 
-  void OnResampleImage(std::string path, int width, int height, talk_base::HttpTransaction *trans);
-  void OnFileShareSessionCreate(cricket::FileShareSession *sess);
-  void OnRequestSignaling();
+      private:
+
+	enum {
+		MSG_STOP,
+	};
+
+	void OnMessage(talk_base::Message * m);
+	std::string filesize_to_string(unsigned int size);
+	void OnSessionState(cricket::FileShareState state);
+	void OnUpdateProgress(cricket::FileShareSession * sess);
+	void OnResampleImage(std::string path, int width, int height,
+			     talk_base::HttpTransaction * trans);
+	void OnFileShareSessionCreate(cricket::FileShareSession * sess);
+	void OnRequestSignaling();
 
 
-  Console* console_;
-  talk_base::NetworkManager network_manager_;
-  talk_base::scoped_ptr<cricket::HttpPortAllocator> port_allocator_;
-  talk_base::scoped_ptr<cricket::SessionManager> session_manager_;
-  talk_base::scoped_ptr<cricket::FileShareSessionClient> file_share_session_client_;
-  buzz::XmppClient *xmpp_client_;
-  buzz::Jid send_to_jid_;
-  cricket::FileShareManifest *manifest_;
-  cricket::FileShareSession *session_;
-  bool waiting_for_file_;
-  std::string root_dir_;
-public:
-  sigslot::signal3<const std::string&, //par 
-		   const std::string&,//filename
-		   const std::string&> /*pas utile*/ SignalFileReceived;
-  sigslot::signal3<const std::string&, //sender or receiver
-		   const std::string&, //statue
-		   const std::string&> /*pas utile*/SignalFileTransferStatue;
-  
+	Console *console_;
+	talk_base::NetworkManager network_manager_;
+	talk_base::scoped_ptr < cricket::HttpPortAllocator >
+	    port_allocator_;
+	talk_base::scoped_ptr < cricket::SessionManager > session_manager_;
+	talk_base::scoped_ptr < cricket::FileShareSessionClient >
+	    file_share_session_client_;
+	buzz::XmppClient * xmpp_client_;
+	buzz::Jid send_to_jid_;
+	cricket::FileShareManifest * manifest_;
+	cricket::FileShareSession * session_;
+	bool waiting_for_file_;
+	std::string root_dir_;
+      public:
+	sigslot::signal3 < const std::string &,	//par 
+	const std::string &,	//filename
+	const std::string & > /*pas utile */ SignalFileReceived;
+	sigslot::signal3 < const std::string &,	//sender or receiver
+	const std::string &,	//statue
+	const std::string & > /*pas utile */ SignalFileTransferStatue;
+
 };
 
-static unsigned int get_dir_size(const char *directory){
-  unsigned int total = 0;
-  talk_base::DirectoryIterator iter;
-  talk_base::Pathname path;
-  path.AppendFolder(directory);
-  iter.Iterate(path.pathname());
-  while (iter.Next())  {
-    if (iter.Name() == "." || iter.Name() == "..")
-      continue;
-    if (iter.IsDirectory()) {
-      path.AppendPathname(iter.Name());
-      total += get_dir_size(path.pathname().c_str());
-    }
-    else
-      total += iter.FileSize();
-  }
-  return total;
+static unsigned int get_dir_size(const char *directory)
+{
+	unsigned int total = 0;
+	talk_base::DirectoryIterator iter;
+	talk_base::Pathname path;
+	path.AppendFolder(directory);
+	iter.Iterate(path.pathname());
+	while (iter.Next()) {
+		if (iter.Name() == "." || iter.Name() == "..")
+			continue;
+		if (iter.IsDirectory()) {
+			path.AppendPathname(iter.Name());
+			total += get_dir_size(path.pathname().c_str());
+		} else
+			total += iter.FileSize();
+	}
+	return total;
 }
 
 #endif
-
-

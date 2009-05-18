@@ -76,6 +76,11 @@ void MsgWindow::show_message(const std::string& sender,const std::string& msg,bo
 	textview_msg->showMessage(msg);
 
 }
+void MsgWindow::show_notify_msg(const std::string& msg)
+{
+	textview_msg->showGrayMsg(msg);
+}
+
 /*
 void MsgWindow::show_message(const std::string& msg)
 {

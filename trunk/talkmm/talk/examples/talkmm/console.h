@@ -35,6 +35,10 @@ enum {
 	MSG_START,
 	MSG_INPUT,
 	MSG_CALL,
+	MSG_CALL_ANSWER,
+	MSG_CALL_HANGUP,
+	MSG_FILE_CANCEL,
+	MSG_FILE_ANSWER,
 };
 
 class Console:public talk_base::MessageHandler {
@@ -73,15 +77,16 @@ class Console:public talk_base::MessageHandler {
 			const std::string & file);
 	void OnIncomingCall(const std::string & from);
 	void OnHangupCall(const std::string & from);
+	void OnFileTransferStatue(const std::string& type,const std::string& statue,const std::string& jid);
+	void OnCallStatue(const std::string& jid,const std::string& statue);
 
-	void AnswerFile(bool accept = true);
-	void AnswerCall(bool accept = true);
+	void AnswerFile(const std::string& accept = "true");
+	void AnswerCall(const std::string& accept = "true");
 	void MakeCallTo(const std::string & to);
 	void HangupCall(const std::string & to);
 
 	void SendFile(const std::string & to, const std::string & file);
-	void CancelSendFile(const buzz::Jid & to);
-	void RefreshMsgBoard(const std::string&);
+	void CancelSendFile(const std::string& to);
 	void SendStatus(int,const std::string& status);
 
       private:

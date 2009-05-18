@@ -98,6 +98,18 @@ void Console::OnMessage(talk_base::Message * msg)
 	case MSG_CALL:
 		client_->MakeCallTo(data->data());
 		break;
+	case MSG_CALL_HANGUP:
+		client_->CancelCallTo(data->data());
+		break;
+	case MSG_FILE_CANCEL:
+		client_->CancelSendFile(data->data());
+		break;
+	case MSG_CALL_ANSWER:
+		client_->OnAnswerCall(data->data());
+		break;
+	case MSG_FILE_ANSWER:
+		client_->OnAnswerFile(data->data());
+		break;
 	}
 }
 
@@ -155,7 +167,20 @@ void Console::OnFileRecu(const std::string & from,
 	main_window->on_file_receive(from, file);
 }
 
+void Console::OnFileTransferStatue(const std::string & type,
+				      const std::string & statue,
+				      const std::string & jid)
+{
+	LockMutex locked;
+	main_window->on_filetranser_statue(jid,statue);
+}
 
+void Console::OnCallStatue(const std::string& jid,const std::string statue)
+{
+	LockMutex locked;
+	main_window->on_calling_statue(jid,statue);
+
+}
 void Console::OnHangupCall(const std::string & from)
 {
 	LockMutex locked;
@@ -184,7 +209,6 @@ void Console::SendMessage(const std::string & to,
 
 void Console::MakeCallTo(const std::string & name)
 {
-	//client_->MakeCallTo(name);
 	client_thread_->Post(this, MSG_CALL, new talk_base::TypedMessageData < std::string > (name));
 	return;
 }
@@ -201,27 +225,25 @@ void Console::SendFile(const std::string & to, const std::string & file)
 }
 
 
-void Console::AnswerCall(bool accept)
+//void Console::AnswerCall(bool accept)
+void Console::AnswerCall(const std::string& accept)
 {
-	client_->OnAnswerCall(accept);
+	//client_->OnAnswerCall(accept);
+	client_thread_->Post(this, MSG_CALL_ANSWER, new talk_base::TypedMessageData < std::string > (accept));
 }
 
-void Console::AnswerFile(bool accept)
+void Console::AnswerFile(const std::string& accept)
 {
-	client_->OnAnswerFile(accept);
+	//client_->OnAnswerFile(accept);
+	client_thread_->Post(this, MSG_FILE_ANSWER, new talk_base::TypedMessageData < std::string > (accept));
 }
 
-void Console::RefreshMsgBoard(const std::string & from)
+void Console::CancelSendFile(const std::string& to)
 {
-	main_window->file_transfer(from);
-}
-
-void Console::CancelSendFile(const buzz::Jid & to)
-{
-	client_->CancelSendFile(to);
+	client_thread_->Post(this, MSG_FILE_CANCEL, new talk_base::TypedMessageData < std::string > (to));
 }
 
 void Console::HangupCall(const std::string & to)
 {
-	client_->CancelCallTo(to);
+	client_thread_->Post(this, MSG_CALL_HANGUP, new talk_base::TypedMessageData < std::string > (to));
 }

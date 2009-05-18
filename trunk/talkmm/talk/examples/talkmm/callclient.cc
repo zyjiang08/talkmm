@@ -234,12 +234,9 @@ void CallClient::ParseLine(const std::string & line)
 
 }
 
-CallClient::CallClient(buzz::XmppClient * xmpp_client)
-:  xmpp_client_(xmpp_client),
-    //roster_(new RosterMap), file_roster_(new RosterMap), 
-    //enligne_roster_(new RosterMap), all_roster_(new RosterMap),
-    call_(NULL), incoming_call_(false), incoming_file_(false),
-sending_file_(false)
+CallClient::CallClient(buzz::XmppClient * xmpp_client):xmpp_client_(xmpp_client),
+call_(NULL),
+incoming_call_(false), incoming_file_(false), sending_file_(false)
 {
 
 	b_first_time_send_file_ = true;
@@ -292,12 +289,13 @@ CallClient::~CallClient()
 
 }
 
-void CallClient::CancelSendFile(const buzz::Jid & found_jid)
+void CallClient::CancelSendFile(const std::string & to)
 {
+	//buzz::Jid found_jid = buzz::Jid(to);
 	std::cout << "CancelSendFile is called" << std::endl;
 	//session_->Cancel();
 	//if(session_){
-	if(_current_sending_fileclient){
+	if (_current_sending_fileclient) {
 		_current_sending_fileclient->Cancel();
 		session_ = NULL;
 	}
@@ -353,36 +351,9 @@ void CallClient::SendFile(const std::string & to, const std::string & file)
 
 void CallClient::OnFileTransferStatue(const std::string & type,
 				      const std::string & statue,
-				      const std::string & no_use)
+				      const std::string & jid)
 {
-
-//  console_->Print("OnFileTransferStatue");
-	if (statue == "offer") {
-//    incoming_file_ = true;
-//     if(type == "receiver"){
-//       std::string str;
-//       str += 
-//       console_->Print();
-//    }//if
-	}			//if
-	else {
-		std::string str = "file transfer ";
-		str += statue;
-		this->console_->Print(str);
-		incoming_file_ = false;
-		b_first_time_send_file_ = false;
-
-		if (statue == "started") {
-			sending_file_ = true;
-
-		}		//if
-		else
-			sending_file_ = false;
-		if (!(statue == "started") && type == "sender") {
-//      delete _current_sending_fileclient;
-//      _current_sending_fileclient = NULL;
-		}		//if
-	}			//else
+	console_->OnFileTransferStatue(type, statue, jid);
 
 }
 
@@ -390,13 +361,6 @@ void CallClient::OnFileReceived(const std::string & from,
 				const std::string & file,
 				const std::string & no_use)
 {
-	std::string str;
-	str += from;
-	str += " want to send file ";
-	str += file;
-	str += "' to you...";
-	console_->Print(str);
-	incoming_file_ = true;
 	console_->OnFileRecu(from, file);
 
 }
@@ -442,14 +406,6 @@ void CallClient::OnCallDestroy(cricket::Call * call)
 		console_->Print("call destroyed");
 	}
 
-	/*
-	   console_->SetPrompt(NULL);
-	   console_->Print("call destroyed");
-	   console_->Send("otherhangup###\n");
-	   call_ = NULL;
-	   session_ = NULL;
-	   //  }
-	 */
 }
 
 void CallClient::OnJingleInfo(const std::string & relay_token,
@@ -482,7 +438,6 @@ void CallClient::OnStateChange(buzz::XmppEngine::State state)
 		InitPhone();
 		InitPresence();
 		console_->OnSignOn();
-//    InitFileShareClient();
 		break;
 
 	case buzz::XmppEngine::STATE_CLOSED:
@@ -496,13 +451,6 @@ void CallClient::OnStateChange(buzz::XmppEngine::State state)
 	}
 }
 
-/*
-void CallClient:InitFileShareClient()
-{
-  
-  //jit->SignalJingleInfo.connect(_current_sending_fileclient, &FileShareClient::OnJingleInfo);
-}
-*/
 void CallClient::InitPhone( /*cricket::SessionManager* s */ )
 {
 
@@ -588,10 +536,11 @@ void CallClient::InitPresence()
 	//_current_sending_fileclient->OnSignon(port_allocator_, session_manager_, NULL, session_manager_task_);
 }
 
-void CallClient::SetPresence(buzz::Status::Show f_show,const std::string&  f_status)
+void CallClient::SetPresence(buzz::Status::Show f_show,
+			     const std::string & f_status)
 {
 
-	
+
 	buzz::PresenceOutTask * presence_out_ =
 	    new buzz::PresenceOutTask(xmpp_client_);
 	my_status.set_show(f_show);
@@ -620,28 +569,24 @@ void CallClient::OnSessionState(cricket::Call * call,
 	if (state == cricket::Session::STATE_RECEIVEDINITIATE) {
 		console_->Printf("Incoming call from '%s'",
 				 jid.Str().c_str());
-		//std::string message = "incomingcall###";
-		//message += jid.Str();
-		//message += "\n";
-		//console_->Send(message);
 		call_ = call;
 		session_ = session;
 		incoming_call_ = true;
 		console_->OnIncomingCall(jid.Str());
 	} else if (state == cricket::Session::STATE_SENTINITIATE) {
 		console_->Print("calling...");
+		console_->OnCallStatue(jid.Str(), "calling");
 	} else if (state == cricket::Session::STATE_RECEIVEDACCEPT) {
 		console_->Print("call answered");
-		console_->Send("callanswered###\n");
+		console_->OnCallStatue(jid.Str(), "answer");
 	} else if (state == cricket::Session::STATE_RECEIVEDREJECT) {
 		console_->Print("call not answered");
-		console_->Send("callnotanswered###\n");
+		console_->OnCallStatue(jid.Str(), "noanswer");
 	} else if (state == cricket::Session::STATE_INPROGRESS) {
 		console_->Print("call in progress");
-		console_->Send("callinprogress###\n");
+		console_->OnCallStatue(jid.Str(), "talking");
 	} else if (state == cricket::Session::STATE_RECEIVEDTERMINATE) {
 		console_->Print("other side hung up");
-		console_->Send("otherhangup###\n");
 		console_->OnHangupCall(jid.Str());
 	}
 }
@@ -650,123 +595,14 @@ void CallClient::OnSessionState(cricket::Call * call,
 
 void CallClient::OnStatusUpdate(const buzz::Status & status)
 {
-	//RosterItem item;
-	//item.jid = status.jid();
-	//item.show = status.show();
-	//item.status = status.status();
-	//    item.status = status.status();
-	//    item.file_cap = status.fileshare_capability()?1:0;
-	//    item.phone_cap = status.phone_capability()?1:0;
-
-	//std::string key = item.jid.Str();
-
-	//console_->RosterPresence(key);
 	console_->OnRosterPresence(status);
-#if 0
-	size_t pos = key.find("/");
-	std::string str = key.substr(0, pos);;
-	str += status.available()? "<online\n" : "<offline\n";
-	console_->Send(str);
-
-	console_->Printf("Adding to All roster: %s", key.c_str());
-	(*all_roster_)[key] = item;
-
-	if (status.available() && status.fileshare_capability()) {
-		console_->Printf("Adding to file roster: %s", key.c_str());
-		(*file_roster_)[key] = item;
-	}			//if
-	else {
-		RosterMap::iterator iter = file_roster_->find(key);
-		if (iter != file_roster_->end()) {
-			file_roster_->erase(iter);
-			console_->Printf("Removing from file roster: %s",
-					 key.c_str());
-		}		//if
-	}			//else
-
-	if (status.available()) {
-		console_->Printf("Adding to available roster: %s",
-				 key.c_str());
-		(*enligne_roster_)[key] = item;
-	}			//if
-	else {
-		RosterMap::iterator iter = enligne_roster_->find(key);
-		if (iter != enligne_roster_->end()) {
-			enligne_roster_->erase(iter);
-			console_->
-			    Printf("Removing from available roster: %s",
-				   key.c_str());
-		}		//if
-	}			//else
-
-
-	if (status.available() && status.phone_capability()) {
-		console_->Printf("Adding to phone roster: %s",
-				 key.c_str());
-		(*roster_)[key] = item;
-	} else {
-		RosterMap::iterator iter = roster_->find(key);
-		if (iter != roster_->end()) {
-			roster_->erase(iter);
-			console_->Printf("Removing from phone roster: %s",
-					 key.c_str());
-		}		//if
-	}
-#endif
 }
-
-#if 0
-void CallClient::PrintRoster()
-{
-	console_->SetPrompting(false);
-	console_->Printf("Roster contains %d callable", roster_->size());
-	RosterMap::iterator iter = roster_->begin();
-	while (iter != roster_->end()) {
-		console_->Printf("%s - %s",
-				 iter->second.jid.BareJid().Str().c_str(),
-				 DescribeStatus(iter->second.show,
-						iter->second.status));
-		iter++;
-	}
-	console_->SetPrompting(true);
-}
-
-void CallClient::PrintOLRoster()
-{
-	console_->SetPrompting(false);
-	console_->Printf("Roster contains %d online",
-			 enligne_roster_->size());
-	RosterMap::iterator iter = enligne_roster_->begin();
-	while (iter != enligne_roster_->end()) {
-		console_->Printf("%s - %s",
-				 iter->second.jid.BareJid().Str().c_str(),
-				 DescribeStatus(iter->second.show,
-						iter->second.status));
-		iter++;
-	}
-	console_->SetPrompting(true);
-}
-#endif
 
 void CallClient::OnTexteRecu(const std::string & iconset,
 			     const std::string & from,
 			     const std::string & texte)
 {
-	std::string str;
-	str += from;
-	str += std::string("(");
-	str += iconset;
-	str += std::string(") said: ");
-	str += texte;
-	this->console_->Print(str);
-	std::string message = "message###";
-	message += from;
-	message += "###";
-	message += texte;
-	message += "\n";
-	console_->Print(message);
 	console_->OnRecuMessage(from, texte);
-
 }
 
 void CallClient::SendTexte(const std::string & name,
@@ -798,22 +634,6 @@ void CallClient::MakeCallTo(const std::string & name)
 	buzz::Jid callto_jid = buzz::Jid(name);
 	std::cout << "Callclient::MakeCallTo " << name << std::endl;
 
-	/*
-	   bool found = false;
-	   RosterMap::iterator iter = roster_->begin();
-	   while (iter != roster_->end()) {
-	   if (iter->second.jid.BareEquals(callto_jid)) {
-	   found = true;
-	   found_jid = iter->second.jid;
-	   break;
-	   }
-	   ++iter;
-	   }
-	 */
-
-	//if (found) {
-	console_->Printf("Found online friend '%s'",
-			 callto_jid.Str().c_str());
 	phone_client()->SignalCallDestroy.connect(this,
 						  &CallClient::
 						  OnCallDestroy);
@@ -827,18 +647,14 @@ void CallClient::MakeCallTo(const std::string & name)
 	}
 
 	phone_client()->SetFocus(call_);
-	//} else {
-	//  console_->Printf("Could not find online friend '%s'", name.c_str());
-	//  console_->Send("callnotanswered###\n");
-	//} 
 }
 
 
-void CallClient::OnAnswerCall(bool accept)
+void CallClient::OnAnswerCall(const std::string & accept)
 {
 
 	if (call_ && incoming_call_) {
-		if (accept) {
+		if ("true" == accept) {
 			console_->Send("accept call\n");
 			assert(call_->sessions().size() == 1);
 			call_->AcceptSession(call_->sessions()[0]);
@@ -851,10 +667,10 @@ void CallClient::OnAnswerCall(bool accept)
 	}
 }
 
-void CallClient::OnAnswerFile(bool accept)
+void CallClient::OnAnswerFile(const std::string & accept)
 {
 	if (incoming_file_) {
-		if (accept)
+		if ("true" == accept)
 			_current_sending_fileclient->acceptFile();
 		else {
 			_current_sending_fileclient->Cancel();
