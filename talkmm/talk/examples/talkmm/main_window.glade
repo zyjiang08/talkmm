@@ -522,31 +522,15 @@
                     <property name="visible">True</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <widget class="GtkLabel" id="label_name">
+                      <widget class="GtkLabel" id="label_user_name">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">set name</property>
                       </widget>
                       <packing>
                         <property name="position">0</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkComboBox" id="combobox_status">
-                        <property name="visible">True</property>
-                        <property name="has_frame">False</property>
-                        <property name="items" translatable="yes" comments="&#x5728;&#x7EBF;&#10;&#x5520;&#x53FC;&#10;&#x6682;&#x65F6;&#x79BB;&#x5F00;&#10;&#x8BF7;&#x52FF;&#x6253;&#x6270;&#10;&#x8FDC;&#x8FDC;&#x79BB;&#x5F00;&#10;&#x79BB;&#x7EBF;&#10;&#x65B0;&#x72B6;&#x6001;">Available
-Chat
-Away
-DND
-XA
-Unavailable
-New status</property>
-                      </widget>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">False</property>
-                        <property name="position">1</property>
-                      </packing>
+                      <placeholder/>
                     </child>
                   </widget>
                   <packing>
@@ -584,7 +568,7 @@ New status</property>
                     <child>
                       <widget class="GtkImage" id="image1">
                         <property name="visible">True</property>
-                        <property name="pixbuf">search.png</property>
+                        <property name="pixbuf">search_2.png</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
@@ -650,7 +634,7 @@ New status</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">False</property>
-                    <property name="padding">5</property>
+                    <property name="padding">1</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
@@ -664,17 +648,26 @@ New status</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">False</property>
+                    <property name="padding">1</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
+                  <widget class="GtkComboBox" id="combobox_status">
+                    <property name="visible">True</property>
+                    <property name="has_frame">False</property>
+                    <property name="items" translatable="yes" comments="&#x5728;&#x7EBF;&#10;&#x5520;&#x53FC;&#10;&#x6682;&#x65F6;&#x79BB;&#x5F00;&#10;&#x8BF7;&#x52FF;&#x6253;&#x6270;&#10;&#x8FDC;&#x8FDC;&#x79BB;&#x5F00;&#10;&#x79BB;&#x7EBF;&#10;&#x65B0;&#x72B6;&#x6001;">Available
+Chat
+Away
+DND
+XA
+Unavailable
+New status</property>
+                  </widget>
+                  <packing>
+                    <property name="padding">1</property>
+                    <property name="position">2</property>
+                  </packing>
                 </child>
                 <child>
                   <placeholder/>

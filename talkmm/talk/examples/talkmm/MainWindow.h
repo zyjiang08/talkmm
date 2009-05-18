@@ -64,6 +64,7 @@ class MainWindow : public Gtk::Window {
 		void close_session(const std::string& from);
 		Gtk::Menu* get_tray_pop_menu() { return tray_pop_menu;}
 		/** finsh login*/
+		void set_label_user_name(const std::string& f_jid);
 		const RosterItem& get_roster(const std::string& f_jid);
 		void on_signon();
 		void on_roster_presence(const buzz::Status& status_);
@@ -125,6 +126,7 @@ class MainWindow : public Gtk::Window {
 		Session*				m_session;
 		GlademmXML				main_xml;
 		Gtk::Notebook*				main_notebook;
+		Gtk::Label* 				label_user_name;
 
 		enum{ LOGIN_INIT=0,LOGIN_LOADING,LOGIN_FINISH};
 		//ConfWindow*			confwindow;
