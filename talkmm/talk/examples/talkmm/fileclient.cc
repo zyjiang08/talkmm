@@ -302,14 +302,15 @@ void FileShareClient::OnUpdateProgress(cricket::FileShareSession * sess)
 	    && sess->GetCurrentItemName(&itemname)) {
 		float percent = (float) progress / totalsize;
 
-		int value = percent * 100;
-		char buffer[30];
-		sprintf(buffer, "%d", value);
-		std::string message = "progress###";
-		message += buffer;
-		message += "\n";
-		console_->Print(message);
+		//int value = percent * 100;
+		//char buffer[30];
+		//sprintf(buffer, "%d", value);
+		//std::string message = "progress###";
+		//message += buffer;
+		//message += "\n";
+		//console_->Print(message);
 		console_->OnFileProgress(sess->jid().Str(),itemname,percent);
+		/*
 		unsigned int progressbar_width = (width * 4) / 5;
 
 		const char *filename = itemname.c_str();
@@ -327,6 +328,7 @@ void FileShareClient::OnUpdateProgress(cricket::FileShareSession * sess)
 				std::cout.put(' ');
 		}
 		std::cout.flush();
+		*/
 	}
 }
 
