@@ -439,7 +439,7 @@ void MainWindow::on_incoming_call(const std::string& from)
 				 	m_console->AnswerCall("true");
 					MsgWindow* msg_window = open_session(from);
 					msg_window->raise();
-					 break;
+				 	break;
 				 }
         case (Gtk::RESPONSE_CANCEL): {
 					 m_console->AnswerCall("false");
@@ -474,7 +474,7 @@ void MainWindow::on_send_file(   const std::string& to,  const std::string& file
 	const RosterItem& item = this->get_roster(to);
 	if(item.file_cap){
 		MsgWindow* msg_window = open_session(to);
-		//msg_window->file_transfer_start();
+		msg_window->file_transfer_start();
 		m_console->SendFile(to,filename);
 	}
 	else

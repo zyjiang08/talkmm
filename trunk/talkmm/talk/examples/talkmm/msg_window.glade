@@ -47,7 +47,9 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkComboBox" id="combobox1"/>
+              <widget class="GtkComboBox" id="combobox_functions">
+                <property name="visible">True</property>
+              </widget>
               <packing>
                 <property name="expand">False</property>
                 <property name="position">3</property>

@@ -57,6 +57,7 @@ class MsgWindow: public Gtk::Window
 		Gtk::Button* 				button_send_file;
 		Gtk::Button* 				button_cancel_send_file;
 		Gtk::Button* 				button_cancel_call;
+		Gtk::ComboBox*				combobox_functions;
 		//Gtk::VBox*				vbox_file;
 		Gtk::Frame*				progress_frame;
 		Gtk::ProgressBar*			progressbar_send_file;
