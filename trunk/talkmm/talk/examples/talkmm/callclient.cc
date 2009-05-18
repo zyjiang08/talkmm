@@ -361,6 +361,7 @@ void CallClient::OnFileReceived(const std::string & from,
 				const std::string & file,
 				const std::string & no_use)
 {
+	incoming_file_ = true;
 	console_->OnFileRecu(from, file);
 
 }
@@ -655,7 +656,7 @@ void CallClient::OnAnswerCall(const std::string & accept)
 
 	if (call_ && incoming_call_) {
 		if ("true" == accept) {
-			console_->Send("accept call\n");
+			console_->Print("accept call\n");
 			assert(call_->sessions().size() == 1);
 			call_->AcceptSession(call_->sessions()[0]);
 			phone_client()->SetFocus(call_);
