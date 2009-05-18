@@ -34,7 +34,7 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 	textview_msg = Gtk::manage(new class MsgBox);
 	Gtk::ScrolledWindow* scroll_msg = dynamic_cast<Gtk::ScrolledWindow*>(msg_xml->get_widget("scrolled_msg_show"));
 	scroll_msg->add(*textview_msg);
-	//textview_msg = dynamic_cast<Gtk::TextView*> (msg_xml->get_widget("textview_msg"));
+	textview_msg->set_editable(false);
 
 	hbox_cancel = dynamic_cast < Gtk::HBox * > (msg_xml->get_widget("hbox_cancel"));
 
@@ -50,7 +50,6 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 
 	progress_frame = dynamic_cast<Gtk::Frame*>(msg_xml->get_widget("progress_frame"));
 	progressbar_send_file = dynamic_cast<Gtk::ProgressBar*>(msg_xml->get_widget("progressbar_send_file"));
-	//progressbar_send_file->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_send_file));
 	
 	combobox_functions = dynamic_cast<Gtk::ComboBox*>(msg_xml->get_widget("combobox_functions"));
 
@@ -81,39 +80,16 @@ void MsgWindow::show_message(const std::string& sender,const std::string& msg,bo
 }
 void MsgWindow::show_notify_msg(const std::string& msg)
 {
-	textview_msg->showGrayMsg(msg);
+	textview_msg->showSystemMsg(msg);
 }
 
-/*
-void MsgWindow::show_message(const std::string& msg)
-{
-	textview_msg->set_wrap_mode(Gtk::WRAP_WORD);
-        Glib::RefPtr < Gtk::TextBuffer > buffer = textview_msg->get_buffer();
-        Gtk::TextBuffer::iterator end = buffer->end();
-        Gdk::Rectangle rect;
-        textview_msg->get_visible_rect(rect);
-
-        int y = -1;
-        int height = -1;
-        textview_msg->get_line_yrange(end, y, height);
-
-        buffer->place_cursor(buffer->insert(end, msg));
-
-        if (y < rect.get_y() + rect.get_height() + 16) // 最后一行可见，也就是用户没有向上滚动
-                textview_msg->scroll_to_mark(buffer->get_insert(), 0); // 插入文本后也要向下滚动，使最后一行继续可见
-
-}
-*/
 
 void MsgWindow::send_message()
 {
 	std::string text = entry_send->get_text();
 	m_parent->on_send_message(m_jid,text);
-	//std::string utext="me : "+ text ;
-	  size_t pos = m_jid.find("@");
-	  std::string str = m_jid.substr(0, pos);;
-	show_message(str,text,true);
-	//show_message("\n");
+	const std::string& me = m_parent->get_name();
+	show_message(me,text,true);
 	entry_send->set_text("");
 
 }
@@ -124,32 +100,6 @@ void MsgWindow::on_button_send_file()
         dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
         dialog.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
 
-	/*
-        Gtk::FileFilter filter_png;
-
-        filter_png.set_name("PNG files");
-        filter_png.add_mime_type("image/png");
-        dialog.add_filter(filter_png);
-
-        Gtk::FileFilter filter_jpg;
-        filter_jpg.set_name("JPG files");
-        filter_jpg.add_mime_type("image/jpg");
-
-        dialog.add_filter(filter_jpg);
-
-        Gtk::FileFilter filter_gif;
-        filter_gif.set_name("GIF files");
-        filter_gif.add_mime_type("image/gif");
-
-        dialog.add_filter(filter_gif);
-
-        Gtk::FileFilter filter_any;
-        filter_any.set_name("Any files");
-        filter_any.add_mime_type("*");
-
-        dialog.add_filter(filter_any);
-	*/
-
         std::string filename ;
 
         //dialog.set_current_folder("~/Desktop");
@@ -158,12 +108,6 @@ void MsgWindow::on_button_send_file()
         switch (result) {
         case (Gtk::RESPONSE_OK): {
                         filename = dialog.get_filename(); //注意：这里取回的并不是Glib::ustring, 而是std::string.
-			/*
-			hbox_cancel->show();
-			button_send_file->show();
-			button_cancel_send_file->show();
-			button_cancel_call->hide();
-			*/
 			m_parent->on_send_file(m_jid, filename);
                         break;
                 }
@@ -201,8 +145,13 @@ void MsgWindow::on_button_call()
 void MsgWindow::on_button_cancel_call()
 {
 	hbox_cancel->hide();
-	m_parent->on_hangup_call(m_jid);
+	m_parent->hangup_call(m_jid);
 }
+void MsgWindow::on_call_hangup()
+{
+	hbox_cancel->hide();
+}
+
 
 void MsgWindow::file_transfer_start()
 {

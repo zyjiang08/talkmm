@@ -73,7 +73,8 @@ class MainWindow : public Gtk::Window {
 		void on_file_receive(const std::string& from,const std::string& file);
 
 		void send_call_to(const std::string& to);
-		void on_hangup_call(const std::string& to);
+		void on_hangup_call(const std::string& from);
+		void hangup_call(const std::string& to);
 		void on_incoming_call(const std::string& from);
 
 		void on_send_file(const std::string& to,const std::string& filename);
@@ -97,6 +98,7 @@ class MainWindow : public Gtk::Window {
 		//void on_file_update_progress(const std::string& jid, const std::string& file,float percent);
 		void on_file_update_progress(const std::string& jid, const std::string& file,
 					     float percent, const std::string& describe);
+		const std::string& get_name(){return m_name;}
 
 	protected:
 		bool on_delete_event(GdkEventAny* event);
@@ -129,6 +131,7 @@ class MainWindow : public Gtk::Window {
 		GlademmXML				main_xml;
 		Gtk::Notebook*				main_notebook;
 		Gtk::Label* 				label_user_name;
+		std::string				m_name;
 
 		enum{ LOGIN_INIT=0,LOGIN_LOADING,LOGIN_FINISH};
 		//ConfWindow*			confwindow;

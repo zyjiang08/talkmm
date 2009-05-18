@@ -38,6 +38,7 @@ class MsgWindow: public Gtk::Window
 		void on_button_cancel_send_file();
 		void on_button_call();
 		void on_button_cancel_call();
+		void on_call_hangup();
 		void file_transfer_start();
 		void file_transfer_end();
 	//	void update_file_progress(const std::string& file,float percent);
