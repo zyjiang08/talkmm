@@ -40,6 +40,7 @@ class MsgWindow: public Gtk::Window
 		void on_button_cancel_call();
 		void file_transfer_start();
 		void file_transfer_end();
+		void update_file_progress(const std::string& file,float percent);
 	protected:
 		bool on_delete_event(GdkEventAny* event);
 	private:
@@ -56,6 +57,7 @@ class MsgWindow: public Gtk::Window
 		Gtk::Button* 				button_cancel_call;
 		//Gtk::VBox*				vbox_file;
 		Gtk::Frame*				progress_frame;
+		Gtk::ProgressBar*			progressbar_send_file;
 
 
 };

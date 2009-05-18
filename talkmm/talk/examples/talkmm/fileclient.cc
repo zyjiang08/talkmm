@@ -309,6 +309,7 @@ void FileShareClient::OnUpdateProgress(cricket::FileShareSession * sess)
 		message += buffer;
 		message += "\n";
 		console_->Print(message);
+		console_->OnFileProgress(sess->jid().Str(),itemname,percent);
 		unsigned int progressbar_width = (width * 4) / 5;
 
 		const char *filename = itemname.c_str();

@@ -175,7 +175,7 @@ void Console::OnFileTransferStatue(const std::string & type,
 	main_window->on_filetranser_statue(jid,statue);
 }
 
-void Console::OnCallStatue(const std::string& jid,const std::string statue)
+void Console::OnCallStatue(const std::string& jid,const std::string& statue)
 {
 	LockMutex locked;
 	main_window->on_calling_statue(jid,statue);
@@ -200,6 +200,11 @@ void Console::OnRecuMessage(const std::string & from,
 	main_window->on_receive_message(from, message);
 }
 
+void Console::OnFileProgress(const std::string& jid,const std::string& file,float percent)
+{
+	LockMutex locked;
+	main_window->on_file_update_progress(jid,file,percent);
+}
 void Console::SendMessage(const std::string & to,
 			  const std::string & message)
 {
@@ -247,3 +252,4 @@ void Console::HangupCall(const std::string & to)
 {
 	client_thread_->Post(this, MSG_CALL_HANGUP, new talk_base::TypedMessageData < std::string > (to));
 }
+
