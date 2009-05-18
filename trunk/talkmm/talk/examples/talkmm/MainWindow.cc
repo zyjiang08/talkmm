@@ -581,3 +581,10 @@ void MainWindow::on_calling_statue(const std::string& jid,const std::string& sta
 	}
 
 }
+
+void MainWindow::on_file_update_progress(const std::string& jid, const std::string& file,float percent)
+{
+	MsgWindow* msg_window = open_session(jid);
+	msg_window->update_file_progress(file,percent);
+
+}

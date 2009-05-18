@@ -49,7 +49,7 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 	button_cancel_call->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_cancel_call));
 
 	progress_frame = dynamic_cast<Gtk::Frame*>(msg_xml->get_widget("progress_frame"));
-	//progressbar_send_file = dynamic_cast<Gtk::Progressbar*>(msg_xml->get_widget("progressbar_send_file"));
+	progressbar_send_file = dynamic_cast<Gtk::ProgressBar*>(msg_xml->get_widget("progressbar_send_file"));
 	//progressbar_send_file->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_send_file));
 
 	add(*vbox_main);
@@ -213,3 +213,11 @@ void MsgWindow::file_transfer_end()
 	hbox_cancel->hide();
 	progress_frame->hide();
 }
+
+void MsgWindow::update_file_progress(const std::string& file,float percent)
+{
+	progressbar_send_file->set_fraction(percent);
+	progressbar_send_file->set_text(file);
+
+}
+
