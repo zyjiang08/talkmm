@@ -309,7 +309,37 @@ void FileShareClient::OnUpdateProgress(cricket::FileShareSession * sess)
 		//message += buffer;
 		//message += "\n";
 		//console_->Print(message);
-		console_->OnFileProgress(sess->jid().Str(),itemname,percent);
+		double totalsize_t = 0.0;
+		char temp[64];
+		memset(temp, 0, 64);
+		std::string des;
+		std::cout << "totalsize : " << totalsize << std::endl;
+		if(totalsize < 1024){
+			totalsize_t = (double)totalsize;
+			sprintf(temp, "%.2f", totalsize_t);
+			des = "	(" + (std::string)temp + "B)";
+		}
+		else if((totalsize >= 1024) && (totalsize < 1024 * 1024)){
+			totalsize_t = totalsize / 1024.0;
+			sprintf(temp, "%.2f", totalsize_t);
+			des = "	(" + (std::string)temp + "KB)";
+		}
+		else if((totalsize >= 1024 * 1024) && (totalsize < 1024 * 1024 * 1024)){
+			totalsize_t = totalsize / 1024.0 / 1024.0;
+			sprintf(temp, "%.2f", totalsize_t);
+			des = "	(" + (std::string)temp + "MB)";
+		}
+		else if((totalsize >= 1024 * 1024 * 1024) && (totalsize < 1024.0 * 1024.0 * 1024.0 * 1024.0)){
+			totalsize_t = totalsize / 1024.0 / 1024.0 / 1024.0;
+			sprintf(temp, "%.2f", totalsize_t);
+			des = "	(" + (std::string)temp + "GB)";
+		}
+		else{
+			des = "too big!";
+		}
+
+
+		console_->OnFileProgress(sess->jid().Str(), itemname, percent, des);
 		/*
 		unsigned int progressbar_width = (width * 4) / 5;
 

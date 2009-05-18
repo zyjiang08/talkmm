@@ -40,7 +40,9 @@ class MsgWindow: public Gtk::Window
 		void on_button_cancel_call();
 		void file_transfer_start();
 		void file_transfer_end();
-		void update_file_progress(const std::string& file,float percent);
+	//	void update_file_progress(const std::string& file,float percent);
+		void update_file_progress(const std::string& file, float percent, const std::string& describe);
+
 	protected:
 		bool on_delete_event(GdkEventAny* event);
 	private:

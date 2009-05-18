@@ -79,7 +79,10 @@ class Console:public talk_base::MessageHandler {
 	void OnHangupCall(const std::string & from);
 	void OnFileTransferStatue(const std::string& type,const std::string& statue,const std::string& jid);
 	void OnCallStatue(const std::string& jid,const std::string& statue);
-	void OnFileProgress(const std::string& jid, const std::string& file,float percent);
+	//void OnFileProgress(const std::string& jid, const std::string& file,float percent);
+	void OnFileProgress(const std::string& jid,const std::string& file,
+				     float percent, const std::string& describe);
+
 
 	void AnswerFile(const std::string& accept = "true");
 	void AnswerCall(const std::string& accept = "true");

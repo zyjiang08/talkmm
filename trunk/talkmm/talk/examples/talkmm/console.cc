@@ -200,10 +200,10 @@ void Console::OnRecuMessage(const std::string & from,
 	main_window->on_receive_message(from, message);
 }
 
-void Console::OnFileProgress(const std::string& jid,const std::string& file,float percent)
+void Console::OnFileProgress(const std::string& jid,const std::string& file,float percent, const std::string& describe)
 {
 	LockMutex locked;
-	main_window->on_file_update_progress(jid,file,percent);
+	main_window->on_file_update_progress(jid, file, percent, describe);
 }
 void Console::SendMessage(const std::string & to,
 			  const std::string & message)

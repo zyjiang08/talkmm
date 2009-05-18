@@ -29,11 +29,10 @@ MsgBox::MsgBox()
         set_right_margin(2);
         set_wrap_mode(Gtk::WRAP_WORD_CHAR);
 
-        Glib::RefPtr < Gtk::TextBuffer > buffer =
-                Gtk::TextBuffer::create(taglist.getTagTable());
+        Glib::RefPtr < Gtk::TextBuffer > buffer = Gtk::TextBuffer::create(taglist.getTagTable());
 
         set_buffer(buffer);
-        set_name("icalk_msg_textview");
+        //set_name("icalk_msg_textview");
         show_all();
 }
 
@@ -155,7 +154,7 @@ void MsgBox::showTime(const std::string& time_)
                 snprintf(timetext, 34, "(%02d:%02d:%02d):", tmw->tm_hour, tmw->tm_min, tmw->tm_sec);
         } else {
                 printf("Debug in time stamp\n");
-                snprintf(timetext, time_.size(), time_.c_str());
+                snprintf(timetext, time_.size(), "%s", time_.c_str());
         }
 
         RefTag titlecolor = taglist.getTimeFont();
@@ -172,8 +171,7 @@ void MsgBox::showTime(const std::string& time_)
         buffer->move_mark(mark, end);
 
         //end = buffer->insert_with_tag(end, "\t\t\t\t\t\t", taglist.getBoldFont());
-        end =
-                buffer->insert_with_tag(end, Glib::ustring(timetext), taglist.getBoldFont());
+        end = buffer->insert_with_tag(end, Glib::ustring(timetext), taglist.getBoldFont());
 
         //end = buffer->insert_with_tag(end, "\n", taglist.getBoldFont());
         first = mark->get_iter();
