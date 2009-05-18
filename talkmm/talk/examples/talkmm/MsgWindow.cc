@@ -150,6 +150,13 @@ void MsgWindow::on_button_send_file()
         switch (result) {
         case (Gtk::RESPONSE_OK): {
                         filename = dialog.get_filename(); //注意：这里取回的并不是Glib::ustring, 而是std::string.
+			/*
+			hbox_cancel->show();
+			button_send_file->show();
+			button_cancel_send_file->show();
+			button_cancel_call->hide();
+			*/
+			m_parent->on_send_file(m_jid, filename);
                         break;
                 }
 
@@ -161,27 +168,25 @@ void MsgWindow::on_button_send_file()
                         return ;
         }
 
-	hbox_cancel->show();
-	button_send_file->show();
-	button_cancel_send_file->show();
-	button_cancel_call->hide();
-	m_parent->on_send_file(m_jid, filename);
 }
 
 void MsgWindow::on_button_cancel_send_file()
 {
-	//m_parent->on_cancel_send_file(m_jid);
-	cout << "on_button_cancel_send_file" << endl;
-	hbox_cancel->hide();
+	//file_transfer_end();
+	//hbox_cancel->hide();
+	//button_cancel_send_file->hide();
 	m_parent->on_cancel_send_file(m_jid);
 }
 
 void MsgWindow::on_button_call()
 {
-	hbox_cancel->show();
 	button_call->show();
 	button_send_file->show();
+
+	button_cancel_call->show();
 	button_cancel_send_file->hide();
+	hbox_cancel->show();
+
 	m_parent->send_call_to(m_jid);
 }
 
@@ -191,15 +196,15 @@ void MsgWindow::on_button_cancel_call()
 	m_parent->on_hangup_call(m_jid);
 }
 
-void MsgWindow::file_tranfer_start()
+void MsgWindow::file_transfer_start()
 {
+	hbox_cancel->show();
+	button_cancel_call->hide();
 	progress_frame->show();
 }
 
-/*
-void MsgWindow::file_tranfer_end()
+void MsgWindow::file_transfer_end()
 {
 	hbox_cancel->hide();
 	progress_frame->hide();
 }
-*/

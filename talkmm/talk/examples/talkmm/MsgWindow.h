@@ -37,8 +37,8 @@ class MsgWindow: public Gtk::Window
 		void on_button_cancel_send_file();
 		void on_button_call();
 		void on_button_cancel_call();
-		void file_tranfer_start();
-		void file_tranfer_end();
+		void file_transfer_start();
+		void file_transfer_end();
 	protected:
 		bool on_delete_event(GdkEventAny* event);
 	private:

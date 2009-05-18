@@ -236,6 +236,7 @@ std::string FileShareClient::filesize_to_string(unsigned int size)
 //      thread->Post(this, MSG_STOP);
 //      std::cout << std::endl << "File transfer completed." << std::endl;
       console_->Print("filetransfercompleted###\n");
+      console_->RefreshMsgBoard(session_->jid().Str());
       waiting_for_file_ = true;
       this->SignalFileTransferStatue(type, "completed", "");
 //      delete this->manifest_;
