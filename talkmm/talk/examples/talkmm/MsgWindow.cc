@@ -146,6 +146,7 @@ void MsgWindow::on_button_cancel_call()
 {
 	hbox_cancel->hide();
 	m_parent->hangup_call(m_jid);
+	show_notify_msg("hangup the call");
 }
 void MsgWindow::on_call_hangup()
 {

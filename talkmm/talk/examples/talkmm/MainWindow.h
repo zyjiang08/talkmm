@@ -24,6 +24,7 @@
 #include <gtkmm.h>
 #include <gtkmm/checkbutton.h>
 #include <sigc++/connection.h>
+#include <libsexymm/icon-entry.h>
 #include <libglademm/xml.h>
 #include <glib/gi18n.h>
 #include <map>
@@ -119,7 +120,8 @@ class MainWindow : public Gtk::Window {
 		Console*				m_console;
 		Gtk::Entry*				entry_account;
 		Gtk::Entry*				entry_passwd;
-		Gtk::Entry*				entry_filter;
+		//Gtk::Entry*				entry_filter;
+		Sexy::IconEntry*			entry_filter;
 		Gtk::Button*				button_ok;
 		Gtk::CheckButton*			check_button_rememberMe;
 		Gtk::CheckButton* 			check_button_keeppasswd;
