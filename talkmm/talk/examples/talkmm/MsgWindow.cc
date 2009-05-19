@@ -150,6 +150,7 @@ void MsgWindow::on_button_cancel_call()
 void MsgWindow::on_call_hangup()
 {
 	hbox_cancel->hide();
+	//button_cancel_call->hide();
 }
 
 
