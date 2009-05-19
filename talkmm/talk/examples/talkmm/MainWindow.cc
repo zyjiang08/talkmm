@@ -470,6 +470,7 @@ void MainWindow::on_incoming_call(const std::string& from)
         case (Gtk::RESPONSE_OK): {
 				 	m_console->AnswerCall("true");
 					MsgWindow* msg_window = open_session(from);
+					msg_window->on_call_start();
 					msg_window->raise();
 				 	break;
 				 }
@@ -609,7 +610,8 @@ void MainWindow::on_calling_statue(const std::string& jid,const std::string& sta
 {
 	MsgWindow* msg_window = open_session(jid);
 	if("answer"==statue){
-		msg_window->show_notify_msg("please start talk");
+		//msg_window->show_notify_msg("please start talk");
+		msg_window->on_call_start();
 
 	}
 	else if("noanswer" == statue){

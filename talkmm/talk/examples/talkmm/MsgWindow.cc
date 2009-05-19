@@ -154,11 +154,19 @@ void MsgWindow::on_call_hangup()
 	//button_cancel_call->hide();
 }
 
+void MsgWindow::on_call_start()
+{
+	hbox_cancel->show();
+	button_cancel_call->show();
+	button_cancel_send_file->hide();
+	show_notify_msg("please start talk");
+}
 
 void MsgWindow::file_transfer_start()
 {
 	hbox_cancel->show();
 	button_cancel_call->hide();
+	button_cancel_send_file->show();
 	progress_frame->show();
 }
 
