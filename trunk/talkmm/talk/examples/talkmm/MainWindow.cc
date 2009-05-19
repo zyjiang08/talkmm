@@ -155,6 +155,8 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	/**third page*/
 	label_user_name = dynamic_cast <Gtk::Label*>(main_xml->get_widget("label_user_name"));
 	//label_user_name->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::set_label_user_name));
+	entry_filter = dynamic_cast<Gtk::Entry*>(main_xml->get_widget("entry_filter"));
+	entry_filter->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::on_entry_filter_changed));
 
 	Gtk::Container* list_window = dynamic_cast <Gtk::Container*>(main_xml->get_widget("listWindow"));
 	list_view = Gtk::manage(new BuddyView(*this));
@@ -350,6 +352,7 @@ void MainWindow::on_roster_presence(const buzz::Status& status)
   	item.status = status.status();
   	item.file_cap = status.fileshare_capability()?1:0;
   	item.phone_cap = status.phone_capability()?1:0;
+	item.online = status.available();
 
 
   	std::string key = item.jid.Str();
@@ -607,4 +610,10 @@ void MainWindow::on_file_update_progress(const std::string& jid, const std::stri
 {
 	MsgWindow* msg_window = open_session(jid);
 	msg_window->update_file_progress(file, percent, describe);
+}
+
+void MainWindow::on_entry_filter_changed()
+{
+	Glib::ustring filter = entry_filter->get_text();
+	list_view->set_filter_text(filter);
 }
