@@ -60,7 +60,7 @@ int DealConf::WriteXML(const string username, const string password)
 #ifdef _DEBUG_LOGIN
 	doc.Print();	
 #endif
-	doc.SaveFile( "./config.xml" );
+	doc.SaveFile( "./.config.xml" );
     
 	return 0 ;
 }
