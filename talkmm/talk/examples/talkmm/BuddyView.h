@@ -57,6 +57,7 @@ class BuddyView:public Gtk::TreeView {
 	/**更新好友状态*/
 	void refreshBuddyStatus(const std::string & jid,const std::string& name,const std::string& status="",int show=5,bool call=false);
 
+	void set_filter_text(const Glib::ustring& text);
 
 	/**
          * @brief 获取TreeModel里的ID
@@ -71,14 +72,17 @@ class BuddyView:public Gtk::TreeView {
 
       protected:
 	bool on_button_press_event(GdkEventButton *);
+	bool list_visible_func(const Gtk::TreeIter& iter);
 
       private:
 	MainWindow & m_parent;
 
 	Glib::RefPtr < TreeModelDnd > m_treestore;
+	Glib::RefPtr < Gtk::TreeModelFilter> m_treemodelfilter;
 
 	BuddyColumns buddyColumns;
 	Gtk::CellRendererText m_rendtext;
+	Glib::ustring m_filterText;
 
       private:
 	/** 比较好友*/

@@ -99,6 +99,7 @@ class MainWindow : public Gtk::Window {
 		void on_file_update_progress(const std::string& jid, const std::string& file,
 					     float percent, const std::string& describe);
 		const std::string& get_name(){return m_name;}
+		void on_entry_filter_changed();
 
 	protected:
 		bool on_delete_event(GdkEventAny* event);
@@ -118,6 +119,7 @@ class MainWindow : public Gtk::Window {
 		Console*				m_console;
 		Gtk::Entry*				entry_account;
 		Gtk::Entry*				entry_passwd;
+		Gtk::Entry*				entry_filter;
 		Gtk::Button*				button_ok;
 		Gtk::CheckButton*			check_button_rememberMe;
 		Gtk::CheckButton* 			check_button_keeppasswd;

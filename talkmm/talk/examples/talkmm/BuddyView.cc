@@ -23,7 +23,8 @@
 #include "BuddyView.h"
 
 BuddyView::BuddyView(MainWindow & f_parent):
-m_parent(f_parent)
+		m_parent(f_parent)
+                , m_filterText("")
 {
 	set_headers_visible(false);
 	set_border_width(5);
@@ -34,7 +35,11 @@ m_parent(f_parent)
 		   Gdk::ENTER_NOTIFY_MASK | Gdk::LEAVE_NOTIFY_MASK);
 
 	m_treestore = TreeModelDnd::create(buddyColumns);
-	set_model(m_treestore);
+	//set_model(m_treestore);
+        m_treemodelfilter = Gtk::TreeModelFilter::create(m_treestore);
+        m_treemodelfilter->set_visible_func(sigc::mem_fun(*this, &BuddyView::
+                                            list_visible_func));
+        set_model(m_treemodelfilter);
 
 	append_column("ICON", buddyColumns.icon);
 	//set_show_expanders(false); //gtkmm 2.12
@@ -52,6 +57,13 @@ m_parent(f_parent)
 	this->append_column(*col);
 	this->append_column("Voip", buddyColumns.audioicon);
 
+        m_treestore->
+        set_default_sort_func(sigc::
+                              mem_fun(*this,
+                                      &BuddyView::on_sort_compare));
+        m_treestore->
+        set_sort_column_id(Gtk::TreeSortable::DEFAULT_SORT_COLUMN_ID,
+                           Gtk::SORT_ASCENDING);
 	/*
 	   this->signal_enter_notify_event().connect(sigc::mem_fun(
 	   *this,&BuddyView::on_enter_event));
@@ -136,6 +148,8 @@ void BuddyView::refreshBuddyStatus(const std::string & jid,const std::string& na
 		(*iter)[buddyColumns.nickname] = marktext;
 		g_free(marktext);
 	}
+	if(call)
+		(*iter)[buddyColumns.audioicon] = Gdk::Pixbuf::create_from_file("./image/call.png",24,24);
 
 }
 
@@ -172,4 +186,50 @@ bool BuddyView::on_button_press_event(GdkEventButton * ev)
 	}
 
 	return result;
+}
+
+
+int BuddyView::on_sort_compare(const Gtk::TreeModel::iterator & a,
+                               const Gtk::TreeModel::iterator & b)
+{
+        int result;
+#if 0
+
+        if ((result =
+                                (*a)[buddyColumns.status] - (*b)[buddyColumns.status]) == 0) {
+                Glib::ustring an = (*a)[buddyColumns.nickname];
+                Glib::ustring bn = (*b)[buddyColumns.nickname];
+                result = an.lowercase().compare(bn.lowercase());
+        }
+#endif
+                Glib::ustring an = (*a)[buddyColumns.nickname];
+                Glib::ustring bn = (*b)[buddyColumns.nickname];
+                result = an.lowercase().compare(bn.lowercase());
+
+        return result;
+}
+
+void BuddyView::set_filter_text(const Glib::ustring& text)
+{
+        m_filterText = text;
+        m_treemodelfilter->refilter();
+
+}
+
+bool BuddyView::list_visible_func(const Gtk::TreeIter& iter)
+{
+
+        Glib::ustring email = (*iter)[buddyColumns.id];
+        Glib::ustring name = (*iter)[buddyColumns.nickname];
+        //int type = (*iter)[buddyColumns.status];
+
+        if (m_filterText.empty())
+                return true;
+        else if (email.lowercase().find(m_filterText.lowercase()) != Glib::ustring::npos)
+                return true;
+        else if (name.lowercase().find(m_filterText.lowercase()) != Glib::ustring::npos)
+                return true;
+
+        return false;
+
 }
