@@ -39,6 +39,5 @@ talkmm_LDADD =  \
 	       $(top_srcdir)/talk/base/libcricketbase.la \
 	       $(EXPAT_LIBS) $(ORTP_LIBS) -lpthread -lssl -lcrypto \
 		$(ILBC_LIBS) $(SPEEX_LIBS) $(GLIB_LIBS) $(MEDIA_LIBS) $(MEDIASTREAMER_LIBS)
-talkmm_LDFLAGS =`pkg-config --libs gtkmm-2.4 libglademm-2.4 gthread-2.0`
-AM_CPPFLAGS = -DPOSIX `pkg-config --cflags gtkmm-2.4 libglademm-2.4 gthread-2.0`
-#AM_CPPFLAGS = -DPOSIX `pkg-config --cflags glibmm-2.4 gtkmm-2.4 libglademm-2.4`
+talkmm_LDFLAGS =`pkg-config --libs gtkmm-2.4 libglademm-2.4 gthread-2.0 libsexymm`
+AM_CPPFLAGS = -DPOSIX `pkg-config --cflags gtkmm-2.4 libglademm-2.4 gthread-2.0 libsexymm`

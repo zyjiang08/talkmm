@@ -155,8 +155,27 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	/**third page*/
 	label_user_name = dynamic_cast <Gtk::Label*>(main_xml->get_widget("label_user_name"));
 	//label_user_name->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::set_label_user_name));
-	entry_filter = dynamic_cast<Gtk::Entry*>(main_xml->get_widget("entry_filter"));
+	//entry_filter = dynamic_cast<Gtk::Entry*>(main_xml->get_widget("entry_filter"));
+
+        Gtk::HBox* hboxfiler = dynamic_cast<Gtk::HBox*>
+                               (main_xml->get_widget("hbox_filter"));
+
+        entry_filter = Gtk::manage(new Sexy::IconEntry());
+
+        hboxfiler->pack_start(*entry_filter);
+
+        entry_filter->add_clear_button();
+
+	Gtk::Image* icon = Gtk::manage(new Gtk::Image(Gtk::Stock::FIND, Gtk::ICON_SIZE_MENU));
+
+        icon->show();
+
+        entry_filter->set_icon(Sexy::ICON_ENTRY_PRIMARY, icon);
+
 	entry_filter->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::on_entry_filter_changed));
+
+
+
 
 	Gtk::Container* list_window = dynamic_cast <Gtk::Container*>(main_xml->get_widget("listWindow"));
 	list_view = Gtk::manage(new BuddyView(*this));
