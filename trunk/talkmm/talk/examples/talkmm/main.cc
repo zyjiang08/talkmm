@@ -23,6 +23,11 @@
 #include <config.h>
 #endif
 
+////////////////////////////////////
+//added on 2009.5.20 by string
+#include <libglademm/xml.h>
+////////////////////////////////////
+
 
 using namespace std;
 
@@ -45,10 +50,20 @@ int main(int argc, char* argv[])
 	textdomain (GETTEXT_PACKAGE);
 	*/
 
+
 	if (!g_thread_supported())
 		g_thread_init(NULL);
 
 	gdk_threads_init();
+
+	////////////////////////////////////
+	//added on 2009.5.20 by string
+	//test themes
+	//gtk_rc_parse("./themes/Afterhours/gtk-2.0/gtkrc");
+	//gtk_rc_parse("./themes/Cillop-Midnite/gtk-2.0/gtkrc");
+	//gtk_rc_parse("./themes/SoftSquares/metacity-1/metacity-theme-1.xml");
+	////////////////////////////////////
+
 	Gtk::Main kit(argc, argv);
 	Talkmm talkmm;
 

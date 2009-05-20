@@ -65,7 +65,7 @@ class MainWindow : public Gtk::Window {
 		void close_session(const std::string& from);
 		Gtk::Menu* get_tray_pop_menu() { return tray_pop_menu;}
 		/** finsh login*/
-		void set_label_user_name(const std::string& f_jid);
+		void on_set_settings();
 		const RosterItem& get_roster(const std::string& f_jid);
 		void on_signon();
 		void on_roster_presence(const buzz::Status& status_);
@@ -126,6 +126,7 @@ class MainWindow : public Gtk::Window {
 		Gtk::CheckButton*			check_button_rememberMe;
 		Gtk::CheckButton* 			check_button_keeppasswd;
 		Gtk::Button* 				button_cancel;
+		Gtk::Button* 				button_settings;
 		Gtk::ProgressBar* 			progressbar_login;
 		Gtk::ComboBox*				combobox_status;
 		TrayIcon*				tray_icon;

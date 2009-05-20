@@ -147,14 +147,17 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	Gtk::MenuItem* menu_quit = dynamic_cast<Gtk::MenuItem*>(menu_xml->get_widget("menu_quit"));
 	menu_quit->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::on_quit));
 	/**second page*/
-        button_cancel = dynamic_cast <Gtk::Button *> (main_xml->get_widget("login_cancel"));
+        button_cancel = dynamic_cast <Gtk::Button*> (main_xml->get_widget("login_cancel"));
         button_cancel->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_loginWindow_cancel));
 
 	progressbar_login = dynamic_cast <Gtk::ProgressBar*> (main_xml->get_widget("progressbar_login"));
 
 	/**third page*/
 	label_user_name = dynamic_cast <Gtk::Label*>(main_xml->get_widget("label_user_name"));
-	//label_user_name->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::set_label_user_name));
+
+	button_settings = dynamic_cast <Gtk::Button *>(main_xml->get_widget("button_settings"));
+	//button_settings->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::on_set_settings));
+
 	//entry_filter = dynamic_cast<Gtk::Entry*>(main_xml->get_widget("entry_filter"));
 
         Gtk::HBox* hboxfiler = dynamic_cast<Gtk::HBox*>
@@ -349,9 +352,10 @@ void MainWindow::on_quit()
 	exit(0);
 	
 }
-void MainWindow::set_label_user_name(const std::string& f_jid)
+
+void MainWindow::on_set_settings()
 {
-	cout << "set_label_user_name" << endl;
+	cout << "set_settings" << endl;
 }
 
 const RosterItem& MainWindow::get_roster(const std::string& f_jid)
