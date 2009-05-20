@@ -24,7 +24,7 @@
 #include <gtkmm/treeview.h>
 #include <gtkmm/treestore.h>
 #include <gtkmm/treeselection.h>
-#include <gtkmm/tooltips.h>
+#include <gtkmm/tooltip.h>
 #include <assert.h>
 #include <functional>
 #include <vector>
@@ -34,10 +34,11 @@
 
 using namespace std;
 
+class TreeViewTooltips;
 
 /**
  * @brief  用于显示好友列表的控件.继承Gtk::TreeView
- * @author xihels@gmail.com
+ * @author lerosua@gmail.com
  *
  */
 
@@ -73,6 +74,7 @@ class BuddyView:public Gtk::TreeView {
       protected:
 	bool on_button_press_event(GdkEventButton *);
 	bool list_visible_func(const Gtk::TreeIter& iter);
+	bool on_tooltip_show(int,int,bool,const Glib::RefPtr<Gtk::Tooltip>&);
 
       private:
 	MainWindow & m_parent;
@@ -81,6 +83,7 @@ class BuddyView:public Gtk::TreeView {
 	Glib::RefPtr < Gtk::TreeModelFilter> m_treemodelfilter;
 
 	BuddyColumns buddyColumns;
+	TreeViewTooltips* m_tooltips;
 	Gtk::CellRendererText m_rendtext;
 	Glib::ustring m_filterText;
 
