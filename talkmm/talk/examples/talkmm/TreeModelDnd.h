@@ -6,8 +6,8 @@
  * @param icon Buddy成员的图标，一般由对方上传的头像，默认会设置一个头像。
  * 离线时会是离线时的头像。
  * @param id Buddy成员的用户id，原始的jid string形式，如 icalk@gmail.com
- * @param status 代码Buddy成员的状态。普通的Buddy成员有六种状态。数字0-6,
- *   下面将解说特殊Buddy的status值。
+ * @param show 代码Buddy成员的状态。普通的Buddy成员有六种状态。数字0-6,
+ *   下面将解说特殊Buddy的show值。
  *
  * @note 这种方式表示似乎有些局限性。考虑另起一个变量来表示类型，以支持
  * 像网关，Gtalk类型的聊天群这样有状态的类型。
@@ -24,7 +24,7 @@ class BuddyColumns:public Gtk::TreeModel::ColumnRecord {
 	Gtk::TreeModelColumn < Glib::RefPtr < Gdk::Pixbuf > >icon;
 	Gtk::TreeModelColumn < Glib::ustring > nickname;
 	Gtk::TreeModelColumn < Glib::ustring > id;
-	Gtk::TreeModelColumn < int >status;
+	Gtk::TreeModelColumn < int >show;
 	Gtk::TreeModelColumn < int >type;
 	Gtk::TreeModelColumn < Glib::RefPtr < Gdk::Pixbuf > >audioicon;
 };

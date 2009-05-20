@@ -5,6 +5,7 @@ talkmm_SOURCES = talkmm.cc main.cc callclient.cc console.cc chatclient.cc filecl
 		 MsgWindow.cc \
 		 BuddyView.cc \
 		 TreeModelDnd.cc \
+		 TreeViewTooltips.cc \
 		 TrayIcon.cc \
 		 TagList.cc \
 		 MsgBox.cc \
@@ -19,6 +20,7 @@ noinst_HEADERS = talkmm.h callclient.h  console.h chatclient.h  fileclient.h \
 		 MsgWindow.h  \
 		 BuddyView.h \
 		 TreeModelDnd.h \
+		 TreeViewTooltips.h \
 		 TrayIcon.h \
 		 SmileTree.h \
 		 TagList.h \

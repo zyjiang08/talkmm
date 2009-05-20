@@ -20,11 +20,11 @@ bool TreeModelDnd::row_draggable_vfunc(const Gtk::TreeModel::Path & path) const
 
 	if (iter) {
 		Row row = *iter;
-		int status_ = row[buddyColumns.status];
-		printf("status_ is %d\n", status_);
+		int show_ = row[buddyColumns.show];
+		printf("show_ is %d\n", show_);
 
 		/*
-		   if (STATUS_GROUP == status_)
+		   if (STATUS_GROUP == show_)
 		   return false;
 		   else
 		   return true;
@@ -63,8 +63,8 @@ bool TreeModelDnd::row_drop_possible_vfunc(const Gtk::TreeModel::
 		Row row = *iter_dest_parent;
 		Glib::ustring name = row[buddyColumns.id];
 		printf("name is %s\n", name.c_str());
-		int status_ = row[buddyColumns.status];
-		printf("status_ is %d\n", status_);
+		int show_ = row[buddyColumns.show];
+		printf("show_ is %d\n", show_);
 
 		if (iter_dest_parent) {
 			return true;
@@ -90,6 +90,6 @@ BuddyColumns::BuddyColumns()
 	add(nickname);
 	add(audioicon);
 	add(id);
-	//add(status);
+	//add(show);
 	//add(type);
 }

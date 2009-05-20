@@ -21,6 +21,7 @@
 #include <fstream>
 #include <unistd.h>
 #include "BuddyView.h"
+#include "TreeViewTooltips.h"
 
 BuddyView::BuddyView(MainWindow & f_parent):
 		m_parent(f_parent)
@@ -28,6 +29,7 @@ BuddyView::BuddyView(MainWindow & f_parent):
 {
 	set_headers_visible(false);
 	set_border_width(5);
+	set_has_tooltip();
 	set_name("icalk_blist_treeview");
 
 	add_events(Gdk::POINTER_MOTION_MASK | Gdk::BUTTON_MOTION_MASK | 
@@ -68,12 +70,15 @@ BuddyView::BuddyView(MainWindow & f_parent):
 	   this->signal_enter_notify_event().connect(sigc::mem_fun(
 	   *this,&BuddyView::on_enter_event));
 	 */
+        m_tooltips = new TreeViewTooltips(this);
+	this->set_tooltip_window( *m_tooltips);
+	this->signal_query_tooltip().connect(sigc::mem_fun(*this,&BuddyView::on_tooltip_show));
 	show_all_children();
 }
 
 BuddyView::~BuddyView()
 {
-	//delete m_tooltips;
+	delete m_tooltips;
 }
 
 Gtk::TreeModel::iterator BuddyView::getListIter(Gtk::TreeModel::Children children, const Glib::ustring & id)
@@ -232,4 +237,26 @@ bool BuddyView::list_visible_func(const Gtk::TreeIter& iter)
 
         return false;
 
+}
+
+bool BuddyView::on_tooltip_show(int x,int y, bool key_mode,const Glib::RefPtr<Gtk::Tooltip>& tooltip)
+{
+
+        Gtk::TreeModel::Path path;
+        Gtk::TreeViewColumn * column;
+        int cell_x, cell_y;
+        if (this->get_path_at_pos(x, y, path, column, cell_x,cell_y)){
+                Gtk::TreeModel::iterator iter =
+                        this->get_model()->get_iter(path);
+
+                if (!iter)
+                        return false;
+                Glib::ustring jid = (*iter)[buddyColumns.id];
+		Glib::ustring msg = (*iter)[buddyColumns.nickname];
+		m_tooltips->setLabel(jid+"\n"+msg);
+
+
+		return true;
+	}
+	return false;
 }
