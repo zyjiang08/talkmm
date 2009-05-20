@@ -620,6 +620,7 @@ void MainWindow::on_calling_statue(const std::string& jid,const std::string& sta
 	}
 	else if("noanswer" == statue){
 		msg_window->show_notify_msg("romte no answer");
+		msg_window->on_call_hangup();
 	}
 	else if("calling" == statue){
 		msg_window->show_notify_msg("calling...");
