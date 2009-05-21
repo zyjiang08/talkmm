@@ -38,7 +38,7 @@ class Talkmm
 {
 
 	public:
-		Talkmm();
+		Talkmm(MainWindow* _win);
 		~Talkmm();
 		bool OnLogin(const std::string& f_username,const std::string& f_pass);
 		void DisConnect();
@@ -54,7 +54,7 @@ class Talkmm
 		Console* m_console;
 		talk_base::Thread* main_thread;
 		talk_base::Thread* console_thread;
-		bool relogin;
+		//bool relogin;
 
 		MainWindow* main_window;
 };

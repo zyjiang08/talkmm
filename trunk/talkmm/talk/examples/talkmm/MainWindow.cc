@@ -101,12 +101,12 @@ void MainWindow::on_conf_window_close(ConfWindow* dlg)
 }
 */
 
-MainWindow::MainWindow(Talkmm* f_parent):
+MainWindow::MainWindow():
 	window_width(1)
 	,window_height(1)
 	//,confwindow(NULL)
 	,tray_icon(NULL)
-	,m_parent(f_parent)
+	,m_talkmm(NULL)
 	,m_session(new Session)
 	,m_roster(new RosterMap)
 	,m_name("talkmm")
@@ -124,6 +124,8 @@ MainWindow::MainWindow(Talkmm* f_parent):
 	check_button_keeppasswd->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::check_button_keeppasswd_clicked));
 
 	button_ok = dynamic_cast <Gtk::Button*>(main_xml->get_widget("login_ok"));
+	button_ok->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::on_login));
+
         entry_account = dynamic_cast <Gtk::Entry*>(main_xml->get_widget("entry_account"));
         entry_passwd = dynamic_cast <Gtk::Entry*>(main_xml->get_widget("entry_passwd"));
 	entry_passwd->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::on_login_emit));
@@ -200,6 +202,7 @@ MainWindow::~MainWindow()
 {
 	delete m_session;
 	delete m_roster;
+	delete m_talkmm;
 }
 
 bool MainWindow::on_key_press_event(GdkEventKey* ev)
@@ -227,13 +230,13 @@ void MainWindow::on_login_error(const std::string& error)
                                   Gtk::BUTTONS_OK);
         dialog.set_secondary_text(error);
         dialog.run();
-	m_parent->DisConnect();
+	//m_talkmm->DisConnect();
         main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
 }
 
 void MainWindow::on_loginWindow_cancel()
 {
-	m_parent->DisConnect();
+	//m_talkmm->DisConnect();
         main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
 	//Here something need to be done.
 	
@@ -246,6 +249,8 @@ void MainWindow::on_loginWindow_cancel()
 
 void MainWindow::on_signon()
 {
+	m_name = m_talkmm->GetUserName();
+	label_user_name->set_text(m_name);
 	main_notebook->set_current_page(LOGIN_FINISH);
 }
 
@@ -294,7 +299,8 @@ void MainWindow::on_login_emit()
 	button_ok->clicked();
 }
 
-void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
+//void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
+void MainWindow::on_login()
 {
 	const double max = 50;
 	//const double max_t = 200;
@@ -308,8 +314,14 @@ void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 
         main_notebook->set_current_page(LOGIN_LOADING); //设置当前状态为登录中
 
+	if(m_talkmm != NULL){
+		printf("MainWindow::318  delete talkmm\n");
+		delete m_talkmm;
+	}
+	m_talkmm= new Talkmm(this);
 
-        if (!(f_handler->*f_call)(name, passwd)) { // 登录失败
+        //if (!(f_handler->*f_call)(name, passwd)) { // 登录失败}
+	if (!(m_talkmm->OnLogin(name,passwd))){
 		printf("login false\n");
 	}else{
 		for(i = 0; i <= max; ++i)
@@ -334,21 +346,18 @@ void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 		check_button_keeppasswd_clicked();
 	}
 
-	m_name = m_parent->GetUserName();
-
-	label_user_name->set_text(m_name);
 }
 
 
 void MainWindow::signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 {
-	button_ok->signal_clicked().connect(sigc::bind(sigc::mem_fun(*this,&MainWindow::on_login),f_handler,f_call));
+//	button_ok->signal_clicked().connect(sigc::bind(sigc::mem_fun(*this,&MainWindow::on_login),f_handler,f_call));
 }
 
 void MainWindow::on_quit()
 {
 	Gtk::Main::quit();
-	//m_parent->DisConnect();
+	//m_talkmm->DisConnect();
 	exit(0);
 	
 }

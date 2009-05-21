@@ -18,7 +18,7 @@
 
 #include <stdio.h>
 #include <gtkmm/main.h>
-#include "talkmm.h"
+#include "MainWindow.h"
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -65,7 +65,8 @@ int main(int argc, char* argv[])
 	////////////////////////////////////
 
 	Gtk::Main kit(argc, argv);
-	Talkmm talkmm;
+	//Talkmm talkmm;
+	MainWindow window;
 
 	gdk_threads_enter();
 	kit.run();

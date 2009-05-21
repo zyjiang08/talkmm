@@ -22,7 +22,7 @@
 
 bool debug=false;
 
-Talkmm::Talkmm():relogin(false)
+Talkmm::Talkmm(MainWindow* _win):main_window(_win)
 {
 	if (debug)
 	    talk_base::LogMessage::LogToDebug(talk_base::LS_VERBOSE);
@@ -31,8 +31,8 @@ Talkmm::Talkmm():relogin(false)
 	talk_base::InitializeSSL();
 
 	//Create the main window included three notebooks' tabs.
-	main_window = new MainWindow(this);
-	main_window->signal_on_login(this, &Talkmm::OnLogin);
+	//main_window = new MainWindow(this);
+	//main_window->signal_on_login(this, &Talkmm::OnLogin);
 
 	m_callclient = new CallClient(m_pump.client());
 
@@ -54,9 +54,9 @@ Talkmm::~Talkmm()
 {
 	delete m_callclient;
 	delete m_console;
-	delete main_thread;
-	delete console_thread;
-	delete main_window;
+	//delete main_thread;
+	//delete console_thread;
+	//delete main_window;
 
 }
 
@@ -71,9 +71,9 @@ void Talkmm::DisConnect()
 	m_console=NULL;
 	console_thread=NULL;
 	main_thread=NULL;
-	*/
 	relogin=true;
 	main_thread->Stop();
+	*/
 
 	
 }
@@ -96,10 +96,6 @@ bool Talkmm::OnLogin(const std::string& f_username,const std::string& f_pass)
 	m_xcs.set_server(talk_base::SocketAddress("talk.google.com", 5222));
 	printf("Logging in as %s\n", m_jid.Str().c_str());
 	m_pump.DoLogin(m_xcs, new XmppSocket(true), NULL);
-	if(relogin){
-		talk_base::ThreadManager::SetCurrent(main_thread);
-		main_thread->Start();
-	}
 	
 	return true;
 }

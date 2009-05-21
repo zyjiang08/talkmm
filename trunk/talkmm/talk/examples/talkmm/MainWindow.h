@@ -54,7 +54,7 @@ struct RosterItem {
 
 class MainWindow : public Gtk::Window {
 	public:
-		MainWindow(Talkmm* f_parent);
+		MainWindow();
 		~MainWindow();
 		//void on_conf_window_close(ConfWindow* dlg);
 		bool on_key_press_event(GdkEventKey* ev);
@@ -89,7 +89,8 @@ class MainWindow : public Gtk::Window {
 		void on_loginWindow_cancel();
 		void on_login_error(const std::string& error);
 		void on_login_emit();
-		void on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
+		//void on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
+		void on_login();
 		void signal_on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call);
 		void set_console(Console* f_console){m_console = f_console;};
 
@@ -116,7 +117,7 @@ class MainWindow : public Gtk::Window {
 		DealConf dealconf;
 		typedef std::map<std::string,MsgWindow*> Session;
 		RosterMap*				m_roster;
-		Talkmm*					m_parent;
+		Talkmm*					m_talkmm;
 		Console*				m_console;
 		Gtk::Entry*				entry_account;
 		Gtk::Entry*				entry_passwd;
