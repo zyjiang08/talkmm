@@ -492,6 +492,8 @@ void MainWindow::on_incoming_call(const std::string& from)
 
 void MainWindow::on_cancel_send_file(const std::string& to)
 {
+	m_console->CancelSendFile(to);
+#if 0
 	const RosterItem& item = this->get_roster(to);
 	MsgWindow* msg_window = open_session(to);
 	if(item.file_cap){
@@ -504,6 +506,7 @@ void MainWindow::on_cancel_send_file(const std::string& to)
 		std::cout<<msg<<std::endl;
 		msg_window->show_notify_msg(msg);
 	}
+#endif
 }
 
 void MainWindow::on_send_file(   const std::string& to,  const std::string& filename)
