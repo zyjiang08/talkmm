@@ -234,9 +234,15 @@ void CallClient::ParseLine(const std::string & line)
 
 }
 
-CallClient::CallClient(buzz::XmppClient * xmpp_client):xmpp_client_(xmpp_client),
-call_(NULL),
-incoming_call_(false), incoming_file_(false), sending_file_(false)
+CallClient::CallClient(buzz::XmppClient * xmpp_client):xmpp_client_(xmpp_client)
+	,call_(NULL)
+	,incoming_call_(false)
+	,incoming_file_(false)
+	,sending_file_(false)
+,_chatclient(NULL)
+,presence_push_(NULL)
+,_current_sending_fileclient(NULL)
+,_current_waiting_fileclient(NULL)
 {
 
 	b_first_time_send_file_ = true;
@@ -282,10 +288,14 @@ incoming_call_(false), incoming_file_(false), sending_file_(false)
 
 CallClient::~CallClient()
 {
-	delete _chatclient;
-	delete _current_waiting_fileclient;
-	delete _current_sending_fileclient;
-	delete presence_push_;
+	if(_chatclient !=NULL)
+		delete _chatclient;
+	if(_current_waiting_fileclient !=NULL)
+		delete _current_waiting_fileclient;
+	if(_current_sending_fileclient !=NULL)
+		delete _current_sending_fileclient;
+	if(presence_push_ !=NULL)
+		delete presence_push_;
 
 }
 

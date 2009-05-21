@@ -71,11 +71,11 @@ void Console::StartConsole()
 	for (;;) {
 //      fgets(buffer, sizeof(buffer), stdin);
 		fgets(buffer, sizeof(buffer), stdin);
-		client_thread_->Post(this, MSG_INPUT,
-				     new talk_base::TypedMessageData <
-				     std::string > (buffer));
-
-
+//		client_thread_->Post(this, MSG_INPUT,
+//				     new talk_base::TypedMessageData <
+//				     std::string > (buffer));
+//
+//
 	}			//for
 }
 
