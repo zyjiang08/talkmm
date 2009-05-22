@@ -241,22 +241,23 @@ bool BuddyView::list_visible_func(const Gtk::TreeIter& iter)
 
 bool BuddyView::on_tooltip_show(int x,int y, bool key_mode,const Glib::RefPtr<Gtk::Tooltip>& tooltip)
 {
-
         Gtk::TreeModel::Path path;
         Gtk::TreeViewColumn * column;
+
         int cell_x, cell_y;
+
         if (this->get_path_at_pos(x, y, path, column, cell_x,cell_y)){
-                Gtk::TreeModel::iterator iter =
-                        this->get_model()->get_iter(path);
+                Gtk::TreeModel::iterator iter = this->get_model()->get_iter(path);
 
                 if (!iter)
                         return false;
+
                 Glib::ustring jid = (*iter)[buddyColumns.id];
 		Glib::ustring msg = (*iter)[buddyColumns.nickname];
 		m_tooltips->setLabel(jid+"\n"+msg);
 
-
 		return true;
 	}
+
 	return false;
 }

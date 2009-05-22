@@ -179,9 +179,6 @@ MainWindow::MainWindow():
 
 	entry_filter->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::on_entry_filter_changed));
 
-
-
-
 	Gtk::Container* list_window = dynamic_cast <Gtk::Container*>(main_xml->get_widget("listWindow"));
 	list_view = Gtk::manage(new BuddyView(*this));
 	list_window->add(*list_view);
@@ -224,10 +221,7 @@ bool MainWindow::on_key_press_event(GdkEventKey* ev)
 
 void MainWindow::on_login_error(const std::string& error)
 {
-
-        Gtk::MessageDialog dialog(*this, _("Login error"), false,
-                                  Gtk::MESSAGE_INFO,
-                                  Gtk::BUTTONS_OK);
+        Gtk::MessageDialog dialog(*this, _("Login error"), false, Gtk::MESSAGE_INFO, Gtk::BUTTONS_OK);
         dialog.set_secondary_text(error);
         dialog.run();
 	//m_talkmm->DisConnect();
@@ -237,7 +231,8 @@ void MainWindow::on_login_error(const std::string& error)
 void MainWindow::on_loginWindow_cancel()
 {
 	//m_talkmm->DisConnect();
-        main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
+	on_login_error("cancel login");
+        //main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
 	//Here something need to be done.
 	
 	//m_pump.client()->Stop();
@@ -318,7 +313,8 @@ void MainWindow::on_login()
 		printf("MainWindow::318  delete talkmm\n");
 		delete m_talkmm;
 	}
-	m_talkmm= new Talkmm(this);
+
+	m_talkmm = new Talkmm(this);
 
         //if (!(f_handler->*f_call)(name, passwd)) { // 登录失败}
 	if (!(m_talkmm->OnLogin(name,passwd))){
@@ -457,7 +453,7 @@ void MainWindow::on_hangup_call(const std::string& from)
 {
 	MsgWindow* msg_window = open_session(from);
 	msg_window->on_call_hangup();
-	msg_window->show_notify_msg("romete hangup the call");
+	msg_window->show_notify_msg("remote hangup the call");
 
 }
 void MainWindow::hangup_call(const std::string& to)
@@ -524,7 +520,8 @@ void MainWindow::on_send_file(   const std::string& to,  const std::string& file
 	if(item.file_cap){
 		MsgWindow* msg_window = open_session(to);
 		msg_window->file_transfer_start();
-		m_console->SendFile(to,filename);
+		//msg_window->file_sending = true;
+		m_console->SendFile(to, filename);
 	}
 	else
 		std::cout<<to<<" does not support file translate with jingle"<<std::endl;
@@ -631,7 +628,7 @@ void MainWindow::on_calling_statue(const std::string& jid,const std::string& sta
 
 	}
 	else if("noanswer" == statue){
-		msg_window->show_notify_msg("romte no answer");
+		msg_window->show_notify_msg("remote no answer");
 		msg_window->on_call_hangup();
 	}
 	else if("calling" == statue){
@@ -647,7 +644,12 @@ void MainWindow::on_file_update_progress(const std::string& jid, const std::stri
 					 float percent, const std::string& describe)
 {
 	MsgWindow* msg_window = open_session(jid);
-	msg_window->update_file_progress(file, percent, describe);
+
+	//if(msg_window->file_sending){
+		msg_window->update_file_progress(file, percent, describe);
+		cout << "on_file_update_progress........................" << endl;
+	//}
+	//cout << "on_file_update_progress++++++++++++++++++++++++++++" << endl;
 }
 
 void MainWindow::on_entry_filter_changed()
