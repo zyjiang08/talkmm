@@ -25,6 +25,9 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 		     const std::string& f_jid):m_parent(f_parent),
 		     m_jid(f_jid)
 {
+	calling = false;
+	file_sending= false;
+
         msg_xml = Gnome::Glade::Xml::create(msg_ui, "vbox_main");
 	Gtk::VBox* vbox_main= dynamic_cast < Gtk::VBox * > (msg_xml->get_widget("vbox_main"));
 
@@ -61,6 +64,7 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 	hbox_cancel->hide();
 	combobox_functions->hide();
 }
+
 MsgWindow::~MsgWindow()
 {
 
@@ -68,10 +72,19 @@ MsgWindow::~MsgWindow()
 
 bool MsgWindow::on_delete_event(GdkEventAny* event)
 {
-	m_parent->close_session(m_jid);
-	delete this;
+	/*
+	if(file_sending)
+		m_parent->on_cancel_send_file(m_jid);
+	*/
 
+	if(calling)
+		m_parent->hangup_call(m_jid);
+
+	m_parent->close_session(m_jid);
+
+	delete this;
 }
+
 void MsgWindow::show_message(const std::string& sender,const std::string& msg,bool self)
 {
 	textview_msg->showTitle(sender,self);
@@ -127,6 +140,7 @@ void MsgWindow::on_button_cancel_send_file()
 	//file_transfer_end();
 	//hbox_cancel->hide();
 	//button_cancel_send_file->hide();
+	this->file_sending = false;
 	m_parent->on_cancel_send_file(m_jid);
 }
 
@@ -140,11 +154,13 @@ void MsgWindow::on_button_call()
 	hbox_cancel->show();
 
 	m_parent->send_call_to(m_jid);
+	this->calling = true;
 }
 
 void MsgWindow::on_button_cancel_call()
 {
 	hbox_cancel->hide();
+	this->calling = false;
 	m_parent->hangup_call(m_jid);
 	show_notify_msg("hangup the call");
 }
@@ -160,6 +176,7 @@ void MsgWindow::on_call_start()
 	button_cancel_call->show();
 	button_cancel_send_file->hide();
 	show_notify_msg("please start talk");
+	this->calling = true;
 }
 
 void MsgWindow::file_transfer_start()
@@ -168,12 +185,14 @@ void MsgWindow::file_transfer_start()
 	button_cancel_call->hide();
 	button_cancel_send_file->show();
 	progress_frame->show();
+	this->file_sending = true;
 }
 
 void MsgWindow::file_transfer_end()
 {
 	hbox_cancel->hide();
 	progress_frame->hide();
+	this->file_sending = false;
 }
 
 void MsgWindow::update_file_progress(const std::string& file, float percent, const std::string& describe)

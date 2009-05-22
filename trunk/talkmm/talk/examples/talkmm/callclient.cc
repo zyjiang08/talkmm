@@ -304,7 +304,6 @@ void CallClient::CancelSendFile(const std::string & to)
 	//buzz::Jid found_jid = buzz::Jid(to);
 	std::cout << "CancelSendFile is called" << std::endl;
 	//session_->Cancel();
-	//if(session_){
 	if (_current_sending_fileclient) {
 		_current_sending_fileclient->Cancel();
 		session_ = NULL;
@@ -452,8 +451,7 @@ void CallClient::OnStateChange(buzz::XmppEngine::State state)
 		break;
 
 	case buzz::XmppEngine::STATE_CLOSED:
-		buzz::XmppEngine::Error error =
-		    xmpp_client_->GetError(NULL);
+		buzz::XmppEngine::Error error = xmpp_client_->GetError(NULL);
 		console_->Print("logged out..." + strerror(error));
 		console_->Send("loggedout\n");
 		console_->OnSignError(strerror(error));
