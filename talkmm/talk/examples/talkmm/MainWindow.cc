@@ -112,6 +112,8 @@ MainWindow::MainWindow():
 	,m_name("talkmm")
 	,combobox_status(NULL)
 {
+	this->set_icon_from_file("logo.png");
+
         main_xml = Gnome::Glade::Xml::create(main_ui, "main_notebook");
         main_notebook = dynamic_cast < Gtk::Notebook * > (main_xml->get_widget("main_notebook"));
         main_notebook->set_current_page(LOGIN_INIT);
