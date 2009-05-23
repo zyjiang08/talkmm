@@ -150,6 +150,8 @@ MainWindow::MainWindow():
 	tray_pop_menu = dynamic_cast<Gtk::Menu* >(menu_xml->get_widget("tray_menu"));
 	Gtk::MenuItem* menu_quit = dynamic_cast<Gtk::MenuItem*>(menu_xml->get_widget("menu_quit"));
 	menu_quit->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::on_quit));
+	Gtk::MenuItem* menu_disconnect=dynamic_cast<Gtk::MenuItem*>(menu_xml->get_widget("menu_disconnect"));
+	menu_disconnect->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::on_disconnect));
 	/**second page*/
         button_cancel = dynamic_cast <Gtk::Button*> (main_xml->get_widget("login_cancel"));
         button_cancel->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_loginWindow_cancel));
@@ -226,22 +228,23 @@ void MainWindow::on_login_error(const std::string& error)
         Gtk::MessageDialog dialog(*this, _("Login error"), false, Gtk::MESSAGE_INFO, Gtk::BUTTONS_OK);
         dialog.set_secondary_text(error);
         dialog.run();
-	//m_talkmm->DisConnect();
         main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
 }
 
 void MainWindow::on_loginWindow_cancel()
 {
-	//m_talkmm->DisConnect();
-	on_login_error("cancel login");
-        //main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
-	//Here something need to be done.
-	
-	//m_pump.client()->Stop();
-	/*
-	talk_base::Thread *thread_t = talk_base::ThreadManager::CurrentThread();
-	thread_t->Stop();
-	*/
+	delete m_talkmm;
+	m_talkmm=NULL;
+        main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
+}
+void MainWindow::on_disconnect()
+{
+	if(m_talkmm!=NULL){
+		delete m_talkmm;
+		m_talkmm=NULL;
+	}
+        main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
+
 }
 
 void MainWindow::on_signon()
@@ -296,7 +299,6 @@ void MainWindow::on_login_emit()
 	button_ok->clicked();
 }
 
-//void MainWindow::on_login(CLogin::Handler* f_handler,CLogin::View::Func f_call)
 void MainWindow::on_login()
 {
 	const double max = 50;
@@ -312,13 +314,11 @@ void MainWindow::on_login()
         main_notebook->set_current_page(LOGIN_LOADING); //设置当前状态为登录中
 
 	if(m_talkmm != NULL){
-		printf("MainWindow::318  delete talkmm\n");
 		delete m_talkmm;
 	}
 
 	m_talkmm = new Talkmm(this);
 
-        //if (!(f_handler->*f_call)(name, passwd)) { // 登录失败}
 	if (!(m_talkmm->OnLogin(name,passwd))){
 		printf("login false\n");
 	}else{

@@ -72,6 +72,7 @@ class MainWindow : public Gtk::Window {
 		void on_receive_message(const std::string& from,const std::string& message);
 		void on_send_message(const std::string& to,const std::string& message);
 		void on_file_receive(const std::string& from,const std::string& file);
+		void on_disconnect();
 
 		void send_call_to(const std::string& to);
 		void on_hangup_call(const std::string& from);
