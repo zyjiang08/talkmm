@@ -63,22 +63,25 @@ void MainWindow::on_menu_view_preferences()
 }
 
 */
-void MainWindow::on_menu_about()
+void MainWindow::on_button_about()
 {
 	static Gtk::AboutDialog*  about(0);
 	if(about == 0){
 		std::vector<Glib::ustring> authors;
-		authors.push_back("lerosua ");
-		about = new Gtk::AboutDialog ;
-		//about->set_logo(ui_logo);
-		about->set_program_name("GMDemo");
-		about->set_version("0.10");
-		about->set_website("http://lerosua.org");
-		about->set_copyright("Copyright (c) 2009 lerosua");
-		about->set_comments(_("GMDemo is gtkmm program demo"));
+		authors.push_back("Talkmm Team: XiongQin, Lerosua, Junyi");
+		about = new Gtk::AboutDialog;
+		about->set_icon_from_file("talkmm_logo_1.png");
+		const static Glib::RefPtr<Gdk::Pixbuf>& logo_icon = Gdk::Pixbuf::create_from_file("talkmm_logo_2.png");
+
+		about->set_logo(logo_icon);
+		about->set_program_name("Talkmm");
+		about->set_version("1.0");
+		about->set_website("http://code.google.com/p/talkmm/");
+		about->set_copyright("Copyright (c) 2009 Talkmm Team");
+		about->set_comments(_("Talkmm is a full featured gtalk for Linux based on libjingle."));
 		about->set_authors(authors);
 		about->set_license (_("This program is licenced under GNU General Public Licence (GPL) version 2."));
-		about->set_translator_credits("lerosua");
+		about->set_translator_credits("XXX");
 
 
 	}
@@ -163,6 +166,8 @@ MainWindow::MainWindow():
 
 	button_settings = dynamic_cast <Gtk::Button *>(main_xml->get_widget("button_settings"));
 	//button_settings->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::on_set_settings));
+	button_about = dynamic_cast <Gtk::Button *>(main_xml->get_widget("button_about"));
+	button_about->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::on_button_about));
 
 	//entry_filter = dynamic_cast<Gtk::Entry*>(main_xml->get_widget("entry_filter"));
 
