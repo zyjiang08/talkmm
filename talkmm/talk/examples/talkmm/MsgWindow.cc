@@ -74,10 +74,8 @@ MsgWindow::~MsgWindow()
 
 bool MsgWindow::on_delete_event(GdkEventAny* event)
 {
-	/*
 	if(file_sending)
 		m_parent->on_cancel_send_file(m_jid);
-	*/
 
 	if(calling)
 		m_parent->hangup_call(m_jid);
@@ -142,7 +140,7 @@ void MsgWindow::on_button_cancel_send_file()
 	//file_transfer_end();
 	//hbox_cancel->hide();
 	//button_cancel_send_file->hide();
-	this->file_sending = false;
+	//this->file_sending = false;
 	m_parent->on_cancel_send_file(m_jid);
 }
 
@@ -162,7 +160,7 @@ void MsgWindow::on_button_call()
 void MsgWindow::on_button_cancel_call()
 {
 	hbox_cancel->hide();
-	this->calling = false;
+	//this->calling = false;
 	m_parent->hangup_call(m_jid);
 	show_notify_msg("hangup the call");
 }

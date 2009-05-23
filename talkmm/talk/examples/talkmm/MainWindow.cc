@@ -599,6 +599,8 @@ void MainWindow::on_filetranser_statue(const std::string& jid,const std::string&
 {
 	MsgWindow* msg_window = open_session(jid);
 
+	if(msg_window->file_sending){
+	
 	if("started" == statue){
 		msg_window->show_notify_msg("file tranfser start");
 		msg_window->file_transfer_start();
@@ -619,6 +621,10 @@ void MainWindow::on_filetranser_statue(const std::string& jid,const std::string&
 		msg_window->show_notify_msg("file transfer completed");
 		msg_window->file_transfer_end();
 	}
+	
+	}
+	else
+		msg_window->hide();
 }
 
 void MainWindow::on_calling_statue(const std::string& jid,const std::string& statue)
