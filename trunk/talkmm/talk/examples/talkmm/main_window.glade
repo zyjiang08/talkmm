@@ -745,6 +745,14 @@ New status</property>
       </widget>
     </child>
     <child>
+      <widget class="GtkImageMenuItem" id="menu_disconnect">
+        <property name="label">Disconnect</property>
+        <property name="visible">True</property>
+        <property name="use_underline">True</property>
+	<property name="use_stock">False</property>
+      </widget>
+    </child>
+    <child>
       <widget class="GtkImageMenuItem" id="menu_quit">
         <property name="label">gtk-quit</property>
         <property name="visible">True</property>

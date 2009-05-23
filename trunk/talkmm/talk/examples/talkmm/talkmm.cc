@@ -62,19 +62,7 @@ Talkmm::~Talkmm()
 
 void Talkmm::DisConnect()
 {
-	/*
-	console_thread->Stop();
-	main_thread->Stop();
-	delete console_thread;
-	delete main_thread;
-	delete m_console;
-	m_console=NULL;
-	console_thread=NULL;
-	main_thread=NULL;
-	relogin=true;
-	main_thread->Stop();
-	*/
-
+	m_pump.DoDisconnect();
 	
 }
 bool Talkmm::OnLogin(const std::string& f_username,const std::string& f_pass)
