@@ -34,7 +34,7 @@
                       <widget class="GtkImage" id="image_logo">
                         <property name="visible">True</property>
                         <property name="xalign">0.54000002145767212</property>
-                        <property name="pixbuf">logo.png</property>
+                        <property name="pixbuf">talkmm_logo_1.png</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
