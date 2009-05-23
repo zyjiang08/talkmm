@@ -106,7 +106,7 @@ class MainWindow : public Gtk::Window {
 
 	protected:
 		bool on_delete_event(GdkEventAny* event);
-		void on_menu_about();
+		void on_button_about();
 	private:
 		/** 属性窗口退出处理*/
 		void on_conf_window_quit();
@@ -129,6 +129,7 @@ class MainWindow : public Gtk::Window {
 		Gtk::CheckButton* 			check_button_keeppasswd;
 		Gtk::Button* 				button_cancel;
 		Gtk::Button* 				button_settings;
+		Gtk::Button* 				button_about;
 		Gtk::ProgressBar* 			progressbar_login;
 		Gtk::ComboBox*				combobox_status;
 		TrayIcon*				tray_icon;
