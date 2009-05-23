@@ -21,6 +21,8 @@
 #include "MsgWindow.h"
 #include "MsgBox.h"
 
+using namespace std;
+
 MsgWindow::MsgWindow(MainWindow* f_parent,
 		     const std::string& f_jid):m_parent(f_parent),
 		     m_jid(f_jid)
@@ -72,17 +74,63 @@ MsgWindow::~MsgWindow()
 
 }
 
+string MsgWindow::alarm(string& flag)
+{
+	int result = 10000;
+	Glib::ustring alarm_message;
+
+	if(flag == "file"){
+		alarm_message = " Do you want to cancel the file transfer process now ? ";
+		Gtk::MessageDialog dialog(*this, _("Cancel File"), false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_OK_CANCEL);
+		dialog.set_secondary_text(alarm_message);
+		result = dialog.run();
+        	
+		if(result == Gtk::RESPONSE_OK) {
+			return "cancel_file_ok";
+		}
+		else if(result == Gtk::RESPONSE_CANCEL){ 
+			return "cancel_file_no";
+		}
+
+	}else if(flag == "call"){
+		alarm_message = " Do you want to cancel the call process now ? ";
+		Gtk::MessageDialog dialog(*this, _("Cancel Call"), false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_OK_CANCEL);
+		dialog.set_secondary_text(alarm_message);
+		result = dialog.run();
+        	
+		if(result == Gtk::RESPONSE_OK) {
+			return "cancel_call_ok";
+		}
+		else if(result == Gtk::RESPONSE_CANCEL){ 
+			return "cancel_call_no";
+		}
+	}
+}
+
 bool MsgWindow::on_delete_event(GdkEventAny* event)
 {
-	if(file_sending)
-		m_parent->on_cancel_send_file(m_jid);
+	bool do_or_not = false;
+	string file_flag = "file";
+	string call_flag = "call";
 
-	if(calling)
-		m_parent->hangup_call(m_jid);
+	if(file_sending){
+		if(alarm(file_flag) == "cancel_file_ok"){
+			m_parent->on_cancel_send_file(m_jid);
+		}
+		do_or_not = true;
+	}
 
-	m_parent->close_session(m_jid);
+	if(calling){
+		if(alarm(call_flag) == "cancel_call_ok"){
+			m_parent->hangup_call(m_jid);
+		}
+		do_or_not = true;
+	}
 
-	delete this;
+	if(do_or_not){
+		m_parent->close_session(m_jid);
+		delete this;
+	}
 }
 
 void MsgWindow::show_message(const std::string& sender,const std::string& msg,bool self)

@@ -237,6 +237,7 @@ void MainWindow::on_loginWindow_cancel()
 	m_talkmm=NULL;
         main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
 }
+
 void MainWindow::on_disconnect()
 {
 	if(m_talkmm!=NULL){
@@ -253,7 +254,6 @@ void MainWindow::on_signon()
 	label_user_name->set_text(m_name);
 	main_notebook->set_current_page(LOGIN_FINISH);
 }
-
 
 void MainWindow::check_button_rememberme_clicked()
 {
