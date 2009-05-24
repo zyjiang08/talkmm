@@ -39,6 +39,7 @@
 #include <memory>
 #include <climits>
 #include <cstdlib>
+#include <cstdio>
 
 
 #include "talk/base/logging.h"

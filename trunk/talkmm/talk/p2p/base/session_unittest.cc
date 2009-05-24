@@ -2,6 +2,7 @@
 #include <sstream>
 #include <deque>
 #include <map>
+#include <cstdio>
 
 #include "talk/base/common.h"
 #include "talk/base/logging.h"

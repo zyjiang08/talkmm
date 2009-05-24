@@ -30,7 +30,7 @@ BuddyView::BuddyView(MainWindow & f_parent):
 	set_headers_visible(false);
 	set_border_width(5);
 	set_has_tooltip();
-	set_name("icalk_blist_treeview");
+	set_name("talkmm_blist_treeview");
 
 	add_events(Gdk::POINTER_MOTION_MASK | Gdk::BUTTON_MOTION_MASK | 
 		   Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK | 

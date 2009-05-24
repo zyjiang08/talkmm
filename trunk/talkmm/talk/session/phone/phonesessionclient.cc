@@ -25,6 +25,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <cstdio>
 #include "talk/base/logging.h"
 #include "talk/session/phone/phonesessionclient.h"
 #include "talk/xmpp/constants.h"

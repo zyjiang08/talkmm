@@ -156,7 +156,7 @@ echo
 
 if test x$enable_phone = xyes ; then
 	echo
-	echo Supported Examples: xxpalk pcp
+	echo Supported Examples: xxpalk pcp talkmm
 	echo Supported Codecs:
 	if test x$enable_gips = xyes ; then
 		echo GIPS: yes
