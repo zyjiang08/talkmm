@@ -242,15 +242,15 @@ void MainWindow::on_login_error(const std::string& error)
 void MainWindow::on_loginWindow_cancel()
 {
 	delete m_talkmm;
-	m_talkmm=NULL;
+	m_talkmm = NULL;
         main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
 }
 
 void MainWindow::on_disconnect()
 {
-	if(m_talkmm!=NULL){
+	if(m_talkmm != NULL){
 		delete m_talkmm;
-		m_talkmm=NULL;
+		m_talkmm = NULL;
 	}
         main_notebook->set_current_page(LOGIN_INIT); //设置当前状态为登录中
 
