@@ -122,7 +122,6 @@ bool MsgWindow::on_delete_event(GdkEventAny* event)
 		if(alarm(call_flag) == "cancel_call_ok"){
 			m_parent->hangup_call(m_jid);
 		}
-		do_or_not = true;
 	}
 
 	m_parent->close_session(m_jid);
