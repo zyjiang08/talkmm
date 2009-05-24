@@ -68,14 +68,17 @@ void MainWindow::on_button_about()
 	static Gtk::AboutDialog*  about(0);
 	if(about == 0){
 		std::vector<Glib::ustring> authors;
-		authors.push_back("Talkmm Team: XiongQin, Lerosua, Junyi");
+		authors.push_back("Talkmm Team:");
+		authors.push_back("XiongQin (xingq@gamil.com)");
+		authors.push_back("Lerosua  (lerosua@gmail.com)");
+		authors.push_back("Junyi    (junyi.hit@gmail.com)");
 		about = new Gtk::AboutDialog;
 		about->set_icon_from_file("talkmm_logo_1.png");
 		const static Glib::RefPtr<Gdk::Pixbuf>& logo_icon = Gdk::Pixbuf::create_from_file("talkmm_logo_2.png");
 
 		about->set_logo(logo_icon);
 		about->set_program_name("Talkmm");
-		about->set_version("1.0");
+		about->set_version("0.1");
 		about->set_website("http://code.google.com/p/talkmm/");
 		about->set_copyright("Copyright (c) 2009 Talkmm Team");
 		about->set_comments(_("Talkmm is a full featured gtalk for Linux based on libjingle."));
@@ -153,8 +156,8 @@ MainWindow::MainWindow():
 	tray_pop_menu = dynamic_cast<Gtk::Menu* >(menu_xml->get_widget("tray_menu"));
 	Gtk::MenuItem* menu_quit = dynamic_cast<Gtk::MenuItem*>(menu_xml->get_widget("menu_quit"));
 	menu_quit->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::on_quit));
-	Gtk::MenuItem* menu_disconnect=dynamic_cast<Gtk::MenuItem*>(menu_xml->get_widget("menu_disconnect"));
-	menu_disconnect->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::on_disconnect));
+	//Gtk::MenuItem* menu_disconnect=dynamic_cast<Gtk::MenuItem*>(menu_xml->get_widget("menu_disconnect"));
+	//menu_disconnect->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::on_disconnect));
 	/**second page*/
         button_cancel = dynamic_cast <Gtk::Button*> (main_xml->get_widget("login_cancel"));
         button_cancel->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_loginWindow_cancel));
