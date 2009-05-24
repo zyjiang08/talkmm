@@ -109,7 +109,6 @@ string MsgWindow::alarm(string& flag)
 
 bool MsgWindow::on_delete_event(GdkEventAny* event)
 {
-	bool do_or_not = false;
 	string file_flag = "file";
 	string call_flag = "call";
 
@@ -117,7 +116,6 @@ bool MsgWindow::on_delete_event(GdkEventAny* event)
 		if(alarm(file_flag) == "cancel_file_ok"){
 			m_parent->on_cancel_send_file(m_jid);
 		}
-		do_or_not = true;
 	}
 
 	if(calling){
@@ -127,10 +125,8 @@ bool MsgWindow::on_delete_event(GdkEventAny* event)
 		do_or_not = true;
 	}
 
-	if(do_or_not){
-		m_parent->close_session(m_jid);
-		delete this;
-	}
+	m_parent->close_session(m_jid);
+	delete this;
 }
 
 void MsgWindow::show_message(const std::string& sender,const std::string& msg,bool self)
@@ -208,13 +204,14 @@ void MsgWindow::on_button_call()
 void MsgWindow::on_button_cancel_call()
 {
 	hbox_cancel->hide();
-	//this->calling = false;
+	this->calling = false;
 	m_parent->hangup_call(m_jid);
 	show_notify_msg("hangup the call");
 }
 void MsgWindow::on_call_hangup()
 {
 	hbox_cancel->hide();
+	this->calling = false;
 	//button_cancel_call->hide();
 }
 
