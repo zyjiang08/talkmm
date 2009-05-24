@@ -6,6 +6,7 @@
 #include <cstring>
 #include <iostream>
 #include <cassert>
+#include <cstdio>
 
 using namespace cricket;
 

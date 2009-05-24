@@ -29,6 +29,7 @@
 #include <memory>
 #include <climits>
 #include <cstdlib>
+#include <cstdio>
 
 
 #include <sys/types.h>
