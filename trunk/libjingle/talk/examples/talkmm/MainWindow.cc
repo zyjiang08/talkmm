@@ -174,26 +174,33 @@ MainWindow::MainWindow():
 
 	//entry_filter = dynamic_cast<Gtk::Entry*>(main_xml->get_widget("entry_filter"));
 
-        Gtk::HBox* hboxfiler = dynamic_cast<Gtk::HBox*>(main_xml->get_widget("hbox_filter"));
+        Gtk::HBox* hboxfiler = dynamic_cast<Gtk::HBox*>
+                               (main_xml->get_widget("hbox_filter"));
+
         entry_filter = Gtk::manage(new Sexy::IconEntry());
+
         hboxfiler->pack_start(*entry_filter);
+
         entry_filter->add_clear_button();
 
 	Gtk::Image* icon = Gtk::manage(new Gtk::Image(Gtk::Stock::FIND, Gtk::ICON_SIZE_MENU));
 
-
         icon->show();
+
         entry_filter->set_icon(Sexy::ICON_ENTRY_PRIMARY, icon);
+
 	entry_filter->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::on_entry_filter_changed));
 
 	Gtk::Container* list_window = dynamic_cast <Gtk::Container*>(main_xml->get_widget("listWindow"));
 	list_view = Gtk::manage(new BuddyView(*this));
 	list_window->add(*list_view);
 
+
 	combobox_status = dynamic_cast<Gtk::ComboBox*>(main_xml->get_widget("combobox_status"));
 	combobox_status->set_active(0);
 	combobox_status->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::on_combox_status_change));
 	add(*main_notebook);
+
 
 	this->set_size_request(240,576);
 	this->show_all();
