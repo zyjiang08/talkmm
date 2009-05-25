@@ -48,7 +48,8 @@ public:
         void setImage(const Glib::RefPtr<Gdk::Pixbuf> pixbuf)
         {
 
-                m_avatar->set(pixbuf);
+                m_avatar->set
+                (pixbuf);
         }
 
         /** 隐藏Tooltips*/
