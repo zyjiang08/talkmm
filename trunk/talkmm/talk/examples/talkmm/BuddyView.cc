@@ -59,18 +59,15 @@ BuddyView::BuddyView(MainWindow & f_parent):
 	this->append_column(*col);
 	this->append_column("Voip", buddyColumns.audioicon);
 
-        m_treestore->
-        set_default_sort_func(sigc::
-                              mem_fun(*this,
-                                      &BuddyView::on_sort_compare));
-        m_treestore->
-        set_sort_column_id(Gtk::TreeSortable::DEFAULT_SORT_COLUMN_ID,
-                           Gtk::SORT_ASCENDING);
+        m_treestore->set_default_sort_func(sigc::mem_fun(*this, &BuddyView::on_sort_compare));
+        m_treestore->set_sort_column_id(Gtk::TreeSortable::DEFAULT_SORT_COLUMN_ID, Gtk::SORT_ASCENDING);
 	/*
 	   this->signal_enter_notify_event().connect(sigc::mem_fun(
 	   *this,&BuddyView::on_enter_event));
 	 */
         m_tooltips = new TreeViewTooltips(this);
+	const Glib::RefPtr<Gdk::Pixbuf> image = Gdk::Pixbuf::create_from_file("user-info.png"); 
+	m_tooltips->setImage(image);
 	this->set_tooltip_window( *m_tooltips);
 	this->signal_query_tooltip().connect(sigc::mem_fun(*this,&BuddyView::on_tooltip_show));
 	show_all_children();
