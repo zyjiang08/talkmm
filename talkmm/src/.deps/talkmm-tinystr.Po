@@ -1,0 +1,26 @@
+talkmm-tinystr.o: config/tinystr.cc config/tinystr.h \
+ /usr/include/assert.h /usr/include/features.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/string.h \
+ /usr/lib/gcc/i686-pc-linux-gnu/4.4.0/include/stddef.h \
+ /usr/include/xlocale.h
+
+config/tinystr.h:
+
+/usr/include/assert.h:
+
+/usr/include/features.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/gnu/stubs-32.h:
+
+/usr/include/string.h:
+
+/usr/lib/gcc/i686-pc-linux-gnu/4.4.0/include/stddef.h:
+
+/usr/include/xlocale.h:
