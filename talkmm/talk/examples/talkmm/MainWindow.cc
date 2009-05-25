@@ -69,7 +69,7 @@ void MainWindow::on_button_about()
 	if(about == 0){
 		std::vector<Glib::ustring> authors;
 		authors.push_back("Talkmm Team:");
-		authors.push_back("XiongQin (xingq@gamil.com)");
+		authors.push_back("XiongQin (xiongq@gamil.com)");
 		authors.push_back("Lerosua  (lerosua@gmail.com)");
 		authors.push_back("Junyi    (junyi.hit@gmail.com)");
 		about = new Gtk::AboutDialog;
