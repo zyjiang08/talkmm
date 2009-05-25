@@ -3,43 +3,38 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: talkmm 0.10\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-05-26 00:45+0800\n"
-"PO-Revision-Date: 2009-05-26 00:48+0800\n"
-"Last-Translator: lerosua <lerosua@gmail.com>\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Chinese\n"
-"X-Poedit-Country: CHINA\n"
-"X-Poedit-SourceCharset: utf-8\n"
 
 #: ../data/main_window.glade.h:1
 msgid " "
 msgstr ""
 
 #: ../data/main_window.glade.h:2
-#, fuzzy
 msgid " Account:  "
-msgstr "帐号"
+msgstr ""
 
 #: ../data/main_window.glade.h:3
-#, fuzzy
 msgid " Password: "
-msgstr "密码"
+msgstr ""
 
 #: ../data/main_window.glade.h:4
-#, fuzzy
 msgid "About"
-msgstr "关于"
+msgstr ""
 
 #: ../data/main_window.glade.h:5
-#, fuzzy
 msgid "Add"
-msgstr "添加"
+msgstr ""
 
 #. &#x5728;&#x7EBF;&#10;&#x5520;&#x53FC;&#10;&#x6682;&#x65F6;&#x79BB;&#x5F00;&#10;&#x8BF7;&#x52FF;&#x6253;&#x6270;&#10;&#x8FDC;&#x8FDC;&#x79BB;&#x5F00;&#10;&#x79BB;&#x7EBF;&#10;&#x65B0;&#x72B6;&#x6001;
 #: ../data/main_window.glade.h:7
@@ -55,16 +50,15 @@ msgstr ""
 
 #: ../data/main_window.glade.h:14
 msgid "Buddy"
-msgstr "好友"
+msgstr ""
 
 #: ../data/main_window.glade.h:15
 msgid "Cancel"
 msgstr ""
 
 #: ../data/main_window.glade.h:16
-#, fuzzy
 msgid "Chat"
-msgstr "聊天"
+msgstr ""
 
 #: ../data/main_window.glade.h:17
 msgid "Email"
@@ -76,7 +70,7 @@ msgstr ""
 
 #: ../data/main_window.glade.h:19
 msgid "Keep Password"
-msgstr "记住密码"
+msgstr ""
 
 #: ../data/main_window.glade.h:20
 msgid "OK"
@@ -84,38 +78,35 @@ msgstr ""
 
 #: ../data/main_window.glade.h:21
 msgid "Remember Me"
-msgstr "记住帐户"
+msgstr ""
 
 #: ../data/main_window.glade.h:22
 msgid "Roster"
 msgstr ""
 
 #: ../data/main_window.glade.h:23
-#, fuzzy
 msgid "Settings"
-msgstr "头像设置"
+msgstr ""
 
 #: ../data/main_window.glade.h:24
 msgid "loading"
-msgstr "正在加载"
+msgstr ""
 
 #: ../data/main_window.glade.h:25
 msgid "login"
-msgstr "登入"
+msgstr ""
 
 #: ../data/main_window.glade.h:26
 msgid "page 3"
 msgstr ""
 
 #: ../data/msg_window.glade.h:1
-#, fuzzy
 msgid "     Call      "
-msgstr "组: "
+msgstr ""
 
 #: ../data/msg_window.glade.h:2
-#, fuzzy
 msgid "  Send File  "
-msgstr "发送文件"
+msgstr ""
 
 #: ../data/msg_window.glade.h:3
 msgid "CancelCall"
