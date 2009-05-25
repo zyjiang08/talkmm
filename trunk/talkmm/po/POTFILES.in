@@ -1,0 +1,4 @@
+# List of source files which contain translatable strings.
+[encoding: UTF-8]
+data/main_window.glade
+data/msg_window.glade

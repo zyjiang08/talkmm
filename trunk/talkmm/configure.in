@@ -1,0 +1,133 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ([2.63])
+AC_INIT(talkmm, 0.1, lerosua@gmail.com)
+AC_COPYRIGHT([Copyright (C) 2009 lerosua@gmail.com])
+AC_CONFIG_SRCDIR([src/main.cc])
+AC_CONFIG_HEADER([config.h])
+AM_INIT_AUTOMAKE(dist-bzip2 no-define)
+
+AM_MAINTAINER_MODE
+IT_PROG_INTLTOOL([0.35.0])
+AC_PROG_LIBTOOL
+
+# Checks for programs.
+AC_PROG_CXX
+AC_PROG_CC
+AC_PROG_CPP
+AC_LANG_CPLUSPLUS
+
+# Checks for libraries.
+pkg_modules="gtkmm-2.4 >= 2.6.0 libglademm-2.4 >= 2.4.0 libsexymm"
+PKG_CHECK_MODULES(PACKAGE, $pkg_modules)
+AC_SUBST(PACKAGE_CFLAGS)
+AC_SUBST(PACKAGE_LIBS)
+
+
+HAVE_EXPAT=no
+AC_CHECK_LIB(expat, XML_ParserCreate, HAVE_EXPAT="yes")
+if test "x$HAVE_EXPAT" = xyes ; then
+  EXPAT_LIBS="-lexpat"
+  AC_SUBST(EXPAT_LIBS)
+else
+  AC_ERROR([Expat is required to build libjingle. You can get it from http://expat.sourceforge.net/])
+fi
+
+PKG_CHECK_MODULES(ORTP, ortp >= 0.7.0, enable_ortp=yes, enable_ortp=no)
+if test x$enable_ortp = xno ; then
+	enable_phone=no
+	AC_MSG_NOTICE([oRTP is required to build libjingle. You can get it from http://www.linphone.org/ortp/])
+else
+	AC_SUBST(ORTP_CFLAGS)
+	AC_SUBST(ORTP_LIBS)
+	AC_DEFINE(HAVE_ORTP, 1, [oRTP provides RTP supprt])
+fi
+
+PKG_CHECK_MODULES(SPEEX, speex >= 1.1.6, enable_speex=yes, enable_speex=no)
+if test x$enable_speex = xno ; then
+	enable_phone=no
+	AC_MSG_NOTICE([speex is required to build libjingle. You can get it from http://www.speex.org])
+else
+	AC_SUBST(SPEEX_CFLAGS)
+	AC_SUBST(SPEEX_LIBS)
+	AC_DEFINE(HAVE_SPEEX, 1, [speex provides speex support])
+        speex_found=yes
+fi
+
+
+#check ilbc
+AC_ARG_WITH( ilbc,
+      [  --with-ilbc      Set prefix where ilbc headers and libs can be found (ex:/usr, /usr/local, none to disable ilbc support) [default=/usr] ],
+      [ ilbc_prefix=${withval}],[ ilbc_prefix="/usr" ])
+if test "$ilbc_prefix" = "none" ; then
+        AC_MSG_NOTICE([iLBC codec support disabled. ])
+else
+        ILBC_CFLAGS=" -I${ilbc_prefix}/include/ilbc"
+        ILBC_LIBS="-L${ilbc_prefix}/lib -lilbc -lm"
+        CPPFLAGS_save=$CPPFLAGS
+        CPPFLAGS=$ILBC_CFLAGS
+        LDFLAGS_save=$LDFLAGS
+        LDFLAGS=$ILBC_LIBS
+        AC_CHECK_HEADERS(iLBC_decode.h,[AC_CHECK_LIB(ilbc,iLBC_decode,ilbc_found=yes,ilbc_found=no)
+        ],ilbc_found=no)
+
+        CPPFLAGS=$CPPFLAGS_save
+        LDFLAGS=$LDFLAGS_save
+
+        if test "$ilbc_found" = "no" ; then
+                AC_MSG_WARN([Could not find ilbc headers or libs. Please install ilbc package from http://www.linphone.org if you want iLBC codec support in libjingle.])
+                ILBC_CFLAGS=
+                ILBC_LIBS=
+        else
+                AC_DEFINE(HAVE_ILBC,1,[Defined when we have ilbc codec lib])
+                AC_SUBST(ILBC_CFLAGS)
+                AC_SUBST(ILBC_LIBS)
+        fi
+fi
+
+#check speex
+PKG_CHECK_MODULES(SPEEX, speex >= 1.1.6, enable_speex=yes, enable_speex=no)
+if test x$enable_speex = xno ; then
+	enable_phone=no
+	AC_MSG_NOTICE([speex is required to build libjingle. You can get it from http://www.speex.org])
+else
+	AC_SUBST(SPEEX_CFLAGS)
+	AC_SUBST(SPEEX_LIBS)
+	AC_DEFINE(HAVE_SPEEX, 1, [speex provides speex support])
+        speex_found=yes
+fi
+
+PKG_CHECK_MODULES(MEDIASTREAMER, mediastreamer >= 0.0.0, enable_mediastreamer=yes, enable_mediastreamer=no)
+if test x$enable_mediastreamer = xno ; then
+	enable_phone=no
+	AC_MSG_NOTICE([mediastreamer is required to build libjingle. You can get it from http://download.savannah.gnu.org/releases/linphone/mediastreamer/])
+else
+	AC_SUBST(MEDIASTREAMER_CFLAGS)
+	AC_SUBST(MEDIASTREAMER_LIBS)
+	AC_DEFINE(HAVE_MEDIASTREAMER, 1, [mediastreamer found])
+        mediastreamer_found=yes
+fi
+
+# Checks for header files.
+
+# Checks for typedefs, structures, and compiler characteristics.
+
+# Checks for library functions.
+
+
+GETTEXT_PACKAGE=talkmm
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
+
+AM_GLIB_GNU_GETTEXT
+
+
+AC_CONFIG_FILES([Makefile
+	src/Makefile
+	data/Makefile
+	data/images/Makefile
+	po/Makefile.in
+	])
+
+AC_OUTPUT

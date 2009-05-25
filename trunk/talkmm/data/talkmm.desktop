@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=无名称
+Name=talkmm
+Comment=a gtkmm jabber client
+Comment[zh_CN]=一个基于GTKMM的jabber/XMPP客户端
+Exec=talkmm
+Icon=talkmm
+StartupNotify=true
+Terminal=false
+Type=Application
+Categories=Network;InstantMessaging;
+GenericName[zh_CN]=
