@@ -36,7 +36,7 @@ libdir = ${exec_prefix}/lib
 DATADIRNAME = share
 itlocaledir = $(prefix)/$(DATADIRNAME)/locale
 subdir = po
-install_sh = ${SHELL} /src/talkmm/talk/install-sh
+install_sh = $(SHELL) /home/leros/work/talkmm/talkmm/install-sh
 # Automake >= 1.8 provides /bin/mkdir -p.
 # Until it can be supposed, use the safe fallback:
 mkdir_p = $(install_sh) -d
@@ -47,8 +47,8 @@ INSTALL_DATA = ${INSTALL} -m 644
 GMSGFMT = /usr/bin/msgfmt
 MSGFMT = /usr/bin/msgfmt
 XGETTEXT = /usr/bin/xgettext
-INTLTOOL_UPDATE = /usr/bin/intltool-update
-INTLTOOL_EXTRACT = /usr/bin/intltool-extract
+INTLTOOL_UPDATE = $(top_builddir)/intltool-update
+INTLTOOL_EXTRACT = $(top_builddir)/intltool-extract
 MSGMERGE = INTLTOOL_EXTRACT=$(INTLTOOL_EXTRACT) srcdir=$(srcdir) $(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE) --dist
 GENPOT   = INTLTOOL_EXTRACT=$(INTLTOOL_EXTRACT) srcdir=$(srcdir) $(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE) --pot
 
@@ -68,6 +68,7 @@ EXTRA_DISTFILES = ChangeLog POTFILES.skip Makevars LINGUAS
 POTFILES = \
 	../data/main_window.glade \
 	../data/msg_window.glade
+# This comment gets stripped out
 
 CATALOGS=$(shell LINGUAS="$(USE_LINGUAS)"; for lang in $$LINGUAS; do printf "$$lang.gmo "; done)
 

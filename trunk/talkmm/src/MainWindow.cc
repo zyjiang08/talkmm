@@ -29,6 +29,7 @@
 #include "BuddyView.h"
 #include "MsgWindow.h"
 #include "console.h"
+#include "pixmaps.h"
 
 using namespace std;
 
@@ -73,8 +74,10 @@ void MainWindow::on_button_about()
 		authors.push_back("Lerosua  (lerosua@gmail.com)");
 		authors.push_back("Junyi    (junyi.hit@gmail.com)");
 		about = new Gtk::AboutDialog;
-		about->set_icon_from_file("talkmm_logo_1.png");
-		const static Glib::RefPtr<Gdk::Pixbuf>& logo_icon = Gdk::Pixbuf::create_from_file("talkmm_logo_2.png");
+		//about->set_icon_from_file("talkmm_logo_1.png");
+		const static Glib::RefPtr<Gdk::Pixbuf>& logo_icon = getPix("talkmm.png");
+		//const static Glib::RefPtr<Gdk::Pixbuf>& logo_icon = Gdk::Pixbuf::create_from_file("talkmm_logo_2.png");
+		about->set_icon(logo_icon);
 
 		about->set_logo(logo_icon);
 		about->set_program_name("Talkmm");
@@ -118,7 +121,8 @@ MainWindow::MainWindow():
 	,m_name("talkmm")
 	,combobox_status(NULL)
 {
-	this->set_icon_from_file("talkmm_logo_1.png");
+	//this->set_icon_from_file("talkmm_logo_1.png");
+	this->set_icon(getPix("talkmm.png"));
 
         main_xml = Gnome::Glade::Xml::create(main_ui, "main_notebook");
         main_notebook = dynamic_cast < Gtk::Notebook * > (main_xml->get_widget("main_notebook"));

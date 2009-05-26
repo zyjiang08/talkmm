@@ -24,7 +24,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "Unit.h"
-#include "define.h"
+//#include "define.h"
 #define MAX_NUM 512
 
 char GUnit::homePath[MAX_NUM];

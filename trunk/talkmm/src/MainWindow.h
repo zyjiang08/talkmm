@@ -33,7 +33,7 @@
 #include "MVC.h"
 #include "./config/rwxml.h"
 
-#define main_ui "./main_window.glade"
+#define main_ui DATA_DIR"/main_window.glade"
 typedef Glib::RefPtr <Gnome::Glade::Xml> GlademmXML;
 
 

@@ -19,7 +19,7 @@
 #ifndef  DEFINE_FILE_HEADER_INC
 #define  DEFINE_FILE_HEADER_INC
 
-#define DATA_DIR "image"
+#define DATA_DIR "images"
 
 #endif   /* ----- #ifndef DEFINE_FILE_HEADER_INC  ----- */
 

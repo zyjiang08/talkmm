@@ -1,3 +1,12 @@
+INCLUDES = 								\
+	   -I$(top_srcdir)                                              \
+	   -I$(srcdir)                                                  \
+	   -g								\
+	   -DDATA_DIR=\""${datadir}/talkmm"\" 				\
+	   -DTALKMM_LOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
+	   @PACKAGE_CFLAGS@
+
+
 bin_PROGRAMS = talkmm
 talkmm_CXXFLAGS = $(AM_CXXFLAGS)
 talkmm_SOURCES = talkmm.cc \

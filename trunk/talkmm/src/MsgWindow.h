@@ -21,7 +21,7 @@
 
 #include <gtkmm.h>
 
-#define msg_ui "./msg_window.glade"
+#define msg_ui DATA_DIR"/msg_window.glade"
 
 class MsgBox;
 class MainWindow;
