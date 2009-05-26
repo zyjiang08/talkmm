@@ -55,6 +55,7 @@ SendFile( /*const std::string& to, *//*const std::string& file */ )
 void FileShareClient::acceptFile()
 {
 	session_->Accept();
+	session_->SetLocalFolder(root_dir_);
 //      waiting_for_file_ = false;
 }
 
@@ -388,7 +389,7 @@ void FileShareClient::OnFileShareSessionCreate(cricket::FileShareSession *
 					       sess)
 {
 
-//    std::cout<<"OnFileShareSessionCreate"<<std::endl;
+    std::cout<<"OnFileShareSessionCreate"<<std::endl;
 	session_ = sess;
 	sess->SignalState.connect(this, &FileShareClient::OnSessionState);
 	sess->SignalNextFile.connect(this,

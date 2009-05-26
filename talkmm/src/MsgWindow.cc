@@ -27,13 +27,11 @@ using namespace std;
 MsgWindow::MsgWindow(MainWindow* f_parent,
 		     const std::string& f_jid):m_parent(f_parent),
 		     m_jid(f_jid)
+			,file_sending(false)
+			,calling(false)
 {
-	//this->set_icon_from_file("talkmm_logo_1.png");
 	this->set_icon(getPix("talkmm.png"));
 	
-	calling = false;
-	file_sending= false;
-
         msg_xml = Gnome::Glade::Xml::create(msg_ui, "vbox_main");
 	Gtk::VBox* vbox_main= dynamic_cast < Gtk::VBox * > (msg_xml->get_widget("vbox_main"));
 
@@ -76,35 +74,35 @@ MsgWindow::~MsgWindow()
 
 }
 
-string MsgWindow::alarm(string& flag)
+bool MsgWindow::alarm(const std::string& flag)
 {
 	int result = 10000;
 	Glib::ustring alarm_message;
 
 	if(flag == "file"){
-		alarm_message = " Do you want to cancel the file transfer process now ? ";
+		alarm_message = _(" Do you want to cancel the file transfer process now ? ");
 		Gtk::MessageDialog dialog(*this, _("Cancel File"), false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_OK_CANCEL);
 		dialog.set_secondary_text(alarm_message);
 		result = dialog.run();
         	
 		if(result == Gtk::RESPONSE_OK) {
-			return "cancel_file_ok";
+			return true;
 		}
 		else if(result == Gtk::RESPONSE_CANCEL){ 
-			return "cancel_file_no";
+			return false;
 		}
 
 	}else if(flag == "call"){
-		alarm_message = " Do you want to cancel the call process now ? ";
+		alarm_message = _(" Do you want to cancel the call process now ? ");
 		Gtk::MessageDialog dialog(*this, _("Cancel Call"), false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_OK_CANCEL);
 		dialog.set_secondary_text(alarm_message);
 		result = dialog.run();
         	
 		if(result == Gtk::RESPONSE_OK) {
-			return "cancel_call_ok";
+			return true;
 		}
 		else if(result == Gtk::RESPONSE_CANCEL){ 
-			return "cancel_call_no";
+			return false;
 		}
 	}
 }
@@ -115,14 +113,20 @@ bool MsgWindow::on_delete_event(GdkEventAny* event)
 	string call_flag = "call";
 
 	if(file_sending){
-		if(alarm(file_flag) == "cancel_file_ok"){
+		if(alarm(file_flag)){
 			m_parent->on_cancel_send_file(m_jid);
+		}
+		else{
+			return false;
 		}
 	}
 
 	if(calling){
-		if(alarm(call_flag) == "cancel_call_ok"){
+		if(alarm(call_flag)){
 			m_parent->hangup_call(m_jid);
+		}
+		else{
+			return false;
 		}
 	}
 

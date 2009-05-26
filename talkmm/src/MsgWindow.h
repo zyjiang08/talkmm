@@ -50,7 +50,7 @@ class MsgWindow: public Gtk::Window
 
 	protected:
 		bool on_delete_event(GdkEventAny* event);
-		string alarm(string& flag);
+		bool alarm(const std::string& flag);
 	private:
 		MainWindow*				m_parent;
 		std::string				m_jid;

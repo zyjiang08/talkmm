@@ -110,7 +110,7 @@ void BuddyView::add(const std::string & jid_str,const std::string& name,const st
 	else
 		(*listiter)[buddyColumns.icon] = getPix16("dnd.png");
 	if(call)
-		(*listiter)[buddyColumns.audioicon] = getPix16("call.png");
+		(*listiter)[buddyColumns.audioicon] = getPix30("call.png");
 
 
 	if(!status.empty()){
@@ -155,7 +155,7 @@ void BuddyView::refreshBuddyStatus(const std::string & jid,const std::string& na
 		g_free(marktext);
 	}
 	if(call)
-		(*iter)[buddyColumns.audioicon] = getPix16("call.png");
+		(*iter)[buddyColumns.audioicon] = getPix30("call.png");
 
 }
 

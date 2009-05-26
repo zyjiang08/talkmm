@@ -29,9 +29,9 @@
 #include "talk/p2p/client/httpportallocator.h"
 #include "talk/xmpp/xmppclient.h"
 #include "talk/login/status.h"
-#include "talk/examples/talkmm/console.h"
-#include "talk/examples/talkmm/chatclient.h"
-#include "talk/examples/talkmm/fileclient.h"
+#include "console.h"
+#include "chatclient.h"
+#include "fileclient.h"
 
 namespace buzz {
 	class PresencePushTask;
@@ -136,6 +136,7 @@ class CallClient:public sigslot::has_slots <> {
 		       const std::string & texte);
 
 	void OnStatusUpdate(const buzz::Status & status);
+	void OnSetFileDir(const std::string& dir);
 	void SetPresence(buzz::Status::Show f_show,const std::string& f_status);
 };
 
