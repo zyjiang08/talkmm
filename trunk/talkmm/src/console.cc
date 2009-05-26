@@ -25,14 +25,14 @@
 #include <cassert>
 #include "talk/base/messagequeue.h"
 #include "talk/base/stringutils.h"
-#include "talk/examples/talkmm/console.h"
-#include "talk/examples/talkmm/callclient.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <stdio.h>
-#include "string.h"
+//#include "string.h"
 #include "MainWindow.h"
+#include "console.h"
+#include "callclient.h"
 
 struct LockMutex {
 	LockMutex() {
@@ -109,6 +109,9 @@ void Console::OnMessage(talk_base::Message * msg)
 		break;
 	case MSG_FILE_ANSWER:
 		client_->OnAnswerFile(data->data());
+		break;
+	case MSG_FILE_SETDIR:
+		client_->OnSetFileDir(data->data());
 		break;
 	}
 }
@@ -252,4 +255,9 @@ void Console::HangupCall(const std::string & to)
 {
 	client_thread_->Post(this, MSG_CALL_HANGUP, new talk_base::TypedMessageData < std::string > (to));
 }
+void Console::SetRecvFileDir(const std::string& dir)
+{
+	client_thread_->Post(this, MSG_FILE_SETDIR, new talk_base::TypedMessageData < std::string > (dir));
+}
+
 

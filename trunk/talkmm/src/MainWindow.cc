@@ -534,7 +534,6 @@ void MainWindow::on_send_file(   const std::string& to,  const std::string& file
 	if(item.file_cap){
 		MsgWindow* msg_window = open_session(to);
 		msg_window->file_transfer_start();
-		//msg_window->file_sending = true;
 		m_console->SendFile(to, filename);
 	}
 	else
@@ -551,12 +550,31 @@ void MainWindow::on_file_receive(const std::string& from,const std::string& file
         Glib::ustring msg = from +" want to send a file to you "+"("+file+")";
         dialog.set_secondary_text(msg);
         int result = dialog.run();
+	dialog.hide();
         switch (result) {
         case (Gtk::RESPONSE_OK): {
+
+		Gtk::FileChooserDialog dialog_(_("Please select a dir"), Gtk::FILE_CHOOSER_ACTION_SELECT_FOLDER);
+		dialog_.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+		dialog_.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
+
+		int result_ = dialog_.run();
+			switch (result_) {
+				case (Gtk::RESPONSE_OK): {
+					std::string folder_ = dialog_.get_current_folder();
+					std::cout<<"select folder = "<<folder_<<std::endl;
+					m_console->SetRecvFileDir(folder_);
 					m_console->AnswerFile("true");
 					MsgWindow* msg_window = open_session(from);
 					 break;
 				 }
+				default:
+					 m_console->AnswerFile("false");
+					 break;
+			}
+
+		 break;
+	 }
         case (Gtk::RESPONSE_CANCEL): {
 					 m_console->AnswerFile("false");
                         break;
@@ -611,7 +629,6 @@ void MainWindow::on_filetranser_statue(const std::string& jid,const std::string&
 {
 	MsgWindow* msg_window = open_session(jid);
 
-	if(msg_window->file_sending){
 	
 	if("started" == statue){
 		msg_window->show_notify_msg("file tranfser start");
@@ -634,9 +651,6 @@ void MainWindow::on_filetranser_statue(const std::string& jid,const std::string&
 		msg_window->file_transfer_end();
 	}
 	
-	}
-	else
-		msg_window->hide();
 }
 
 void MainWindow::on_calling_statue(const std::string& jid,const std::string& statue)
@@ -665,11 +679,8 @@ void MainWindow::on_file_update_progress(const std::string& jid, const std::stri
 {
 	MsgWindow* msg_window = open_session(jid);
 
-	//if(msg_window->file_sending){
-		msg_window->update_file_progress(file, percent, describe);
-		cout << "on_file_update_progress........................" << endl;
-	//}
-	//cout << "on_file_update_progress++++++++++++++++++++++++++++" << endl;
+	msg_window->update_file_progress(file, percent, describe);
+	cout << "on_file_update_progress........................" << endl;
 }
 
 void MainWindow::on_entry_filter_changed()

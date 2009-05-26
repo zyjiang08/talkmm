@@ -39,6 +39,7 @@ enum {
 	MSG_CALL_HANGUP,
 	MSG_FILE_CANCEL,
 	MSG_FILE_ANSWER,
+	MSG_FILE_SETDIR,
 };
 
 class Console:public talk_base::MessageHandler {
@@ -82,6 +83,7 @@ class Console:public talk_base::MessageHandler {
 	//void OnFileProgress(const std::string& jid, const std::string& file,float percent);
 	void OnFileProgress(const std::string& jid,const std::string& file,
 				     float percent, const std::string& describe);
+	void SetRecvFileDir(const std::string& dir);
 
 
 	void AnswerFile(const std::string& accept = "true");

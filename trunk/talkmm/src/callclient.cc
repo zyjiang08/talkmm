@@ -358,6 +358,10 @@ void CallClient::SendFile(const std::string & to, const std::string & file)
 
 }
 
+void CallClient::OnSetFileDir(const std::string& dir)
+{
+	_current_sending_fileclient->setRootDir(dir);
+}
 void CallClient::OnFileTransferStatue(const std::string & type,
 				      const std::string & statue,
 				      const std::string & jid)
