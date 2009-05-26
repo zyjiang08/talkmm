@@ -2,3 +2,6 @@
 [encoding: UTF-8]
 data/main_window.glade
 data/msg_window.glade
+src/MainWindow.cc
+src/MsgWindow.cc
+src/BuddyView.cc

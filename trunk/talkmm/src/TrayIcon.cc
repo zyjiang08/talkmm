@@ -21,7 +21,6 @@
 TrayIcon::TrayIcon(MainWindow& wnd) :
 	main_wnd_(wnd)
 {
-	//stat_ = Gtk::StatusIcon::create_from_file(DATA_DIR"/gmlive.png");
 	stat_ = Gtk::StatusIcon::create_from_file(DATA_DIR"/images/online.png");
 	if (!stat_)
 		return;
@@ -29,7 +28,7 @@ TrayIcon::TrayIcon(MainWindow& wnd) :
 	stat_->signal_activate ().connect(sigc::mem_fun(*this, &TrayIcon::active_main_wnd));
 	stat_->signal_popup_menu().connect(sigc::mem_fun(*this, &TrayIcon::on_popup_menu));
 
-	stat_->set_tooltip("Gtkmm program demo");
+	stat_->set_tooltip("Talkmm");
 }
 
 TrayIcon::~TrayIcon()
