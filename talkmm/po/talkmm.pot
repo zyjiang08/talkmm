@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-26 00:45+0800\n"
+"POT-Creation-Date: 2009-05-26 18:27+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,4 +114,37 @@ msgstr ""
 
 #: ../data/msg_window.glade.h:4
 msgid "CancelSend"
+msgstr ""
+
+#: ../src/MainWindow.cc:87
+msgid "Talkmm is a full featured gtalk for Linux based on libjingle."
+msgstr ""
+
+#: ../src/MainWindow.cc:89
+msgid ""
+"This program is licenced under GNU General Public Licence (GPL) version 2."
+msgstr ""
+
+#: ../src/MainWindow.cc:240
+msgid "Login error"
+msgstr ""
+
+#: ../src/MainWindow.cc:485
+msgid "Incoming Call"
+msgstr ""
+
+#: ../src/MainWindow.cc:547
+msgid "Receive File"
+msgstr ""
+
+#: ../src/MsgWindow.cc:86
+msgid "Cancel File"
+msgstr ""
+
+#: ../src/MsgWindow.cc:99
+msgid "Cancel Call"
+msgstr ""
+
+#: ../src/MsgWindow.cc:157
+msgid "Please select a file"
 msgstr ""
