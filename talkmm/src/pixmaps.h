@@ -22,7 +22,7 @@
 #define _PIXMAPS_H_
 #include <gdkmm/pixbuf.h>
 #include <gtkmm/image.h>
-#include "define.h"
+//#include "define.h"
 
 Gtk::Image* getSmil(const char* filename);
 Gtk::Image* getImage(const char* filename);

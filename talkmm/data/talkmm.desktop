@@ -4,7 +4,6 @@ Encoding=UTF-8
 Name=无名称
 Name=talkmm
 Comment=a gtkmm jabber client
-Comment[zh_CN]=一个基于GTKMM的jabber/XMPP客户端
 Exec=talkmm
 Icon=talkmm
 StartupNotify=true

@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "BuddyView.h"
 #include "TreeViewTooltips.h"
+#include "pixmaps.h"
 
 BuddyView::BuddyView(MainWindow & f_parent):
 		m_parent(f_parent)
@@ -105,11 +106,11 @@ void BuddyView::add(const std::string & jid_str,const std::string& name,const st
 	(*listiter)[buddyColumns.id] = jid_str;
 
 	if(show>=5)
-		(*listiter)[buddyColumns.icon] = Gdk::Pixbuf::create_from_file("./image/online.png", 16, 16);
+		(*listiter)[buddyColumns.icon] = getPix16("online.png");
 	else
-		(*listiter)[buddyColumns.icon] = Gdk::Pixbuf::create_from_file("./image/dnd.png", 16, 16);
+		(*listiter)[buddyColumns.icon] = getPix16("dnd.png");
 	if(call)
-		(*listiter)[buddyColumns.audioicon] = Gdk::Pixbuf::create_from_file("./image/call.png",24,24);
+		(*listiter)[buddyColumns.audioicon] = getPix16("call.png");
 
 
 	if(!status.empty()){
@@ -142,9 +143,9 @@ void BuddyView::refreshBuddyStatus(const std::string & jid,const std::string& na
 		return;
 	}
 	if(show>=5)
-		(*iter)[buddyColumns.icon] = Gdk::Pixbuf::create_from_file("./image/online.png", 16, 16);
+		(*iter)[buddyColumns.icon] = getPix16("online.png");
 	else
-		(*iter)[buddyColumns.icon] = Gdk::Pixbuf::create_from_file("./image/dnd.png", 16, 16);
+		(*iter)[buddyColumns.icon] = getPix16("dnd.png");
 
 	if(!status.empty()){
 		char* marktext = g_markup_printf_escaped(
@@ -154,7 +155,7 @@ void BuddyView::refreshBuddyStatus(const std::string & jid,const std::string& na
 		g_free(marktext);
 	}
 	if(call)
-		(*iter)[buddyColumns.audioicon] = Gdk::Pixbuf::create_from_file("./image/call.png",24,24);
+		(*iter)[buddyColumns.audioicon] = getPix16("call.png");
 
 }
 

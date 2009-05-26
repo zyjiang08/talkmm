@@ -20,6 +20,7 @@
 #include "MainWindow.h"
 #include "MsgWindow.h"
 #include "MsgBox.h"
+#include "pixmaps.h"
 
 using namespace std;
 
@@ -27,7 +28,8 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 		     const std::string& f_jid):m_parent(f_parent),
 		     m_jid(f_jid)
 {
-	this->set_icon_from_file("talkmm_logo_1.png");
+	//this->set_icon_from_file("talkmm_logo_1.png");
+	this->set_icon(getPix("talkmm.png"));
 	
 	calling = false;
 	file_sending= false;
