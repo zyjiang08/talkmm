@@ -109,6 +109,7 @@ bool MsgWindow::alarm(const std::string& flag)
 
 bool MsgWindow::on_delete_event(GdkEventAny* event)
 {
+	bool flag = true;
 	string file_flag = "file";
 	string call_flag = "call";
 
@@ -117,7 +118,8 @@ bool MsgWindow::on_delete_event(GdkEventAny* event)
 			m_parent->on_cancel_send_file(m_jid);
 		}
 		else{
-			return false;
+			flag = false;
+			//return false;
 		}
 	}
 
@@ -126,12 +128,15 @@ bool MsgWindow::on_delete_event(GdkEventAny* event)
 			m_parent->hangup_call(m_jid);
 		}
 		else{
-			return false;
+			flag = false;
+			//return false;
 		}
 	}
 
-	m_parent->close_session(m_jid);
-	delete this;
+	if(flag){
+		m_parent->close_session(m_jid);
+		delete this;
+	}
 }
 
 void MsgWindow::show_message(const std::string& sender,const std::string& msg,bool self)
