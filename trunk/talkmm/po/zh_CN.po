@@ -1,21 +1,13 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: talkmm 0.10\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-26 18:27+0800\n"
-"PO-Revision-Date: 2009-05-26 00:48+0800\n"
-"Last-Translator: lerosua <lerosua@gmail.com>\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Junyi <junyi.hit@gmail.com>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Chinese\n"
-"X-Poedit-Country: CHINA\n"
-"X-Poedit-SourceCharset: utf-8\n"
 
 #: ../data/main_window.glade.h:1
 msgid " "
@@ -52,6 +44,13 @@ msgid ""
 "Unavailable\n"
 "New status"
 msgstr ""
+"可用\n"
+"聊天\n"
+"离开\n"
+"请勿打扰\n"
+"远远离开\n"
+"不可用\n"
+"新的状态"
 
 #: ../data/main_window.glade.h:14
 msgid "Buddy"
@@ -59,7 +58,7 @@ msgstr "好友"
 
 #: ../data/main_window.glade.h:15
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: ../data/main_window.glade.h:16
 #, fuzzy
@@ -68,7 +67,7 @@ msgstr "聊天"
 
 #: ../data/main_window.glade.h:17
 msgid "Email"
-msgstr ""
+msgstr "邮件"
 
 #: ../data/main_window.glade.h:18
 msgid "General"
@@ -80,7 +79,7 @@ msgstr "记住密码"
 
 #: ../data/main_window.glade.h:20
 msgid "OK"
-msgstr ""
+msgstr "确定"
 
 #: ../data/main_window.glade.h:21
 msgid "Remember Me"
@@ -108,9 +107,8 @@ msgid "page 3"
 msgstr ""
 
 #: ../data/msg_window.glade.h:1
-#, fuzzy
 msgid "     Call      "
-msgstr "组: "
+msgstr "     呼叫      "
 
 #: ../data/msg_window.glade.h:2
 #, fuzzy
@@ -119,41 +117,41 @@ msgstr "发送文件"
 
 #: ../data/msg_window.glade.h:3
 msgid "CancelCall"
-msgstr ""
+msgstr "取消呼叫"
 
 #: ../data/msg_window.glade.h:4
 msgid "CancelSend"
-msgstr ""
+msgstr "取消发送"
 
 #: ../src/MainWindow.cc:87
 msgid "Talkmm is a full featured gtalk for Linux based on libjingle."
-msgstr ""
+msgstr "Talkmm是一个Linux平台下的gtalk版本，它基于libjingle库构建，具有gtalk的全部功能。"
 
 #: ../src/MainWindow.cc:89
-msgid ""
-"This program is licenced under GNU General Public Licence (GPL) version 2."
-msgstr ""
+msgid "This program is licenced under GNU General Public Licence (GPL) version 2."
+msgstr "该程序基于GNU版本2许可发布"
 
 #: ../src/MainWindow.cc:240
 msgid "Login error"
-msgstr ""
+msgstr "登录错误"
 
 #: ../src/MainWindow.cc:485
 msgid "Incoming Call"
-msgstr ""
+msgstr "来电"
 
 #: ../src/MainWindow.cc:547
 msgid "Receive File"
-msgstr ""
+msgstr "接收文件"
 
 #: ../src/MsgWindow.cc:86
 msgid "Cancel File"
-msgstr ""
+msgstr "取消文件"
 
 #: ../src/MsgWindow.cc:99
 msgid "Cancel Call"
-msgstr ""
+msgstr "取消呼叫"
 
 #: ../src/MsgWindow.cc:157
 msgid "Please select a file"
-msgstr ""
+msgstr "请选择文件"
+
