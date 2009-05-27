@@ -87,9 +87,7 @@ void MainWindow::on_button_about()
 		about->set_comments(_("Talkmm is a full featured gtalk for Linux based on libjingle."));
 		about->set_authors(authors);
 		about->set_license (_("This program is licenced under GNU General Public Licence (GPL) version 2."));
-		about->set_translator_credits("XXX");
-
-
+		about->set_translator_credits("Junyi, Lerosua");
 	}
 	about->run();
 	delete about;
@@ -178,8 +176,7 @@ MainWindow::MainWindow():
 
 	//entry_filter = dynamic_cast<Gtk::Entry*>(main_xml->get_widget("entry_filter"));
 
-        Gtk::HBox* hboxfiler = dynamic_cast<Gtk::HBox*>
-                               (main_xml->get_widget("hbox_filter"));
+        Gtk::HBox* hboxfiler = dynamic_cast<Gtk::HBox*>(main_xml->get_widget("hbox_filter"));
 
         entry_filter = Gtk::manage(new Sexy::IconEntry());
 
