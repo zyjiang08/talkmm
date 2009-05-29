@@ -40,7 +40,7 @@ TreeViewTooltips::TreeViewTooltips(BuddyView* view): m_buddyview(view)
 
         m_avatar = Gtk::manage(new Gtk::Image());
         Gtk::HBox* hbox = Gtk::manage(new Gtk::HBox());
-        Gtk::Image* logo = getImage("default.png");
+        Gtk::Image* logo = getImage("online.png");
         hbox->pack_start(*logo);
         hbox->pack_start(*m_label);
         hbox->pack_start(*m_avatar);

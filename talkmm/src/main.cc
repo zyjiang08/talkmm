@@ -44,11 +44,9 @@ int main(int argc, char* argv[])
 {
 	//setlocale (LC_ALL, "");
 
-	/*
-	bindtextdomain (GETTEXT_PACKAGE, GMDEMO_LOCALEDIR);
+	bindtextdomain (GETTEXT_PACKAGE, TALKMM_LOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, NULL);
 	textdomain (GETTEXT_PACKAGE);
-	*/
 
 
 	if (!g_thread_supported())

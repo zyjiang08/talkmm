@@ -27,7 +27,7 @@ string DealConf::DecodeUserInfo(string text)
 int DealConf::WriteXML(const string username, const string password)
 {
 	TiXmlDocument doc("./.config.xml"); 			// 建立一个XML文件
-	TiXmlDeclaration Declaration("1.0","gb2312", "yes"); 	// 声明XML的属性
+	TiXmlDeclaration Declaration("1.0","utf-8", "yes"); 	// 声明XML的属性
 	doc.InsertEndChild(Declaration); 			// 写入基本的XML头结构
 
 	TiXmlElement* InfoRoot = NULL;
