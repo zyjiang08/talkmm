@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: talkmm 0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-29 13:22+0800\n"
+"POT-Creation-Date: 2009-05-29 20:37+0800\n"
 "PO-Revision-Date: 2009-05-29 13:33+0800\n"
 "Last-Translator: Junyi <junyi.hit@gmail.com>\n"
 "Language-Team: \n"
@@ -41,12 +41,12 @@ msgid ""
 "Unavailable\n"
 "New status"
 msgstr ""
-"可用\n"
+"空闲\n"
 "聊天\n"
 "离开\n"
 "请勿打扰\n"
 "远远离开\n"
-"不可用\n"
+"忙碌\n"
 "新的状态"
 
 #: ../data/main_window.glade.h:14
@@ -79,7 +79,7 @@ msgstr "确定"
 
 #: ../data/main_window.glade.h:21
 msgid "Remember Me"
-msgstr "记住帐户"
+msgstr "记住帐号"
 
 #: ../data/main_window.glade.h:22
 msgid "Roster"
@@ -87,7 +87,7 @@ msgstr ""
 
 #: ../data/main_window.glade.h:23
 msgid "Settings"
-msgstr "头像设置"
+msgstr "设置"
 
 #: ../data/main_window.glade.h:24
 msgid "loading"
@@ -110,39 +110,44 @@ msgid "  Send File  "
 msgstr "发送文件"
 
 #: ../data/msg_window.glade.h:3
+msgid "Answer"
+msgstr ""
+
+#: ../data/msg_window.glade.h:4
 msgid "CancelCall"
 msgstr "取消呼叫"
 
-#: ../data/msg_window.glade.h:4
+#: ../data/msg_window.glade.h:5
 msgid "CancelSend"
 msgstr "取消发送"
 
 #: ../src/MainWindow.cc:87
 msgid "Talkmm is a full featured gtalk for Linux based on libjingle."
 msgstr ""
-"Talkmm是一个Linux平台下的gtalk版本，它基于libjingle库构建，具有gtalk的全部功"
-"能。"
+"Talkmm是一个Linux平台下的gtalk版本，\n"
+"它基于libjingle库构建，\n"
+"具有gtalk的全部功能。"
 
 #: ../src/MainWindow.cc:89
 msgid ""
 "This program is licenced under GNU General Public Licence (GPL) version 2."
-msgstr "该程序基于GNU版本2许可发布"
+msgstr "该程序基于GNU许可版本2发布"
 
 #: ../src/MainWindow.cc:241
 msgid "Login error"
 msgstr "登录错误"
 
-#: ../src/MainWindow.cc:571
+#: ../src/MainWindow.cc:578
 msgid "Receive File"
 msgstr "来电"
 
-#: ../src/MainWindow.cc:582
+#: ../src/MainWindow.cc:589
 msgid "Please select a dir"
 msgstr "接收文件"
 
 #: ../src/MsgWindow.cc:85
 msgid " Do you want to cancel the file transfer process now ? "
-msgstr ""
+msgstr "确定取消文件传输吗？"
 
 #: ../src/MsgWindow.cc:86
 msgid "Cancel File"
@@ -150,7 +155,7 @@ msgstr "取消文件"
 
 #: ../src/MsgWindow.cc:98
 msgid " Do you want to cancel the call process now ? "
-msgstr ""
+msgstr "确定取消语音通话吗？"
 
 #: ../src/MsgWindow.cc:99
 msgid "Cancel Call"
@@ -159,3 +164,7 @@ msgstr "取消呼叫"
 #: ../src/MsgWindow.cc:168
 msgid "Please select a file"
 msgstr "请选择文件"
+
+#: ../src/MsgWindow.cc:236
+msgid "is calling you"
+msgstr ""
