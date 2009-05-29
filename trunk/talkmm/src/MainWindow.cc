@@ -480,10 +480,10 @@ void MainWindow::hangup_call(const std::string& to)
 		std::cout<<to<<"on cancel call"<<std::endl;
 }
 
-void MainWindow::set_call_answer(bool answer)
+void MainWindow::set_call_answer(bool call_answer)
 {
 	//MsgWindow* msg_window = open_session(from);
-	if(answer){
+	if(call_answer){
 		m_console->AnswerCall("true");
 		//msg_window->on_call_start();
 		//msg_window->raise();
@@ -576,9 +576,24 @@ void MainWindow::on_send_file(   const std::string& to,  const std::string& file
 	}
 }
 
+void MainWindow::set_file_answer(bool file_answer)
+{
+	//MsgWindow* msg_window = open_session(from);
+	if(file_answer){
+		m_console->AnswerFile("true");
+		//msg_window->on_call_start();
+		//msg_window->raise();
+	}
+	else
+		m_console->AnswerFile("false");
+}
+
 
 void MainWindow::on_file_receive(const std::string& from,const std::string& file)
 {
+	MsgWindow* msg_window = open_session(from);
+	msg_window->on_incoming_file(from);
+	/*
         Gtk::MessageDialog dialog(*this, _("Receive File"), false,
                                   Gtk::MESSAGE_QUESTION,
                                   Gtk::BUTTONS_OK_CANCEL);
@@ -620,6 +635,7 @@ void MainWindow::on_file_receive(const std::string& from,const std::string& file
                         break;
                 }
 	}
+	*/
 }
 
 
