@@ -119,7 +119,6 @@ MainWindow::MainWindow():
 	,m_name("talkmm")
 	,combobox_status(NULL)
 {
-	//this->set_icon_from_file("talkmm_logo_1.png");
 	this->set_icon(getPix("talkmm.png"));
 	this->answer_flag = false;
 
@@ -203,6 +202,9 @@ MainWindow::MainWindow():
 	combobox_status->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::on_combox_status_change));
 	add(*main_notebook);
 
+	/** test for rgba */
+	Glib::RefPtr<const Gdk::Colormap> colormap_ = this->get_screen()->get_rgba_colormap();
+	this->set_default_colormap(colormap_);
 
 	this->set_size_request(240,576);
 	this->show_all();
@@ -211,6 +213,7 @@ MainWindow::MainWindow():
 
 MainWindow::~MainWindow()
 {
+	this->pop_colormap();
 	delete m_session;
 	delete m_roster;
 	delete m_talkmm;
