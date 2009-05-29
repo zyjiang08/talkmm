@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-26 18:27+0800\n"
+"POT-Creation-Date: 2009-05-29 13:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -125,26 +125,34 @@ msgid ""
 "This program is licenced under GNU General Public Licence (GPL) version 2."
 msgstr ""
 
-#: ../src/MainWindow.cc:240
+#: ../src/MainWindow.cc:241
 msgid "Login error"
 msgstr ""
 
-#: ../src/MainWindow.cc:485
-msgid "Incoming Call"
+#: ../src/MainWindow.cc:571
+msgid "Receive File"
 msgstr ""
 
-#: ../src/MainWindow.cc:547
-msgid "Receive File"
+#: ../src/MainWindow.cc:582
+msgid "Please select a dir"
+msgstr ""
+
+#: ../src/MsgWindow.cc:85
+msgid " Do you want to cancel the file transfer process now ? "
 msgstr ""
 
 #: ../src/MsgWindow.cc:86
 msgid "Cancel File"
 msgstr ""
 
+#: ../src/MsgWindow.cc:98
+msgid " Do you want to cancel the call process now ? "
+msgstr ""
+
 #: ../src/MsgWindow.cc:99
 msgid "Cancel Call"
 msgstr ""
 
-#: ../src/MsgWindow.cc:157
+#: ../src/MsgWindow.cc:168
 msgid "Please select a file"
 msgstr ""
