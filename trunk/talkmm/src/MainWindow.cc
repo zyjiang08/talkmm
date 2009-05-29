@@ -568,8 +568,12 @@ void MainWindow::on_send_file(   const std::string& to,  const std::string& file
 		msg_window->file_transfer_start();
 		m_console->SendFile(to, filename);
 	}
-	else
-		std::cout<<to<<" does not support file translate with jingle"<<std::endl;
+	else{
+		Gtk::MessageDialog dialog(*this, "Something wrong");
+		dialog.set_secondary_text("Remote does not support file translate with jingle.");
+		dialog.run();
+		//std::cout<<to<<" does not support file translate with jingle"<<std::endl;
+	}
 }
 
 
@@ -598,7 +602,7 @@ void MainWindow::on_file_receive(const std::string& from,const std::string& file
 					m_console->SetRecvFileDir(folder_);
 					m_console->AnswerFile("true");
 					MsgWindow* msg_window = open_session(from);
-					 break;
+					break;
 				 }
 				default:
 					 m_console->AnswerFile("false");
@@ -712,7 +716,6 @@ void MainWindow::on_file_update_progress(const std::string& jid, const std::stri
 	MsgWindow* msg_window = open_session(jid);
 
 	msg_window->update_file_progress(file, percent, describe);
-	cout << "on_file_update_progress........................" << endl;
 }
 
 void MainWindow::on_entry_filter_changed()

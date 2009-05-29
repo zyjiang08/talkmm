@@ -42,7 +42,7 @@ void getPath()
 
 int main(int argc, char* argv[])
 {
-	//setlocale (LC_ALL, "");
+	setlocale (LC_ALL, "");
 
 	bindtextdomain (GETTEXT_PACKAGE, TALKMM_LOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, NULL);

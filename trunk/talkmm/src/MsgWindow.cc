@@ -208,6 +208,7 @@ void MsgWindow::on_button_call()
 	button_cancel_call->show();
 	button_cancel_send_file->hide();
 	hbox_cancel->show();
+	button_answer->hide();
 
 	m_parent->send_call_to(m_jid);
 	this->calling = true;
@@ -230,16 +231,18 @@ void MsgWindow::on_incoming_call(const std::string& from)
 {
 	hbox_cancel->show();
 	button_call->hide();
+	button_answer->show();
+	button_cancel_send_file->hide();
 	std::string msg = from+_("is calling you");
 	textview_msg->showSystemMsg(msg);
-
 }
+
 void MsgWindow::on_call_answer()
 {
 	button_call->hide();
+	button_answer->hide();
 	hbox_cancel->show();
 	button_cancel_send_file->hide();
-	cout << "on_call_answer" << endl;
 	m_parent->set_call_answer(true);
 	this->calling = true;
 	on_call_start();
@@ -248,13 +251,15 @@ void MsgWindow::on_call_answer()
 void MsgWindow::on_button_cancel_call()
 {
 	if(calling){
-	hbox_cancel->hide();
-	this->calling = false;
-	m_parent->hangup_call(m_jid);
-	show_notify_msg("hangup the call");
+		hbox_cancel->hide();
+		button_call->show();
+		this->calling = false;
+		m_parent->hangup_call(m_jid);
+		show_notify_msg("hangup the call");
 	}
 	else{
 		m_parent->set_call_answer(false);
+		button_call->show();
 		hbox_cancel->hide();
 	}
 }
@@ -262,6 +267,7 @@ void MsgWindow::on_button_cancel_call()
 void MsgWindow::on_call_hangup()
 {
 	hbox_cancel->hide();
+	button_call->show();
 	this->calling = false;
 	//button_cancel_call->hide();
 }
@@ -278,6 +284,7 @@ void MsgWindow::on_call_start()
 void MsgWindow::file_transfer_start()
 {
 	hbox_cancel->show();
+	button_answer->hide();
 	button_cancel_call->hide();
 	button_cancel_send_file->show();
 	progress_frame->show();
