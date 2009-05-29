@@ -43,19 +43,22 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 	scroll_msg->add(*textview_msg);
 	textview_msg->set_editable(false);
 
+	hbox_functions = dynamic_cast < Gtk::HBox * > (msg_xml->get_widget("hbox_functions"));
 	hbox_cancel = dynamic_cast < Gtk::HBox * > (msg_xml->get_widget("hbox_cancel"));
 
 	button_send_file = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_send_file"));
 	button_send_file->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_send_file));
 	button_cancel_send_file = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_cancel_send_file"));
 	button_cancel_send_file->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_cancel_send_file));
+	button_file_answer = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_file_answer"));
+	button_file_answer->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_file_answer));
 
 	button_call = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_call"));
 	button_call->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_call));
 	button_cancel_call = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_cancel_call"));
 	button_cancel_call->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_cancel_call));
-	button_answer = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_answer"));
-	button_answer->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_call_answer));
+	button_call_answer = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_call_answer"));
+	button_call_answer->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_call_answer));
 
 	progress_frame = dynamic_cast<Gtk::Frame*>(msg_xml->get_widget("progress_frame"));
 	progressbar_send_file = dynamic_cast<Gtk::ProgressBar*>(msg_xml->get_widget("progressbar_send_file"));
@@ -66,8 +69,15 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 	this->set_size_request(350,270);
 	this->set_title(m_jid);
 	this->show_all();
+
 	progress_frame->hide();
-	hbox_cancel->hide();
+	hbox_functions->show();
+	button_cancel_send_file->hide();
+	button_file_answer->hide();
+
+	hbox_cancel->show();
+	button_call_answer->hide();
+	button_cancel_call->hide();
 	combobox_functions->hide();
 }
 
@@ -200,6 +210,26 @@ void MsgWindow::on_button_cancel_send_file()
 	m_parent->on_cancel_send_file(m_jid);
 }
 
+void MsgWindow::on_incoming_file(const std::string& from)
+{
+	hbox_cancel->show();
+	button_call->show();
+	button_file_answer->show();
+	std::string msg = from+_("is sending file to you");
+	textview_msg->showSystemMsg(msg);
+	this->file_sending = true;
+}
+
+void MsgWindow::on_file_answer()
+{
+	//hbox_function->show();
+	button_call->show();
+	hbox_cancel->show();
+	m_parent->set_file_answer(true);
+	file_transfer_start();
+	this->file_sending = true;
+}
+
 void MsgWindow::on_button_call()
 {
 	button_call->show();
@@ -208,14 +238,14 @@ void MsgWindow::on_button_call()
 	button_cancel_call->show();
 	button_cancel_send_file->hide();
 	hbox_cancel->show();
-	button_answer->hide();
+	button_call_answer->hide();
 
 	m_parent->send_call_to(m_jid);
 	this->calling = true;
 }
 
 /*
-void MsgWindow::on_button_answer()
+void MsgWindow::on_button_call_answer()
 {
 	button_call->show();
 	button_send_file->show();
@@ -231,16 +261,17 @@ void MsgWindow::on_incoming_call(const std::string& from)
 {
 	hbox_cancel->show();
 	button_call->hide();
-	button_answer->show();
+	button_call_answer->show();
 	button_cancel_send_file->hide();
 	std::string msg = from+_("is calling you");
 	textview_msg->showSystemMsg(msg);
+	this->calling = true;
 }
 
 void MsgWindow::on_call_answer()
 {
 	button_call->hide();
-	button_answer->hide();
+	button_call_answer->hide();
 	hbox_cancel->show();
 	button_cancel_send_file->hide();
 	m_parent->set_call_answer(true);
@@ -276,6 +307,7 @@ void MsgWindow::on_call_start()
 {
 	hbox_cancel->show();
 	button_cancel_call->show();
+	//button_call_answer->show();
 	button_cancel_send_file->hide();
 	show_notify_msg("please start talk");
 	this->calling = true;
@@ -284,7 +316,7 @@ void MsgWindow::on_call_start()
 void MsgWindow::file_transfer_start()
 {
 	hbox_cancel->show();
-	button_answer->hide();
+	button_call_answer->hide();
 	button_cancel_call->hide();
 	button_cancel_send_file->show();
 	progress_frame->show();
@@ -295,6 +327,7 @@ void MsgWindow::file_transfer_end()
 {
 	hbox_cancel->hide();
 	progress_frame->hide();
+	button_file_answer->hide();
 	this->file_sending = false;
 }
 

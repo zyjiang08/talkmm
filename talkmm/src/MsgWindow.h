@@ -36,8 +36,10 @@ class MsgWindow: public Gtk::Window
 		void send_message();
 		void on_button_send_file();
 		void on_button_cancel_send_file();
+		void on_file_answer();
+		void on_incoming_file(const std::string& from);
 		void on_button_call();
-		//void on_button_answer();
+		//void on_button_call_answer();
 		void on_call_answer();
 		void on_button_cancel_call();
 		void on_call_hangup();
@@ -59,10 +61,12 @@ class MsgWindow: public Gtk::Window
 		Gtk::Entry*				entry_send;
 		//Gtk::TextView*				textview_msg;
 		MsgBox*					textview_msg;
+		Gtk::HBox* 				hbox_functions;
 		Gtk::HBox* 				hbox_cancel;
 		Gtk::Button*				button_call;
-		Gtk::Button*				button_answer;
+		Gtk::Button*				button_call_answer;
 		Gtk::Button* 				button_send_file;
+		Gtk::Button*				button_file_answer;
 		Gtk::Button* 				button_cancel_send_file;
 		Gtk::Button* 				button_cancel_call;
 		Gtk::ComboBox*				combobox_functions;
