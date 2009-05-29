@@ -39,12 +39,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="label1">
-                <property name="visible">True</property>
-              </widget>
-              <packing>
-                <property name="position">2</property>
-              </packing>
+              <placeholder/>
             </child>
             <child>
               <widget class="GtkComboBox" id="combobox_functions">
@@ -92,10 +87,16 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="label2">
+              <widget class="GtkButton" id="button_answer">
+                <property name="label" translatable="yes">Answer</property>
                 <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
               </widget>
               <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="padding">1</property>
                 <property name="position">2</property>
               </packing>
             </child>
