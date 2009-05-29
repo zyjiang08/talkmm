@@ -54,6 +54,8 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 	button_call->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_call));
 	button_cancel_call = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_cancel_call"));
 	button_cancel_call->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_cancel_call));
+	button_answer = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_answer"));
+	button_answer->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_call_answer));
 
 	progress_frame = dynamic_cast<Gtk::Frame*>(msg_xml->get_widget("progress_frame"));
 	progressbar_send_file = dynamic_cast<Gtk::ProgressBar*>(msg_xml->get_widget("progressbar_send_file"));
@@ -208,6 +210,29 @@ void MsgWindow::on_button_call()
 	hbox_cancel->show();
 
 	m_parent->send_call_to(m_jid);
+	this->calling = true;
+}
+
+/*
+void MsgWindow::on_button_answer()
+{
+	button_call->show();
+	button_send_file->show();
+
+	button_cancel_call->show();
+	button_cancel_send_file->hide();
+	hbox_cancel->show();
+	this->calling = true;
+}
+*/
+
+void MsgWindow::on_call_answer()
+{
+	button_call->hide();
+	hbox_cancel->show();
+	button_cancel_send_file->hide();
+	cout << "on_call_answer" << endl;
+	m_parent->set_call_answer(true);
 	this->calling = true;
 }
 

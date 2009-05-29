@@ -37,6 +37,8 @@ class MsgWindow: public Gtk::Window
 		void on_button_send_file();
 		void on_button_cancel_send_file();
 		void on_button_call();
+		//void on_button_answer();
+		void on_call_answer();
 		void on_button_cancel_call();
 		void on_call_hangup();
 		void on_call_start();
@@ -60,6 +62,7 @@ class MsgWindow: public Gtk::Window
 		MsgBox*					textview_msg;
 		Gtk::HBox* 				hbox_cancel;
 		Gtk::Button*				button_call;
+		Gtk::Button*				button_answer;
 		Gtk::Button* 				button_send_file;
 		Gtk::Button* 				button_cancel_send_file;
 		Gtk::Button* 				button_cancel_call;

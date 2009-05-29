@@ -75,6 +75,7 @@ class MainWindow : public Gtk::Window {
 		void on_disconnect();
 
 		void send_call_to(const std::string& to);
+		void set_call_answer(bool answer);
 		void on_hangup_call(const std::string& from);
 		void hangup_call(const std::string& to);
 		void on_incoming_call(const std::string& from);
@@ -147,6 +148,7 @@ class MainWindow : public Gtk::Window {
 		int					window_height;
 		int					window_x;
 		int					window_y;
+		bool					answer_flag;
 };
 
 #endif // _MAINWINDOW_HH 

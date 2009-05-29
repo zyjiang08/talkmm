@@ -121,6 +121,7 @@ MainWindow::MainWindow():
 {
 	//this->set_icon_from_file("talkmm_logo_1.png");
 	this->set_icon(getPix("talkmm.png"));
+	this->answer_flag = false;
 
         main_xml = Gnome::Glade::Xml::create(main_ui, "main_notebook");
         main_notebook = dynamic_cast < Gtk::Notebook * > (main_xml->get_widget("main_notebook"));
@@ -476,9 +477,32 @@ void MainWindow::hangup_call(const std::string& to)
 		std::cout<<to<<"on cancel call"<<std::endl;
 }
 
+void MainWindow::set_call_answer(bool answer)
+{
+	if(answer)
+		answer_flag = true;
+	else
+		answer_flag = false;
+}
+
 void MainWindow::on_incoming_call(const std::string& from)
 {
+	MsgWindow* msg_window = open_session(from);
+	//msg_window->on_call_answer();
 
+	if(this->answer_flag){
+		printf("%s : %d\n", __FILE__, __LINE__);
+		m_console->AnswerCall("true");
+		msg_window->on_call_start();
+		msg_window->raise();
+	}else{
+		printf("%s : %d\n", __FILE__, __LINE__);
+		m_console->AnswerCall("false");
+	}
+
+	//msg_window->on_button_answer();
+
+	/*
         Gtk::MessageDialog dialog(*this, _("Incoming Call"), false,
                                   Gtk::MESSAGE_QUESTION,
                                   Gtk::BUTTONS_OK_CANCEL);
@@ -503,6 +527,7 @@ void MainWindow::on_incoming_call(const std::string& from)
                         break;
                 }
 	}
+	*/
 
 }
 
