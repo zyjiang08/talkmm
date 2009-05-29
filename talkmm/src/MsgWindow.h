@@ -44,11 +44,10 @@ class MsgWindow: public Gtk::Window
 		void on_call_start();
 		void file_transfer_start();
 		void file_transfer_end();
+		void on_incoming_call(const std::string& from);
 	//	void update_file_progress(const std::string& file,float percent);
 		void update_file_progress(const std::string& file, float percent, const std::string& describe);
 
-		bool	file_sending;
-		bool	calling;
 
 	protected:
 		bool on_delete_event(GdkEventAny* event);
@@ -70,6 +69,8 @@ class MsgWindow: public Gtk::Window
 		//Gtk::VBox*				vbox_file;
 		Gtk::Frame*				progress_frame;
 		Gtk::ProgressBar*			progressbar_send_file;
+		bool	file_sending;
+		bool	calling;
 
 };
 #endif   /* ----- #ifndef MSGWINDOW_FILE_HEADER_INC  ----- */

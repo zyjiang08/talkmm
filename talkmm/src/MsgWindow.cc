@@ -226,6 +226,14 @@ void MsgWindow::on_button_answer()
 }
 */
 
+void MsgWindow::on_incoming_call(const std::string& from)
+{
+	hbox_cancel->show();
+	button_call->hide();
+	std::string msg = from+_("is calling you");
+	textview_msg->showSystemMsg(msg);
+
+}
 void MsgWindow::on_call_answer()
 {
 	button_call->hide();
@@ -234,14 +242,21 @@ void MsgWindow::on_call_answer()
 	cout << "on_call_answer" << endl;
 	m_parent->set_call_answer(true);
 	this->calling = true;
+	on_call_start();
 }
 
 void MsgWindow::on_button_cancel_call()
 {
+	if(calling){
 	hbox_cancel->hide();
 	this->calling = false;
 	m_parent->hangup_call(m_jid);
 	show_notify_msg("hangup the call");
+	}
+	else{
+		m_parent->set_call_answer(false);
+		hbox_cancel->hide();
+	}
 }
 
 void MsgWindow::on_call_hangup()

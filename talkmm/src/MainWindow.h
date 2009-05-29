@@ -148,7 +148,7 @@ class MainWindow : public Gtk::Window {
 		int					window_height;
 		int					window_x;
 		int					window_y;
-		bool					answer_flag;
+		//bool					answer_flag;
 };
 
 #endif // _MAINWINDOW_HH 
