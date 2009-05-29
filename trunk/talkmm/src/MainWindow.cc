@@ -120,7 +120,7 @@ MainWindow::MainWindow():
 	,combobox_status(NULL)
 {
 	this->set_icon(getPix("talkmm.png"));
-	this->answer_flag = false;
+	//this->answer_flag = false;
 
         main_xml = Gnome::Glade::Xml::create(main_ui, "main_notebook");
         main_notebook = dynamic_cast < Gtk::Notebook * > (main_xml->get_widget("main_notebook"));
@@ -482,17 +482,23 @@ void MainWindow::hangup_call(const std::string& to)
 
 void MainWindow::set_call_answer(bool answer)
 {
-	if(answer)
-		answer_flag = true;
+	//MsgWindow* msg_window = open_session(from);
+	if(answer){
+		m_console->AnswerCall("true");
+		//msg_window->on_call_start();
+		//msg_window->raise();
+	}
 	else
-		answer_flag = false;
+		m_console->AnswerCall("false");
 }
 
 void MainWindow::on_incoming_call(const std::string& from)
 {
 	MsgWindow* msg_window = open_session(from);
+	msg_window->on_incoming_call(from);
 	//msg_window->on_call_answer();
 
+	/*
 	if(this->answer_flag){
 		printf("%s : %d\n", __FILE__, __LINE__);
 		m_console->AnswerCall("true");
@@ -502,6 +508,7 @@ void MainWindow::on_incoming_call(const std::string& from)
 		printf("%s : %d\n", __FILE__, __LINE__);
 		m_console->AnswerCall("false");
 	}
+	*/
 
 	//msg_window->on_button_answer();
 
