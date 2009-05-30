@@ -9,44 +9,56 @@
       <widget class="GtkVBox" id="vbox_main">
         <property name="visible">True</property>
         <child>
-          <widget class="GtkHBox" id="hbox_function">
+          <widget class="GtkHBox" id="hbox_functions">
             <property name="visible">True</property>
             <property name="spacing">5</property>
             <child>
               <widget class="GtkButton" id="button_send_file">
-                <property name="label" translatable="yes">  Send File  </property>
+                <property name="label" translatable="yes">Send File</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
               </widget>
               <packing>
                 <property name="expand">False</property>
-                <property name="padding">5</property>
                 <property name="position">0</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="button_call">
-                <property name="label" translatable="yes">     Call      </property>
+              <widget class="GtkButton" id="button_file_answer">
+                <property name="label" translatable="yes">FileAnswer</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
               </widget>
               <packing>
                 <property name="expand">False</property>
-                <property name="padding">2</property>
+                <property name="padding">1</property>
                 <property name="position">1</property>
               </packing>
             </child>
             <child>
-              <placeholder/>
-            </child>
-            <child>
-              <widget class="GtkComboBox" id="combobox_functions">
+              <widget class="GtkButton" id="button_call">
+                <property name="label" translatable="yes">     Call    </property>
                 <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
               </widget>
               <packing>
                 <property name="expand">False</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkButton" id="button_call_answer">
+                <property name="label" translatable="yes">CallAnswer</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="padding">1</property>
                 <property name="position">3</property>
               </packing>
             </child>
@@ -69,7 +81,7 @@
               </widget>
               <packing>
                 <property name="expand">False</property>
-                <property name="padding">5</property>
+                <property name="padding">1</property>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -82,29 +94,19 @@
               </widget>
               <packing>
                 <property name="expand">False</property>
-                <property name="padding">6</property>
+                <property name="padding">1</property>
                 <property name="position">1</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="button_answer">
-                <property name="label" translatable="yes">Answer</property>
+              <placeholder/>
+            </child>
+            <child>
+              <widget class="GtkComboBox" id="combobox_functions">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
               </widget>
               <packing>
                 <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="padding">1</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkLabel" id="label3">
-                <property name="visible">True</property>
-              </widget>
-              <packing>
                 <property name="position">3</property>
               </packing>
             </child>
