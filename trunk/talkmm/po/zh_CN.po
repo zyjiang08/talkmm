@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: talkmm 0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-29 20:37+0800\n"
-"PO-Revision-Date: 2009-05-29 13:33+0800\n"
+"POT-Creation-Date: 2009-05-30 09:45+0800\n"
+"PO-Revision-Date: 2009-05-30 09:49+0800\n"
 "Last-Translator: Junyi <junyi.hit@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -102,24 +102,28 @@ msgid "page 3"
 msgstr ""
 
 #: ../data/msg_window.glade.h:1
-msgid "     Call      "
-msgstr "     呼叫      "
+msgid "     Call    "
+msgstr "呼叫"
 
 #: ../data/msg_window.glade.h:2
-msgid "  Send File  "
-msgstr "发送文件"
+msgid "CallAnswer"
+msgstr "应答"
 
 #: ../data/msg_window.glade.h:3
-msgid "Answer"
-msgstr ""
-
-#: ../data/msg_window.glade.h:4
 msgid "CancelCall"
 msgstr "取消呼叫"
 
-#: ../data/msg_window.glade.h:5
+#: ../data/msg_window.glade.h:4
 msgid "CancelSend"
 msgstr "取消发送"
+
+#: ../data/msg_window.glade.h:5
+msgid "FileAnswer"
+msgstr "接受文件"
+
+#: ../data/msg_window.glade.h:6
+msgid "Send File"
+msgstr "发送文件"
 
 #: ../src/MainWindow.cc:87
 msgid "Talkmm is a full featured gtalk for Linux based on libjingle."
@@ -137,34 +141,36 @@ msgstr "该程序基于GNU许可版本2发布"
 msgid "Login error"
 msgstr "登录错误"
 
-#: ../src/MainWindow.cc:578
-msgid "Receive File"
-msgstr "来电"
-
-#: ../src/MainWindow.cc:589
-msgid "Please select a dir"
-msgstr "接收文件"
-
-#: ../src/MsgWindow.cc:85
+#: ../src/MsgWindow.cc:95
 msgid " Do you want to cancel the file transfer process now ? "
 msgstr "确定取消文件传输吗？"
 
-#: ../src/MsgWindow.cc:86
+#: ../src/MsgWindow.cc:96
 msgid "Cancel File"
 msgstr "取消文件"
 
-#: ../src/MsgWindow.cc:98
+#: ../src/MsgWindow.cc:108
 msgid " Do you want to cancel the call process now ? "
 msgstr "确定取消语音通话吗？"
 
-#: ../src/MsgWindow.cc:99
+#: ../src/MsgWindow.cc:109
 msgid "Cancel Call"
 msgstr "取消呼叫"
 
-#: ../src/MsgWindow.cc:168
+#: ../src/MsgWindow.cc:178
 msgid "Please select a file"
 msgstr "请选择文件"
 
-#: ../src/MsgWindow.cc:236
+#: ../src/MsgWindow.cc:218
+msgid "is sending file to you"
+msgstr "在传文件给你"
+
+#: ../src/MsgWindow.cc:266
 msgid "is calling you"
-msgstr ""
+msgstr "在呼叫你"
+
+#~ msgid "Receive File"
+#~ msgstr "来电"
+
+#~ msgid "Please select a dir"
+#~ msgstr "接收文件"

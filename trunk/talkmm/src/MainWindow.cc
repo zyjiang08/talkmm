@@ -87,7 +87,7 @@ void MainWindow::on_button_about()
 		about->set_comments(_("Talkmm is a full featured gtalk for Linux based on libjingle."));
 		about->set_authors(authors);
 		about->set_license (_("This program is licenced under GNU General Public Licence (GPL) version 2."));
-		about->set_translator_credits("Junyi, Lerosua");
+		about->set_translator_credits("Junyi, Lerosua, XiongQin");
 	}
 	about->run();
 	delete about;
@@ -119,6 +119,7 @@ MainWindow::MainWindow():
 	,m_name("talkmm")
 	,combobox_status(NULL)
 {
+	this->set_title("Talkmm");
 	this->set_icon(getPix("talkmm.png"));
 	//this->answer_flag = false;
 
@@ -460,8 +461,12 @@ void MainWindow::send_call_to(const std::string& to)
 	const RosterItem& item = this->get_roster(to);
 	if(item.phone_cap)
 		m_console->MakeCallTo(to);
-	else
-		std::cout<<to<<" does not support call  with jingle"<<std::endl;
+	else{
+		Gtk::MessageDialog dialog(*this, "Something wrong");
+		dialog.set_secondary_text("Remote does not support call with jingle.");
+		dialog.run();
+		//std::cout<<to<<" does not support call  with jingle"<<std::endl;
+	}
 }
 
 void MainWindow::on_hangup_call(const std::string& from)

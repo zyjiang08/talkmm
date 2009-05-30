@@ -225,6 +225,9 @@ void MsgWindow::on_file_answer()
 	//hbox_function->show();
 	button_call->show();
 	hbox_cancel->show();
+	button_cancel_send_file->show();
+	button_cancel_call->hide();
+
 	m_parent->set_file_answer(true);
 	file_transfer_start();
 	this->file_sending = true;
