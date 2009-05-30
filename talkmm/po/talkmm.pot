@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-29 20:37+0800\n"
+"POT-Creation-Date: 2009-05-30 09:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,23 +101,27 @@ msgid "page 3"
 msgstr ""
 
 #: ../data/msg_window.glade.h:1
-msgid "     Call      "
+msgid "     Call    "
 msgstr ""
 
 #: ../data/msg_window.glade.h:2
-msgid "  Send File  "
+msgid "CallAnswer"
 msgstr ""
 
 #: ../data/msg_window.glade.h:3
-msgid "Answer"
-msgstr ""
-
-#: ../data/msg_window.glade.h:4
 msgid "CancelCall"
 msgstr ""
 
-#: ../data/msg_window.glade.h:5
+#: ../data/msg_window.glade.h:4
 msgid "CancelSend"
+msgstr ""
+
+#: ../data/msg_window.glade.h:5
+msgid "FileAnswer"
+msgstr ""
+
+#: ../data/msg_window.glade.h:6
+msgid "Send File"
 msgstr ""
 
 #: ../src/MainWindow.cc:87
@@ -133,34 +137,30 @@ msgstr ""
 msgid "Login error"
 msgstr ""
 
-#: ../src/MainWindow.cc:578
-msgid "Receive File"
-msgstr ""
-
-#: ../src/MainWindow.cc:589
-msgid "Please select a dir"
-msgstr ""
-
-#: ../src/MsgWindow.cc:85
+#: ../src/MsgWindow.cc:95
 msgid " Do you want to cancel the file transfer process now ? "
 msgstr ""
 
-#: ../src/MsgWindow.cc:86
+#: ../src/MsgWindow.cc:96
 msgid "Cancel File"
 msgstr ""
 
-#: ../src/MsgWindow.cc:98
+#: ../src/MsgWindow.cc:108
 msgid " Do you want to cancel the call process now ? "
 msgstr ""
 
-#: ../src/MsgWindow.cc:99
+#: ../src/MsgWindow.cc:109
 msgid "Cancel Call"
 msgstr ""
 
-#: ../src/MsgWindow.cc:168
+#: ../src/MsgWindow.cc:178
 msgid "Please select a file"
 msgstr ""
 
-#: ../src/MsgWindow.cc:236
+#: ../src/MsgWindow.cc:218
+msgid "is sending file to you"
+msgstr ""
+
+#: ../src/MsgWindow.cc:266
 msgid "is calling you"
 msgstr ""

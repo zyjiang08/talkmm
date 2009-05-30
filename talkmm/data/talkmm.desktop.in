@@ -2,7 +2,7 @@
 Version=1.0
 Encoding=UTF-8
 Name=无名称
-_Name=talkmm
+_Name=Talkmm
 _Comment=a gtkmm jabber client
 Exec=talkmm
 Icon=talkmm
