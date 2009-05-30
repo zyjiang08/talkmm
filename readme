@@ -1,4 +1,15 @@
+Talkmm 贡献者：XiongQin(console, 翻译), Lerosua(UI, 翻译), Junyi(UI, 翻译)，Ziyan（Logo），Yeqin Su（程序打包）。
 
-构建时指定iLbc的位置
+SVN代码库编译指南：
 
-./configure --with-ilbc=/usr/local
+1、下载SVN代码：svn checkout http://talkmm.googlecode.com/svn/trunk/ talkmm-read-only
+2、进入talkmm-read-only目录中的libjingle子目录
+3、编译安装libjingle：./configure --with-ilbc=/usr/local
+		    make
+		    make install
+4、libjingle安装完毕之后，进入talkmm-read-only目录中的talkmm子目录
+5、执行autogen.sh脚本：./autogen.sh
+6、编译安装talkmm：./configure
+		 make
+		 make install
+7、卸载talkmm：进入talkmm-read-only目录中的talkmm子目录执行make uninstall即可。
