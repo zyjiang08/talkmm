@@ -1,5 +1,5 @@
 if PHONE
-SUBDIRS=xxpalk pcp talkmm
+SUBDIRS=xxpalk pcp
 else
 SUBDIRS=pcp
 endif
