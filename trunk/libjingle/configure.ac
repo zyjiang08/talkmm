@@ -137,7 +137,6 @@ AC_OUTPUT([Makefile
 	  talk/login/Makefile
 	  talk/chat/Makefile
 	  talk/examples/xxpalk/Makefile
-	  talk/examples/talkmm/Makefile
           talk/examples/pcp/Makefile
 	  talk/p2p/Makefile
 	  talk/p2p/base/Makefile
