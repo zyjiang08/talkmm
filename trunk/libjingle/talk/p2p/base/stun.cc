@@ -36,6 +36,7 @@
 #include "talk/p2p/base/stun.h"
 #include <iostream>
 #include <cassert>
+#include <string.h>
 
 #if defined(_MSC_VER) && _MSC_VER < 1300
 namespace std {
@@ -393,7 +394,7 @@ void StunByteStringAttribute::CopyBytes(const char* bytes) {
 
 void StunByteStringAttribute::CopyBytes(const void* bytes, uint16 length) {
   char* new_bytes = new char[length];
-  std::memcpy(new_bytes, bytes, length);
+  memcpy(new_bytes, bytes, length);
   SetBytes(new_bytes, length);
 }
 

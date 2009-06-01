@@ -35,6 +35,7 @@
 #include <iostream>
 #include <cassert>
 #include <errno.h>
+#include <cstdlib>
 
 #ifdef POSIX
 extern "C" {

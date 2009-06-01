@@ -30,6 +30,8 @@
 #endif
 
 #include <cassert>
+#include <string.h>
+#include <algorithm>
 
 #ifdef POSIX
 extern "C" {
