@@ -39,12 +39,11 @@
 #include "talk/base/byteorder.h"
 #include "talk/base/common.h"
 #include "talk/base/logging.h"
+#include <string.h>
 
-#if defined(_MSC_VER) && _MSC_VER < 1300
 namespace std {
   using ::strerror;
 }
-#endif
 
 #ifdef POSIX
 extern "C" {

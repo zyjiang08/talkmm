@@ -34,6 +34,8 @@
 #include "talk/base/stringutils.h"
 #include "talk/base/time.h"
 #include "talk/p2p/base/pseudotcp.h"
+#include <string.h>
+#include <stdlib.h>
 
 #ifdef POSIX
 extern "C" {

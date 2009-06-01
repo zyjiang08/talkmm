@@ -30,6 +30,7 @@
 #include "talk/base/host.h"
 #include "talk/base/thread.h"
 #include "talk/p2p/base/relayserver.h"
+#include <string.h>
 
 #ifdef POSIX
 extern "C" {
