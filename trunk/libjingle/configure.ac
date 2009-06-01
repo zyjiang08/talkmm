@@ -1,4 +1,4 @@
-AC_INIT([libjingle], [0.4.0], [google-talk-open@googlegroups.com])
+AC_INIT([libjingle], [0.4.1], [google-talk-open@googlegroups.com])
 AC_CANONICAL_SYSTEM
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([dist-zip])
@@ -155,7 +155,7 @@ echo
 
 if test x$enable_phone = xyes ; then
 	echo
-	echo Supported Examples: xxpalk pcp talkmm
+	echo Supported Examples: xxpalk pcp
 	echo Supported Codecs:
 	if test x$enable_gips = xyes ; then
 		echo GIPS: yes
