@@ -1,0 +1,38 @@
+Arch下talkmm编译指南
+
+1.编译前准备的包
+语音支持方面的包
+ yaourt -S speex ilbc linphone
+界面支持方面的包
+ yaourt -S gtkmm libsexymm
+
+2.下载源码包
+wget http://talkmm.googlecode.com/files/libjingle-0.4.1.tar.bz2
+wget http://talkmm.googlecode.com/files/talkmm-0.10.tar.bz2
+
+3. 解压libjingle
+tar xvfj libjingle-0.4.1.tar.bz2
+cd libjingle-0.4.1
+./configure 
+make
+cd ..
+
+4. 解压talkmm
+tar xvfj talkmm-0.10.tar.bz2
+cd talkmm-0.10
+
+5. 连接libjingle目录
+ln -s ../libjingle-0.4.1/talk src/talk
+注意这是在talkmm-0.10目录里做的，并且libjingle-0.4.1目录就在talkmm-0.10同级目录中。
+这是为了talkmm里的源码能连接到libjingle里生成的静态库.
+
+6.编译talkmm
+./autogen.sh
+./configure
+make
+sudo make install
+
+PS Arch中gcc 4.4.0-3 版本在编译时似乎有个bug。目前只能跳过这个gcc的版本来编译.
+
+如要指定ilbc位置,就以下面方式
+./configure --with-ilbc=/usr/local
