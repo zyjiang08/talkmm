@@ -22,7 +22,7 @@
 #include "talkmm.h"
 #include "MainWindow.h"
 //#include "ConfWindow.h"
-//#include <glib/gi18n.h>
+#include <glib/gi18n.h>
 #include <stdio.h>
 #include <string.h>
 //#include "./config/rwxml.h"
