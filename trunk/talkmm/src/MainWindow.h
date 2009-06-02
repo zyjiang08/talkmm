@@ -26,7 +26,7 @@
 #include <sigc++/connection.h>
 #include <libsexymm/icon-entry.h>
 #include <libglademm/xml.h>
-#include <glib/gi18n.h>
+//#include <glib/gi18n.h>
 #include <map>
 #include "talk/login/status.h"
 #include "TrayIcon.h"
