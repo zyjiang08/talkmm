@@ -17,6 +17,9 @@
  */
 
 #include <stdio.h>
+#include <string.h>
+#include <locale.h>
+#include <libintl.h>
 #include <gtkmm/main.h>
 #include "MainWindow.h"
 #ifdef HAVE_CONFIG_H
