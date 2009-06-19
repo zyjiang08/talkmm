@@ -16,6 +16,7 @@
  * =====================================================================================
  */
 
+#include <glib/gi18n.h>
 #include <gtkmm/textbuffer.h>
 #include "MainWindow.h"
 #include "MsgWindow.h"
