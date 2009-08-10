@@ -26,7 +26,7 @@ TrayIcon::TrayIcon(MainWindow& wnd) :
 		return;
 
 	stat_->signal_activate ().connect(sigc::mem_fun(*this, &TrayIcon::active_main_wnd));
-	stat_->signal_popup_menu().connect(sigc::mem_fun(*this, &TrayIcon::on_popup_menu));
+	//stat_->signal_popup_menu().connect(sigc::mem_fun(*this, &TrayIcon::on_popup_menu));
 
 	stat_->set_tooltip("Talkmm");
 }

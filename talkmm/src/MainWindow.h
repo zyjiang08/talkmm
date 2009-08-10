@@ -25,8 +25,8 @@
 #include <gtkmm/checkbutton.h>
 #include <sigc++/connection.h>
 #include <libsexymm/icon-entry.h>
-#include <libglademm/xml.h>
-//#include <glib/gi18n.h>
+//#include <libglademm/xml.h>
+#include <glib/gi18n.h>
 #include <map>
 #include "talk/login/status.h"
 #include "TrayIcon.h"
@@ -34,7 +34,7 @@
 #include "./config/rwxml.h"
 
 #define main_ui DATA_DIR"/main_window.glade"
-typedef Glib::RefPtr <Gnome::Glade::Xml> GlademmXML;
+typedef Glib::RefPtr <Gtk::Builder> GBuilderXML;
 
 
 class Talkmm;
@@ -138,7 +138,7 @@ class MainWindow : public Gtk::Window {
 		Gtk::Menu*				tray_pop_menu;
 		BuddyView*				list_view;
 		Session*				m_session;
-		GlademmXML				main_xml;
+		GBuilderXML				main_xml;
 		Gtk::Notebook*				main_notebook;
 		Gtk::Label* 				label_user_name;
 		std::string				m_name;

@@ -123,22 +123,28 @@ MainWindow::MainWindow():
 	this->set_icon(getPix("talkmm.png"));
 	//this->answer_flag = false;
 
-        main_xml = Gnome::Glade::Xml::create(main_ui, "main_notebook");
-        main_notebook = dynamic_cast < Gtk::Notebook * > (main_xml->get_widget("main_notebook"));
+        main_xml = Gtk::Builder::create_from_file(main_ui, "main_notebook");
+        //main_notebook = dynamic_cast < Gtk::Notebook * > (main_xml->get_widget("main_notebook"));
+        main_xml->get_widget("main_notebook",main_notebook);
         main_notebook->set_current_page(LOGIN_INIT);
         main_notebook->set_show_tabs(false);
 
 	/** first page */
-	check_button_rememberMe = dynamic_cast <Gtk::CheckButton*>(main_xml->get_widget("rememberMe"));
+	//check_button_rememberMe = dynamic_cast <Gtk::CheckButton*>(main_xml->get_widget("rememberMe"));
+	main_xml->get_widget("rememberMe",check_button_rememberMe);
 	check_button_rememberMe->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::check_button_rememberme_clicked));
-	check_button_keeppasswd = dynamic_cast <Gtk::CheckButton*>(main_xml->get_widget("keeppasswd"));
+	//check_button_keeppasswd = dynamic_cast <Gtk::CheckButton*>(main_xml->get_widget("keeppasswd"));
+	main_xml->get_widget("keeppasswd",check_button_keeppasswd);
 	check_button_keeppasswd->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::check_button_keeppasswd_clicked));
 
-	button_ok = dynamic_cast <Gtk::Button*>(main_xml->get_widget("login_ok"));
+	//button_ok = dynamic_cast <Gtk::Button*>(main_xml->get_widget("login_ok"));
+	main_xml->get_widget("login_ok",button_ok);
 	button_ok->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::on_login));
 
-        entry_account = dynamic_cast <Gtk::Entry*>(main_xml->get_widget("entry_account"));
-        entry_passwd = dynamic_cast <Gtk::Entry*>(main_xml->get_widget("entry_passwd"));
+        //entry_account = dynamic_cast <Gtk::Entry*>(main_xml->get_widget("entry_account"));
+        main_xml->get_widget("entry_account",entry_account);
+        //entry_passwd = dynamic_cast <Gtk::Entry*>(main_xml->get_widget("entry_passwd"));
+        main_xml->get_widget("entry_passwd",entry_passwd);
 	entry_passwd->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::on_login_emit));
 
 	if(dealconf.ReadXML() != -2){
@@ -155,33 +161,43 @@ MainWindow::MainWindow():
 
 	tray_icon = new TrayIcon(*this);
 
-	GlademmXML menu_xml = Gnome::Glade::Xml::create(main_ui,"tray_menu");
-	tray_pop_menu = dynamic_cast<Gtk::Menu* >(menu_xml->get_widget("tray_menu"));
-	Gtk::MenuItem* menu_quit = dynamic_cast<Gtk::MenuItem*>(menu_xml->get_widget("menu_quit"));
-	menu_quit->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::on_quit));
+	//GBuilderXML menu_xml = Gtk::Builder::create_from_file(main_ui,"tray_menu");
+	////tray_pop_menu = dynamic_cast<Gtk::Menu* >(menu_xml->get_widget("tray_menu"));
+	//menu_xml->get_widget("tray_menu",tray_pop_menu);
+	////Gtk::MenuItem* menu_quit = dynamic_cast<Gtk::MenuItem*>(menu_xml->get_widget("menu_quit"));
+	//Gtk::MenuItem* menu_quit = 0;
+	//menu_xml->get_widget("menu_quit",menu_quit);
+	//menu_quit->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::on_quit));
 	//Gtk::MenuItem* menu_disconnect=dynamic_cast<Gtk::MenuItem*>(menu_xml->get_widget("menu_disconnect"));
 	//menu_disconnect->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::on_disconnect));
 	/**second page*/
-        button_cancel = dynamic_cast <Gtk::Button*> (main_xml->get_widget("login_cancel"));
+        //button_cancel = dynamic_cast <Gtk::Button*> (main_xml->get_widget("login_cancel"));
+        main_xml->get_widget("login_cancel",button_cancel);
         button_cancel->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_loginWindow_cancel));
 
-	progressbar_login = dynamic_cast <Gtk::ProgressBar*> (main_xml->get_widget("progressbar_login"));
+	//progressbar_login = dynamic_cast <Gtk::ProgressBar*> (main_xml->get_widget("progressbar_login"));
+	main_xml->get_widget("progressbar_login",progressbar_login);
 
 	/**third page*/
-	label_user_name = dynamic_cast <Gtk::Label*>(main_xml->get_widget("label_user_name"));
+	//label_user_name = dynamic_cast <Gtk::Label*>(main_xml->get_widget("label_user_name"));
+	main_xml->get_widget("label_user_name",label_user_name);
 
-	button_settings = dynamic_cast <Gtk::Button *>(main_xml->get_widget("button_settings"));
+	//button_settings = dynamic_cast <Gtk::Button *>(main_xml->get_widget("button_settings"));
+	main_xml->get_widget("button_settings",button_settings);
 	//button_settings->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::on_set_settings));
-	button_about = dynamic_cast <Gtk::Button *>(main_xml->get_widget("button_about"));
+	//button_about = dynamic_cast <Gtk::Button *>(main_xml->get_widget("button_about"));
+	main_xml->get_widget("button_about",button_about);
 	button_about->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::on_button_about));
 
 	//entry_filter = dynamic_cast<Gtk::Entry*>(main_xml->get_widget("entry_filter"));
 
-        Gtk::HBox* hboxfiler = dynamic_cast<Gtk::HBox*>(main_xml->get_widget("hbox_filter"));
+        //Gtk::HBox* hboxfilter = dynamic_cast<Gtk::HBox*>(main_xml->get_widget("hbox_filter"));
+        Gtk::HBox* hboxfilter = 0;
+	main_xml->get_widget("hbox_filter",hboxfilter);
 
         entry_filter = Gtk::manage(new Sexy::IconEntry());
 
-        hboxfiler->pack_start(*entry_filter);
+        hboxfilter->pack_start(*entry_filter);
 
         entry_filter->add_clear_button();
 
@@ -193,12 +209,15 @@ MainWindow::MainWindow():
 
 	entry_filter->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::on_entry_filter_changed));
 
-	Gtk::Container* list_window = dynamic_cast <Gtk::Container*>(main_xml->get_widget("listWindow"));
+	//Gtk::Container* list_window = dynamic_cast <Gtk::Container*>(main_xml->get_widget("listWindow"));
+	Gtk::Container* list_window = 0;
+	main_xml->get_widget("listWindow",list_window);
 	list_view = Gtk::manage(new BuddyView(*this));
 	list_window->add(*list_view);
 
 
-	combobox_status = dynamic_cast<Gtk::ComboBox*>(main_xml->get_widget("combobox_status"));
+	//combobox_status = dynamic_cast<Gtk::ComboBox*>(main_xml->get_widget("combobox_status"));
+	main_xml->get_widget("combobox_status",combobox_status);
 	combobox_status->set_active(0);
 	combobox_status->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::on_combox_status_change));
 	add(*main_notebook);

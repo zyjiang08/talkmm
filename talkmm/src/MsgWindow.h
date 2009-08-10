@@ -57,7 +57,7 @@ class MsgWindow: public Gtk::Window
 	private:
 		MainWindow*				m_parent;
 		std::string				m_jid;
-		GlademmXML				msg_xml;
+		GBuilderXML				msg_xml;
 		Gtk::Entry*				entry_send;
 		//Gtk::TextView*				textview_msg;
 		MsgBox*					textview_msg;
