@@ -33,38 +33,54 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 {
 	this->set_icon(getPix("talkmm.png"));
 	
-        msg_xml = Gnome::Glade::Xml::create(msg_ui, "vbox_main");
-	Gtk::VBox* vbox_main= dynamic_cast < Gtk::VBox * > (msg_xml->get_widget("vbox_main"));
+        msg_xml = Gtk::Builder::create_from_file(msg_ui, "vbox_main");
+	//Gtk::VBox* vbox_main= dynamic_cast < Gtk::VBox * > (msg_xml->get_widget("vbox_main"));
+	Gtk::VBox* vbox_main= 0;
+	msg_xml->get_widget("vbox_main",vbox_main);
 
-	entry_send = dynamic_cast<Gtk::Entry*> (msg_xml->get_widget("entry_send"));
+	//entry_send = dynamic_cast<Gtk::Entry*> (msg_xml->get_widget("entry_send"));
+	msg_xml->get_widget("entry_send",entry_send);
 	entry_send->signal_activate().connect(sigc::mem_fun(*this, &MsgWindow::send_message));
 
 	textview_msg = Gtk::manage(new class MsgBox);
-	Gtk::ScrolledWindow* scroll_msg = dynamic_cast<Gtk::ScrolledWindow*>(msg_xml->get_widget("scrolled_msg_show"));
+	//Gtk::ScrolledWindow* scroll_msg = dynamic_cast<Gtk::ScrolledWindow*>(msg_xml->get_widget("scrolled_msg_show"));
+	Gtk::ScrolledWindow* scroll_msg = 0;
+	msg_xml->get_widget("scrolled_msg_show",scroll_msg);
 	scroll_msg->add(*textview_msg);
 	textview_msg->set_editable(false);
 
-	hbox_functions = dynamic_cast < Gtk::HBox * > (msg_xml->get_widget("hbox_functions"));
-	hbox_cancel = dynamic_cast < Gtk::HBox * > (msg_xml->get_widget("hbox_cancel"));
+	//hbox_functions = dynamic_cast < Gtk::HBox * > (msg_xml->get_widget("hbox_functions"));
+	msg_xml->get_widget("hbox_functions",hbox_functions);
+	//hbox_cancel = dynamic_cast < Gtk::HBox * > (msg_xml->get_widget("hbox_cancel"));
+	msg_xml->get_widget("hbox_cancel",hbox_cancel);
 
-	button_send_file = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_send_file"));
+	//button_send_file = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_send_file"));
+	msg_xml->get_widget("button_send_file",button_send_file);
 	button_send_file->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_send_file));
-	button_cancel_send_file = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_cancel_send_file"));
+	//button_cancel_send_file = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_cancel_send_file"));
+	msg_xml->get_widget("button_cancel_send_file",button_cancel_send_file);
 	button_cancel_send_file->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_cancel_send_file));
-	button_file_answer = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_file_answer"));
+	//button_file_answer = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_file_answer"));
+	msg_xml->get_widget("button_file_answer",button_file_answer);
 	button_file_answer->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_file_answer));
 
-	button_call = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_call"));
+	//button_call = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_call"));
+	msg_xml->get_widget("button_call",button_call);
 	button_call->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_call));
-	button_cancel_call = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_cancel_call"));
+	//button_cancel_call = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_cancel_call"));
+	msg_xml->get_widget("button_cancel_call",button_cancel_call);
 	button_cancel_call->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_cancel_call));
-	button_call_answer = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_call_answer"));
+	//button_call_answer = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_call_answer"));
+	msg_xml->get_widget("button_call_answer",button_call_answer);
 	button_call_answer->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_call_answer));
 
-	progress_frame = dynamic_cast<Gtk::Frame*>(msg_xml->get_widget("progress_frame"));
-	progressbar_send_file = dynamic_cast<Gtk::ProgressBar*>(msg_xml->get_widget("progressbar_send_file"));
+	//progress_frame = dynamic_cast<Gtk::Frame*>(msg_xml->get_widget("progress_frame"));
+	msg_xml->get_widget("progress_frame",progress_frame);
+	//progressbar_send_file = dynamic_cast<Gtk::ProgressBar*>(msg_xml->get_widget("progressbar_send_file"));
+	msg_xml->get_widget("progressbar_send_file",progressbar_send_file);
 	
-	combobox_functions = dynamic_cast<Gtk::ComboBox*>(msg_xml->get_widget("combobox_functions"));
+	//combobox_functions = dynamic_cast<Gtk::ComboBox*>(msg_xml->get_widget("combobox_functions"));
+	msg_xml->get_widget("combobox_functions",combobox_functions);
 
 	add(*vbox_main);
 	this->set_size_request(350,270);

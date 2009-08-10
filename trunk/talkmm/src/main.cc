@@ -28,7 +28,7 @@
 
 ////////////////////////////////////
 //added on 2009.5.20 by string
-#include <libglademm/xml.h>
+//#include <libglademm/xml.h>
 ////////////////////////////////////
 
 

@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 
 # libtool - Provide generalized library-building support services.
 # Generated automatically by config.status (talkmm) 0.10
@@ -86,7 +86,7 @@ NM="/usr/bin/nm -B"
 LN_S="ln -s"
 
 # What is the maximum length of a command?
-max_cmd_len=805306365
+max_cmd_len=1572864
 
 # Object file suffix (normally "o").
 objext=o
@@ -150,7 +150,7 @@ global_symbol_to_c_name_address_lib_prefix="sed -n -e 's/^: \\([^ ]*\\) \$/  {\\
 objdir=.libs
 
 # Shell to use when invoking shell scripts.
-SHELL="/bin/bash"
+SHELL="/bin/sh"
 
 # An echo program that does not interpret backslashes.
 ECHO="echo"
@@ -234,7 +234,7 @@ finish_eval=""
 hardcode_into_libs=yes
 
 # Compile-time system search path for libraries.
-sys_lib_search_path_spec="/usr/lib/gcc/i686-pc-linux-gnu/4.4.0 /usr/lib /lib"
+sys_lib_search_path_spec="/usr/lib/gcc/i686-pc-linux-gnu/4.4.1 /usr/lib /lib"
 
 # Run-time system search path for libraries.
 sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/X11R6/lib /usr/local/lib /usr/lib/libfakeroot "
@@ -9040,17 +9040,17 @@ file_list_spec=""
 hardcode_action=immediate
 
 # The directories searched by this compiler when creating a shared library.
-compiler_lib_search_dirs="/usr/lib/gcc/i686-pc-linux-gnu/4.4.0 /usr/lib/gcc/i686-pc-linux-gnu/4.4.0 /usr/lib/gcc/i686-pc-linux-gnu/4.4.0/../../.."
+compiler_lib_search_dirs="/usr/lib/gcc/i686-pc-linux-gnu/4.4.1 /usr/lib/gcc/i686-pc-linux-gnu/4.4.1 /usr/lib/gcc/i686-pc-linux-gnu/4.4.1/../../.."
 
 # Dependencies to place before and after the objects being linked to
 # create a shared library.
-predep_objects="/usr/lib/gcc/i686-pc-linux-gnu/4.4.0/../../../crti.o /usr/lib/gcc/i686-pc-linux-gnu/4.4.0/crtbeginS.o"
-postdep_objects="/usr/lib/gcc/i686-pc-linux-gnu/4.4.0/crtendS.o /usr/lib/gcc/i686-pc-linux-gnu/4.4.0/../../../crtn.o"
+predep_objects="/usr/lib/gcc/i686-pc-linux-gnu/4.4.1/../../../crti.o /usr/lib/gcc/i686-pc-linux-gnu/4.4.1/crtbeginS.o"
+postdep_objects="/usr/lib/gcc/i686-pc-linux-gnu/4.4.1/crtendS.o /usr/lib/gcc/i686-pc-linux-gnu/4.4.1/../../../crtn.o"
 predeps=""
 postdeps="-lstdc++ -lm -lgcc_s -lc -lgcc_s"
 
 # The library search path used internally by the compiler when linking
 # a shared library.
-compiler_lib_search_path="-L/usr/lib/gcc/i686-pc-linux-gnu/4.4.0 -L/usr/lib/gcc/i686-pc-linux-gnu/4.4.0 -L/usr/lib/gcc/i686-pc-linux-gnu/4.4.0/../../.."
+compiler_lib_search_path="-L/usr/lib/gcc/i686-pc-linux-gnu/4.4.1 -L/usr/lib/gcc/i686-pc-linux-gnu/4.4.1 -L/usr/lib/gcc/i686-pc-linux-gnu/4.4.1/../../.."
 
 # ### END LIBTOOL TAG CONFIG: CXX
