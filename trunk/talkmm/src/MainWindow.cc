@@ -33,6 +33,18 @@
 
 using namespace std;
 
+/**构建菜单的xml信息*/
+Glib::ustring ui_menu_info =
+        "<ui>"
+        "<popup name='TrayMenu'>"
+        " <menuitem action='Info'/>"
+        " <menuitem action='Preferences'/>"
+        "       <separator/>"
+        " <menuitem action='Quit'/>"
+        "</popup>"
+        "</ui>";
+ 
+
 void MainWindow::show_window()
 {
 	this->show();
@@ -161,6 +173,9 @@ MainWindow::MainWindow():
 
 	tray_icon = new TrayIcon(*this);
 
+        init_ui_manager();
+
+        tray_pop_menu = dynamic_cast<Gtk::Menu*>(ui_manager->get_widget("/TrayMenu"));
 	//GBuilderXML menu_xml = Gtk::Builder::create_from_file(main_ui,"tray_menu");
 	////tray_pop_menu = dynamic_cast<Gtk::Menu* >(menu_xml->get_widget("tray_menu"));
 	//menu_xml->get_widget("tray_menu",tray_pop_menu);
@@ -238,6 +253,41 @@ MainWindow::~MainWindow()
 	delete m_roster;
 	delete m_talkmm;
 }
+
+void MainWindow::init_ui_manager()
+{
+        //register_stock_items();
+
+        if (!action_group)
+                action_group = Gtk::ActionGroup::create();
+
+        Glib::RefPtr<Gtk::Action> action;
+
+        //TrayMenu
+        action_group->add
+        (Gtk::Action::create("Info", Gtk::Stock::INFO, _("Info"), _("Talkmm Information")),
+         sigc::mem_fun(*this, &MainWindow::on_button_about));
+
+        action_group->add
+        (Gtk::Action::create("Preferences", Gtk::Stock::PREFERENCES, _("Preferences")),
+         sigc::mem_fun(*this, &MainWindow::on_menu_pref_activate));
+
+        action_group->add
+        (Gtk::Action::create("Quit", Gtk::Stock::QUIT, _("Quit")),
+         sigc::mem_fun(*this, &MainWindow::on_quit));
+
+        
+        if (!ui_manager)
+                ui_manager = Gtk::UIManager::create();
+
+        ui_manager->insert_action_group(action_group);
+
+        add_accel_group(ui_manager->get_accel_group());
+
+        ui_manager->add_ui_from_string(ui_menu_info);
+
+}
+
 
 bool MainWindow::on_key_press_event(GdkEventKey* ev)
 {

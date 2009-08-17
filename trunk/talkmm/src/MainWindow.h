@@ -63,6 +63,8 @@ class MainWindow : public Gtk::Window {
 		void on_menu_pref_activate();
 		MsgWindow* open_session(const std::string& from);
 		void close_session(const std::string& from);
+		/** init the menu widget */
+		void init_ui_manager();
 		Gtk::Menu* get_tray_pop_menu() { return tray_pop_menu;}
 		/** finsh login*/
 		void on_set_settings();
@@ -142,6 +144,9 @@ class MainWindow : public Gtk::Window {
 		Gtk::Notebook*				main_notebook;
 		Gtk::Label* 				label_user_name;
 		std::string				m_name;
+
+		Glib::RefPtr<Gtk::UIManager> ui_manager;
+		Glib::RefPtr<Gtk::ActionGroup> action_group;
 
 		enum{ LOGIN_INIT=0,LOGIN_LOADING,LOGIN_FINISH};
 		//ConfWindow*			confwindow;
