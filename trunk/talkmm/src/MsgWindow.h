@@ -23,7 +23,8 @@
 
 #define msg_ui DATA_DIR"/msg_window.glade"
 
-class MsgBox;
+//class MsgBox;
+class XWebkit;
 class MainWindow;
 class MsgWindow: public Gtk::Window
 {
@@ -60,7 +61,8 @@ class MsgWindow: public Gtk::Window
 		GBuilderXML				msg_xml;
 		Gtk::Entry*				entry_send;
 		//Gtk::TextView*				textview_msg;
-		MsgBox*					textview_msg;
+		//MsgBox*					textview_msg;
+		XWebkit*				textview_msg;
 		Gtk::HBox* 				hbox_functions;
 		Gtk::HBox* 				hbox_cancel;
 		Gtk::Button*				button_call;

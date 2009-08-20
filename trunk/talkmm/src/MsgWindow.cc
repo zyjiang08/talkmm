@@ -20,7 +20,8 @@
 #include <gtkmm/textbuffer.h>
 #include "MainWindow.h"
 #include "MsgWindow.h"
-#include "MsgBox.h"
+//#include "MsgBox.h"
+#include "xwebkit.h"
 #include "pixmaps.h"
 
 using namespace std;
@@ -34,52 +35,46 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 	this->set_icon(getPix("talkmm.png"));
 	
         msg_xml = Gtk::Builder::create_from_file(msg_ui, "vbox_main");
-	//Gtk::VBox* vbox_main= dynamic_cast < Gtk::VBox * > (msg_xml->get_widget("vbox_main"));
 	Gtk::VBox* vbox_main= 0;
 	msg_xml->get_widget("vbox_main",vbox_main);
 
-	//entry_send = dynamic_cast<Gtk::Entry*> (msg_xml->get_widget("entry_send"));
 	msg_xml->get_widget("entry_send",entry_send);
 	entry_send->signal_activate().connect(sigc::mem_fun(*this, &MsgWindow::send_message));
 
+	// add xwebkit here
+	//textview_msg = Gtk::manage(new class XWebkit);
+	textview_msg = new XWebkit(m_jid);
+	Gtk::VBox* vbox_text = 0;
+	msg_xml->get_widget("vbox_text",vbox_text);
+	vbox_text->pack_start(*textview_msg,true,true);
+#if 0
 	textview_msg = Gtk::manage(new class MsgBox);
-	//Gtk::ScrolledWindow* scroll_msg = dynamic_cast<Gtk::ScrolledWindow*>(msg_xml->get_widget("scrolled_msg_show"));
 	Gtk::ScrolledWindow* scroll_msg = 0;
 	msg_xml->get_widget("scrolled_msg_show",scroll_msg);
 	scroll_msg->add(*textview_msg);
 	textview_msg->set_editable(false);
+#endif
 
-	//hbox_functions = dynamic_cast < Gtk::HBox * > (msg_xml->get_widget("hbox_functions"));
 	msg_xml->get_widget("hbox_functions",hbox_functions);
-	//hbox_cancel = dynamic_cast < Gtk::HBox * > (msg_xml->get_widget("hbox_cancel"));
 	msg_xml->get_widget("hbox_cancel",hbox_cancel);
 
-	//button_send_file = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_send_file"));
 	msg_xml->get_widget("button_send_file",button_send_file);
 	button_send_file->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_send_file));
-	//button_cancel_send_file = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_cancel_send_file"));
 	msg_xml->get_widget("button_cancel_send_file",button_cancel_send_file);
 	button_cancel_send_file->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_cancel_send_file));
-	//button_file_answer = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_file_answer"));
 	msg_xml->get_widget("button_file_answer",button_file_answer);
 	button_file_answer->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_file_answer));
 
-	//button_call = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_call"));
 	msg_xml->get_widget("button_call",button_call);
 	button_call->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_call));
-	//button_cancel_call = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_cancel_call"));
 	msg_xml->get_widget("button_cancel_call",button_cancel_call);
 	button_cancel_call->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_button_cancel_call));
-	//button_call_answer = dynamic_cast<Gtk::Button*>(msg_xml->get_widget("button_call_answer"));
 	msg_xml->get_widget("button_call_answer",button_call_answer);
 	button_call_answer->signal_clicked().connect(sigc::mem_fun(*this, &MsgWindow::on_call_answer));
 
-	//progress_frame = dynamic_cast<Gtk::Frame*>(msg_xml->get_widget("progress_frame"));
 	msg_xml->get_widget("progress_frame",progress_frame);
-	//progressbar_send_file = dynamic_cast<Gtk::ProgressBar*>(msg_xml->get_widget("progressbar_send_file"));
 	msg_xml->get_widget("progressbar_send_file",progressbar_send_file);
 	
-	//combobox_functions = dynamic_cast<Gtk::ComboBox*>(msg_xml->get_widget("combobox_functions"));
 	msg_xml->get_widget("combobox_functions",combobox_functions);
 
 	add(*vbox_main);
@@ -101,6 +96,8 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 MsgWindow::~MsgWindow()
 {
 
+	printf("delete textview_msg\n");
+	delete textview_msg;
 }
 
 bool MsgWindow::alarm(const std::string& flag)
@@ -164,19 +161,33 @@ bool MsgWindow::on_delete_event(GdkEventAny* event)
 
 	if(flag){
 		m_parent->close_session(m_jid);
-		delete this;
+		//delete this;
+		return true;
 	}
+	return false;
 }
 
 void MsgWindow::show_message(const std::string& sender,const std::string& msg,bool self)
 {
-	textview_msg->showTitle(sender,self);
-	textview_msg->showMessage(msg);
+	//textview_msg->showTitle(sender,self);
+	//textview_msg->showMessage(msg);
+	std::cout<<"sender = "<<sender<<std::endl;
+	if(self){
+		textview_msg->add_message(sender.c_str(),sender.c_str(),msg.c_str(),MESSAGE_SEND);
+		//textview_msg->add_message("test","test","just for test",MESSAGE_RECV);
+
+		}
+	else{
+		//textview_msg->add_message(sender.c_str(),sender.c_str(),msg.c_str(),MESSAGE_RECV);
+		//textview_msg->add_message("botcalk","botcalk","fdsfsfsf",MESSAGE_RECV);
+		textview_msg->add_message("system","system",msg.c_str(),MESSAGE_SYSTEM);
+	}
 
 }
 void MsgWindow::show_notify_msg(const std::string& msg)
 {
-	textview_msg->showSystemMsg(msg);
+	//textview_msg->showSystemMsg(msg);
+	textview_msg->add_message("system","system",msg.c_str(),MESSAGE_SYSTEM);
 }
 
 
@@ -233,7 +244,8 @@ void MsgWindow::on_incoming_file(const std::string& from)
 	button_call->show();
 	button_file_answer->show();
 	std::string msg = from+_("is sending file to you");
-	textview_msg->showSystemMsg(msg);
+	//textview_msg->showSystemMsg(msg);
+	textview_msg->add_message("system","system",msg.c_str(),MESSAGE_SYSTEM);
 	this->file_sending = true;
 }
 
@@ -284,7 +296,8 @@ void MsgWindow::on_incoming_call(const std::string& from)
 	button_call_answer->show();
 	button_cancel_send_file->hide();
 	std::string msg = from+_("is calling you");
-	textview_msg->showSystemMsg(msg);
+	//textview_msg->showSystemMsg(msg);
+	textview_msg->add_message("system","system",msg.c_str(),MESSAGE_SYSTEM);
 	this->calling = true;
 }
 

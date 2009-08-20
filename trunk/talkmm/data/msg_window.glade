@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <interface>
-  <!-- interface-requires gtk+ 2.16 -->
+  <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy toplevel-contextual -->
   <object class="GtkWindow" id="window_msg">
     <property name="visible">True</property>
@@ -8,6 +8,7 @@
     <child>
       <object class="GtkVBox" id="vbox_main">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkHBox" id="hbox_functions">
             <property name="visible">True</property>
@@ -118,11 +119,9 @@
           </packing>
         </child>
         <child>
-          <object class="GtkScrolledWindow" id="scrolled_msg_show">
+          <object class="GtkVBox" id="vbox_text">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="hscrollbar_policy">automatic</property>
-            <property name="vscrollbar_policy">automatic</property>
+            <property name="orientation">vertical</property>
             <child>
               <placeholder/>
             </child>

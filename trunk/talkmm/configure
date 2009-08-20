@@ -15788,7 +15788,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
 # Checks for libraries.
-pkg_modules="gtkmm-2.4 >= 2.6.0 libsexymm"
+pkg_modules="gtkmm-2.4 >= 2.6.0 libsexymm webkit-1.0"
 
 
 if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
