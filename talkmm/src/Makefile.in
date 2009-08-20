@@ -55,11 +55,10 @@ am_talkmm_OBJECTS = talkmm-talkmm.$(OBJEXT) talkmm-main.$(OBJEXT) \
 	talkmm-MainWindow.$(OBJEXT) talkmm-MsgWindow.$(OBJEXT) \
 	talkmm-BuddyView.$(OBJEXT) talkmm-TreeModelDnd.$(OBJEXT) \
 	talkmm-TreeViewTooltips.$(OBJEXT) talkmm-TrayIcon.$(OBJEXT) \
-	talkmm-TagList.$(OBJEXT) talkmm-MsgBox.$(OBJEXT) \
-	talkmm-Unit.$(OBJEXT) talkmm-pixmaps.$(OBJEXT) \
-	talkmm-rwxml.$(OBJEXT) talkmm-tinystr.$(OBJEXT) \
-	talkmm-tinyxml.$(OBJEXT) talkmm-tinyxmlerror.$(OBJEXT) \
-	talkmm-tinyxmlparser.$(OBJEXT)
+	talkmm-xwebkit.$(OBJEXT) talkmm-Unit.$(OBJEXT) \
+	talkmm-pixmaps.$(OBJEXT) talkmm-rwxml.$(OBJEXT) \
+	talkmm-tinystr.$(OBJEXT) talkmm-tinyxml.$(OBJEXT) \
+	talkmm-tinyxmlerror.$(OBJEXT) talkmm-tinyxmlparser.$(OBJEXT)
 talkmm_OBJECTS = $(am_talkmm_OBJECTS)
 am__DEPENDENCIES_1 =
 talkmm_DEPENDENCIES = talk/login/libcricketlogin.la \
@@ -267,8 +266,7 @@ talkmm_SOURCES = talkmm.cc \
 		 TreeModelDnd.cc \
 		 TreeViewTooltips.cc \
 		 TrayIcon.cc \
-		 TagList.cc \
-		 MsgBox.cc \
+		 xwebkit.cc \
 		 Unit.cc \
 		 pixmaps.cc \
 		 ./config/rwxml.cc  ./config/tinystr.cc  ./config/tinyxml.cc  \
@@ -287,9 +285,7 @@ noinst_HEADERS = talkmm.h \
 		 TreeModelDnd.h \
 		 TreeViewTooltips.h \
 		 TrayIcon.h \
-		 SmileTree.h \
-		 TagList.h \
-		 MsgBox.h \
+		 xwebkit.h \
 		 Unit.h \
 		 TreeItem.h \
 		 pixmaps.h \
@@ -308,8 +304,8 @@ talkmm_LDADD = \
 	       $(EXPAT_LIBS) $(ORTP_LIBS) -lpthread -lssl -lcrypto \
 		$(ILBC_LIBS) $(SPEEX_LIBS) $(GLIB_LIBS) $(MEDIA_LIBS) $(MEDIASTREAMER_LIBS)
 
-talkmm_LDFLAGS = `pkg-config --libs gtkmm-2.4 libglademm-2.4 gthread-2.0 libsexymm`
-AM_CPPFLAGS = -DPOSIX `pkg-config --cflags gtkmm-2.4 libglademm-2.4 gthread-2.0 libsexymm`
+talkmm_LDFLAGS = `pkg-config --libs gtkmm-2.4 libglademm-2.4 gthread-2.0 libsexymm webkit-1.0`
+AM_CPPFLAGS = -DPOSIX `pkg-config --cflags gtkmm-2.4 libglademm-2.4 gthread-2.0 libsexymm webkit-1.0`
 all: all-am
 
 .SUFFIXES:
@@ -399,9 +395,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-BuddyView.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-MainWindow.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-MsgBox.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-MsgWindow.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-TagList.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-TrayIcon.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-TreeModelDnd.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-TreeViewTooltips.Po@am__quote@
@@ -418,6 +412,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-tinyxml.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-tinyxmlerror.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-tinyxmlparser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/talkmm-xwebkit.Po@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -608,33 +603,19 @@ talkmm-TrayIcon.obj: TrayIcon.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-TrayIcon.obj `if test -f 'TrayIcon.cc'; then $(CYGPATH_W) 'TrayIcon.cc'; else $(CYGPATH_W) '$(srcdir)/TrayIcon.cc'; fi`
 
-talkmm-TagList.o: TagList.cc
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-TagList.o -MD -MP -MF $(DEPDIR)/talkmm-TagList.Tpo -c -o talkmm-TagList.o `test -f 'TagList.cc' || echo '$(srcdir)/'`TagList.cc
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/talkmm-TagList.Tpo $(DEPDIR)/talkmm-TagList.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='TagList.cc' object='talkmm-TagList.o' libtool=no @AMDEPBACKSLASH@
+talkmm-xwebkit.o: xwebkit.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-xwebkit.o -MD -MP -MF $(DEPDIR)/talkmm-xwebkit.Tpo -c -o talkmm-xwebkit.o `test -f 'xwebkit.cc' || echo '$(srcdir)/'`xwebkit.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/talkmm-xwebkit.Tpo $(DEPDIR)/talkmm-xwebkit.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='xwebkit.cc' object='talkmm-xwebkit.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-TagList.o `test -f 'TagList.cc' || echo '$(srcdir)/'`TagList.cc
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-xwebkit.o `test -f 'xwebkit.cc' || echo '$(srcdir)/'`xwebkit.cc
 
-talkmm-TagList.obj: TagList.cc
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-TagList.obj -MD -MP -MF $(DEPDIR)/talkmm-TagList.Tpo -c -o talkmm-TagList.obj `if test -f 'TagList.cc'; then $(CYGPATH_W) 'TagList.cc'; else $(CYGPATH_W) '$(srcdir)/TagList.cc'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/talkmm-TagList.Tpo $(DEPDIR)/talkmm-TagList.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='TagList.cc' object='talkmm-TagList.obj' libtool=no @AMDEPBACKSLASH@
+talkmm-xwebkit.obj: xwebkit.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-xwebkit.obj -MD -MP -MF $(DEPDIR)/talkmm-xwebkit.Tpo -c -o talkmm-xwebkit.obj `if test -f 'xwebkit.cc'; then $(CYGPATH_W) 'xwebkit.cc'; else $(CYGPATH_W) '$(srcdir)/xwebkit.cc'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/talkmm-xwebkit.Tpo $(DEPDIR)/talkmm-xwebkit.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='xwebkit.cc' object='talkmm-xwebkit.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-TagList.obj `if test -f 'TagList.cc'; then $(CYGPATH_W) 'TagList.cc'; else $(CYGPATH_W) '$(srcdir)/TagList.cc'; fi`
-
-talkmm-MsgBox.o: MsgBox.cc
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-MsgBox.o -MD -MP -MF $(DEPDIR)/talkmm-MsgBox.Tpo -c -o talkmm-MsgBox.o `test -f 'MsgBox.cc' || echo '$(srcdir)/'`MsgBox.cc
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/talkmm-MsgBox.Tpo $(DEPDIR)/talkmm-MsgBox.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MsgBox.cc' object='talkmm-MsgBox.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-MsgBox.o `test -f 'MsgBox.cc' || echo '$(srcdir)/'`MsgBox.cc
-
-talkmm-MsgBox.obj: MsgBox.cc
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-MsgBox.obj -MD -MP -MF $(DEPDIR)/talkmm-MsgBox.Tpo -c -o talkmm-MsgBox.obj `if test -f 'MsgBox.cc'; then $(CYGPATH_W) 'MsgBox.cc'; else $(CYGPATH_W) '$(srcdir)/MsgBox.cc'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/talkmm-MsgBox.Tpo $(DEPDIR)/talkmm-MsgBox.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MsgBox.cc' object='talkmm-MsgBox.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-MsgBox.obj `if test -f 'MsgBox.cc'; then $(CYGPATH_W) 'MsgBox.cc'; else $(CYGPATH_W) '$(srcdir)/MsgBox.cc'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -c -o talkmm-xwebkit.obj `if test -f 'xwebkit.cc'; then $(CYGPATH_W) 'xwebkit.cc'; else $(CYGPATH_W) '$(srcdir)/xwebkit.cc'; fi`
 
 talkmm-Unit.o: Unit.cc
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(talkmm_CXXFLAGS) $(CXXFLAGS) -MT talkmm-Unit.o -MD -MP -MF $(DEPDIR)/talkmm-Unit.Tpo -c -o talkmm-Unit.o `test -f 'Unit.cc' || echo '$(srcdir)/'`Unit.cc

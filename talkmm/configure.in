@@ -19,7 +19,7 @@ AC_PROG_CPP
 AC_LANG_CPLUSPLUS
 
 # Checks for libraries.
-pkg_modules="gtkmm-2.4 >= 2.6.0 libsexymm"
+pkg_modules="gtkmm-2.4 >= 2.6.0 libsexymm webkit-1.0"
 PKG_CHECK_MODULES(PACKAGE, $pkg_modules)
 AC_SUBST(PACKAGE_CFLAGS)
 AC_SUBST(PACKAGE_LIBS)

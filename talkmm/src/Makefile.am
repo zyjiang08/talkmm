@@ -21,8 +21,7 @@ talkmm_SOURCES = talkmm.cc \
 		 TreeModelDnd.cc \
 		 TreeViewTooltips.cc \
 		 TrayIcon.cc \
-		 TagList.cc \
-		 MsgBox.cc \
+		 xwebkit.cc \
 		 Unit.cc \
 		 pixmaps.cc \
 		 ./config/rwxml.cc  ./config/tinystr.cc  ./config/tinyxml.cc  \
@@ -40,9 +39,7 @@ noinst_HEADERS = talkmm.h \
 		 TreeModelDnd.h \
 		 TreeViewTooltips.h \
 		 TrayIcon.h \
-		 SmileTree.h \
-		 TagList.h \
-		 MsgBox.h \
+		 xwebkit.h \
 		 Unit.h \
 		 TreeItem.h \
 		 pixmaps.h \
@@ -59,5 +56,5 @@ talkmm_LDADD =  \
 	       talk/base/libcricketbase.la \
 	       $(EXPAT_LIBS) $(ORTP_LIBS) -lpthread -lssl -lcrypto \
 		$(ILBC_LIBS) $(SPEEX_LIBS) $(GLIB_LIBS) $(MEDIA_LIBS) $(MEDIASTREAMER_LIBS)
-talkmm_LDFLAGS =`pkg-config --libs gtkmm-2.4 libglademm-2.4 gthread-2.0 libsexymm`
-AM_CPPFLAGS = -DPOSIX `pkg-config --cflags gtkmm-2.4 libglademm-2.4 gthread-2.0 libsexymm`
+talkmm_LDFLAGS =`pkg-config --libs gtkmm-2.4 libglademm-2.4 gthread-2.0 libsexymm webkit-1.0`
+AM_CPPFLAGS = -DPOSIX `pkg-config --cflags gtkmm-2.4 libglademm-2.4 gthread-2.0 libsexymm webkit-1.0`
