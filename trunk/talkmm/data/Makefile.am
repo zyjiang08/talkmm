@@ -2,6 +2,7 @@ SUBDIRS= images
 talkmm_ui = \
 	     main_window.glade \
 	     msg_window.glade \
+	     setting_window.glade \
 	     talkmm_logo_1.png \
 	     talkmm_logo_2.png \
 	     user-info.png \
