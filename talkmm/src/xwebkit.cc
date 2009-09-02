@@ -16,6 +16,8 @@
  * =====================================================================================
  */
 
+#include <sys/stat.h>
+#include <string.h>
 #include "xwebkit.h"
 #include <cstdio>
 #include <webkit/webkit.h>

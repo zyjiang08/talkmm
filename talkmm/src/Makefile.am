@@ -17,6 +17,7 @@ talkmm_SOURCES = talkmm.cc \
 		 fileclient.cc \
 		 MainWindow.cc \
 		 MsgWindow.cc \
+		 SettingWindow.cc \
 		 BuddyView.cc \
 		 TreeModelDnd.cc \
 		 TreeViewTooltips.cc \
@@ -35,6 +36,7 @@ noinst_HEADERS = talkmm.h \
 		 define.h \
 		 MainWindow.h \
 		 MsgWindow.h  \
+		 SettingWindow.h \
 		 BuddyView.h \
 		 TreeModelDnd.h \
 		 TreeViewTooltips.h \

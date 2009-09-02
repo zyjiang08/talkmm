@@ -28,6 +28,7 @@
 //#include "./config/rwxml.h"
 #include "BuddyView.h"
 #include "MsgWindow.h"
+#include "SettingWindow.h"
 #include "console.h"
 #include "pixmaps.h"
 
@@ -143,7 +144,7 @@ MainWindow::MainWindow():
 
 	/** first page */
 	//check_button_rememberMe = dynamic_cast <Gtk::CheckButton*>(main_xml->get_widget("rememberMe"));
-	main_xml->get_widget("rememberMe",check_button_rememberMe);
+	main_xml->get_widget("rememberMe", check_button_rememberMe);
 	check_button_rememberMe->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::check_button_rememberme_clicked));
 	//check_button_keeppasswd = dynamic_cast <Gtk::CheckButton*>(main_xml->get_widget("keeppasswd"));
 	main_xml->get_widget("keeppasswd",check_button_keeppasswd);
@@ -199,7 +200,7 @@ MainWindow::MainWindow():
 
 	//button_settings = dynamic_cast <Gtk::Button *>(main_xml->get_widget("button_settings"));
 	main_xml->get_widget("button_settings",button_settings);
-	//button_settings->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::on_set_settings));
+	button_settings->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::on_set_settings));
 	//button_about = dynamic_cast <Gtk::Button *>(main_xml->get_widget("button_about"));
 	main_xml->get_widget("button_about",button_about);
 	button_about->signal_clicked().connect(sigc::mem_fun(*this,&MainWindow::on_button_about));
@@ -211,17 +212,12 @@ MainWindow::MainWindow():
 	main_xml->get_widget("hbox_filter",hboxfilter);
 
         entry_filter = Gtk::manage(new Sexy::IconEntry());
-
         hboxfilter->pack_start(*entry_filter);
-
         entry_filter->add_clear_button();
 
 	Gtk::Image* icon = Gtk::manage(new Gtk::Image(Gtk::Stock::FIND, Gtk::ICON_SIZE_MENU));
-
         icon->show();
-
         entry_filter->set_icon(Sexy::ICON_ENTRY_PRIMARY, icon);
-
 	entry_filter->signal_changed().connect(sigc::mem_fun(*this,&MainWindow::on_entry_filter_changed));
 
 	//Gtk::Container* list_window = dynamic_cast <Gtk::Container*>(main_xml->get_widget("listWindow"));
@@ -241,7 +237,7 @@ MainWindow::MainWindow():
 	Glib::RefPtr<const Gdk::Colormap> colormap_ = this->get_screen()->get_rgba_colormap();
 	this->set_default_colormap(colormap_);
 
-	this->set_size_request(240,576);
+	this->set_size_request(240 + 50,576 + 50);
 	this->show_all();
 	this->resize(1,1);
 }
@@ -445,6 +441,8 @@ void MainWindow::on_quit()
 
 void MainWindow::on_set_settings()
 {
+	SettingWindow* settingwindow = new SettingWindow(this);
+	settingwindow->xx("setting window created...");
 	cout << "set_settings" << endl;
 }
 
