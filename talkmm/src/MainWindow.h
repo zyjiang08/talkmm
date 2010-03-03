@@ -108,6 +108,7 @@ class MainWindow : public Gtk::Window {
 		const std::string& get_name(){return m_name;}
 		void on_entry_filter_changed();
 
+
 	protected:
 		bool on_delete_event(GdkEventAny* event);
 		void on_button_about();
@@ -121,6 +122,7 @@ class MainWindow : public Gtk::Window {
 		typedef std::map<std::string,RosterItem> RosterMap;
 		DealConf dealconf;
 		typedef std::map<std::string,MsgWindow*> Session;
+		sigc::connection			m_timeout;
 		RosterMap*				m_roster;
 		Talkmm*					m_talkmm;
 		Console*				m_console;

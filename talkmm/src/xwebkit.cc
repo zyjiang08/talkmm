@@ -21,6 +21,7 @@
 #include "xwebkit.h"
 #include <cstdio>
 #include <webkit/webkit.h>
+#include <unistd.h>
 
 
 XWebkit::XWebkit(const std::string& from):
@@ -221,6 +222,7 @@ bool XWebkit::init_webkit()
 	fwrite(template_, strlen(template_), sizeof (char), fp);
 	fclose(fp);
 	g_free(filename);
+	sync();
 
 	char *url = get_file_uri_for_tempfile();
 	webkit_web_view_open(WEBKIT_WEB_VIEW(webkit_), url);
@@ -267,7 +269,7 @@ void XWebkit::webkit_write_conv(const char*name,const char* alias,
 	//char* test_ = "appendMessage(\"test script\")";
 	//webkit_web_view_execute_script(WEBKIT_WEB_VIEW(webkit_), test_);
 	webkit_web_view_execute_script(WEBKIT_WEB_VIEW(webkit_), script);
-	old_flags = flags;
+	//old_flags = flags;
 
 	g_free(msg);
 	g_free(script);

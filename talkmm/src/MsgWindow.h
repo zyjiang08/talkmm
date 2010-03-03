@@ -20,11 +20,13 @@
 #define  MSGWINDOW_FILE_HEADER_INC
 
 #include <gtkmm.h>
+#include <deque>
+#include <sigc++/connection.h>
 
 #define msg_ui DATA_DIR"/msg_window.glade"
 
-//class MsgBox;
-class XWebkit;
+class MsgBox;
+//class XWebkit;
 class MainWindow;
 class MsgWindow: public Gtk::Window
 {
@@ -33,7 +35,9 @@ class MsgWindow: public Gtk::Window
 		~MsgWindow();
 		//void show_message(const std::string& msg);
 		void show_message(const std::string& sender,const std::string& msg,bool self=false);
+		void store_message(const std::string& msg);
 		void show_notify_msg(const std::string& msg);
+		bool on_show_message();
 		void send_message();
 		void on_button_send_file();
 		void on_button_cancel_send_file();
@@ -60,9 +64,12 @@ class MsgWindow: public Gtk::Window
 		std::string				m_jid;
 		GBuilderXML				msg_xml;
 		Gtk::Entry*				entry_send;
+		typedef std::deque<std::string> MessageDeque;
+		MessageDeque				m_message_deque;
+		sigc::connection			m_timeout;
 		//Gtk::TextView*				textview_msg;
-		//MsgBox*					textview_msg;
-		XWebkit*				textview_msg;
+		MsgBox*					textview_msg;
+		//XWebkit*				textview_msg;
 		Gtk::HBox* 				hbox_functions;
 		Gtk::HBox* 				hbox_cancel;
 		Gtk::Button*				button_call;

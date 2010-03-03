@@ -478,17 +478,18 @@ void MainWindow::on_roster_presence(const buzz::Status& status)
 	list_view->refreshBuddyStatus(key,name,item.status,show_,item.phone_cap);
 }
 
+
 void MainWindow::on_receive_message(const std::string& from,const std::string& message)
 {
 
 	MsgWindow* msg_window = open_session(from);
 
-	  size_t pos = from.find("@");
-	  std::string str = from.substr(0, pos);;
+	size_t pos = from.find("@");
+	std::string str = from.substr(0, pos);;
 	std::string utext = from +" : "+message+"\n";
 	std::cout<<"recv =========="<<utext<<std::endl;
-	msg_window->show_message(str,message,false);
-//	msg_window->show_message(from,message);
+//	msg_window->show_message(str,message,false);
+	msg_window->store_message(message);
 
 }
 
