@@ -20,10 +20,10 @@
 #define HAVE_GETTEXT 1
 
 /* Defined when we have ilbc codec lib */
-/* #undef HAVE_ILBC */
+#define HAVE_ILBC 1
 
 /* Define to 1 if you have the <iLBC_decode.h> header file. */
-/* #undef HAVE_ILBC_DECODE_H */
+#define HAVE_ILBC_DECODE_H 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
@@ -82,6 +82,9 @@
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "talkmm"
+
+/* Define to the home page for this package. */
+#define PACKAGE_URL ""
 
 /* Define to the version of this package. */
 #define PACKAGE_VERSION "0.10"

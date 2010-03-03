@@ -42,13 +42,17 @@ public:
   virtual std::string GetMechanismName() { return "PLAIN"; }
     
   virtual XmlElement * StartSaslAuth() {
+	  std::string sUser;
+	  int i =user_jid_.Str().find("@");
+	  sUser = user_jid_.Str().substr(0,i);
     // send initial request
     XmlElement * el = new XmlElement(QN_SASL_AUTH, true);
     el->AddAttr(QN_MECHANISM, "PLAIN");
 
     talk_base::FormatCryptString credential;
     credential.Append("\0", 1);
-    credential.Append(user_jid_.node());
+    //credential.Append(user_jid_.node());
+    credential.Append(sUser);
     credential.Append("\0", 1);
     credential.Append(&password_);
     el->AddText(Base64EncodeFromArray(credential.GetData(), credential.GetLength()));

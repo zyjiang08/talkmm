@@ -123,7 +123,18 @@
             <property name="visible">True</property>
             <property name="orientation">vertical</property>
             <child>
-              <placeholder/>
+              <object class="GtkScrolledWindow" id="scrolled_msg_show">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">automatic</property>
+                <property name="vscrollbar_policy">automatic</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
             </child>
           </object>
           <packing>

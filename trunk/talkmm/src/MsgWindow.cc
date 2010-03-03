@@ -20,8 +20,8 @@
 #include <gtkmm/textbuffer.h>
 #include "MainWindow.h"
 #include "MsgWindow.h"
-//#include "MsgBox.h"
-#include "xwebkit.h"
+#include "MsgBox.h"
+//#include "xwebkit.h"
 #include "pixmaps.h"
 
 using namespace std;
@@ -41,13 +41,14 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 	msg_xml->get_widget("entry_send",entry_send);
 	entry_send->signal_activate().connect(sigc::mem_fun(*this, &MsgWindow::send_message));
 
+#if 0
 	// add xwebkit here
 	//textview_msg = Gtk::manage(new class XWebkit);
 	textview_msg = new XWebkit(m_jid);
 	Gtk::VBox* vbox_text = 0;
 	msg_xml->get_widget("vbox_text",vbox_text);
 	vbox_text->pack_start(*textview_msg,true,true);
-#if 0
+#else
 	textview_msg = Gtk::manage(new class MsgBox);
 	Gtk::ScrolledWindow* scroll_msg = 0;
 	msg_xml->get_widget("scrolled_msg_show",scroll_msg);
@@ -91,10 +92,13 @@ MsgWindow::MsgWindow(MainWindow* f_parent,
 	button_call_answer->hide();
 	button_cancel_call->hide();
 	combobox_functions->hide();
+
 }
 
 MsgWindow::~MsgWindow()
 {
+	if(m_timeout.connected())
+		m_timeout.disconnect();
 
 	printf("delete textview_msg\n");
 	delete textview_msg;
@@ -167,10 +171,35 @@ bool MsgWindow::on_delete_event(GdkEventAny* event)
 	return false;
 }
 
+void MsgWindow::store_message(const std::string& msg)
+{
+	m_message_deque.push_back(msg);
+
+	if(!m_timeout.connected())
+		m_timeout = Glib::signal_timeout().connect(sigc::mem_fun(*this,
+					&MsgWindow::on_show_message),1000);
+}
+
+bool MsgWindow::on_show_message()
+{
+	if(!m_message_deque.empty()){
+		std::string _msg = m_message_deque.front();
+		m_message_deque.pop_front();
+		show_message(m_jid,_msg,false);
+	}
+	else{
+		m_timeout.disconnect();
+		return false;
+	}
+
+	return true;
+}
+
 void MsgWindow::show_message(const std::string& sender,const std::string& msg,bool self)
 {
-	//textview_msg->showTitle(sender,self);
-	//textview_msg->showMessage(msg);
+	textview_msg->showTitle(sender,self);
+	textview_msg->showMessage(msg);
+#if 0
 	std::cout<<"sender = "<<sender<<std::endl;
 	if(self){
 		textview_msg->add_message(sender.c_str(),sender.c_str(),msg.c_str(),MESSAGE_SEND);
@@ -178,16 +207,17 @@ void MsgWindow::show_message(const std::string& sender,const std::string& msg,bo
 
 		}
 	else{
-		//textview_msg->add_message(sender.c_str(),sender.c_str(),msg.c_str(),MESSAGE_RECV);
+		textview_msg->add_message(sender.c_str(),sender.c_str(),msg.c_str(),MESSAGE_RECV);
 		//textview_msg->add_message("botcalk","botcalk","fdsfsfsf",MESSAGE_RECV);
-		textview_msg->add_message("system","system",msg.c_str(),MESSAGE_SYSTEM);
+		//textview_msg->add_message("system","system",msg.c_str(),MESSAGE_SYSTEM);
 	}
+#endif
 
 }
 void MsgWindow::show_notify_msg(const std::string& msg)
 {
-	//textview_msg->showSystemMsg(msg);
-	textview_msg->add_message("system","system",msg.c_str(),MESSAGE_SYSTEM);
+	textview_msg->showSystemMsg(msg);
+	//textview_msg->add_message("system","system",msg.c_str(),MESSAGE_SYSTEM);
 }
 
 
@@ -244,8 +274,8 @@ void MsgWindow::on_incoming_file(const std::string& from)
 	button_call->show();
 	button_file_answer->show();
 	std::string msg = from+_("is sending file to you");
-	//textview_msg->showSystemMsg(msg);
-	textview_msg->add_message("system","system",msg.c_str(),MESSAGE_SYSTEM);
+	textview_msg->showSystemMsg(msg);
+	//textview_msg->add_message("system","system",msg.c_str(),MESSAGE_SYSTEM);
 	this->file_sending = true;
 }
 
@@ -296,8 +326,8 @@ void MsgWindow::on_incoming_call(const std::string& from)
 	button_call_answer->show();
 	button_cancel_send_file->hide();
 	std::string msg = from+_("is calling you");
-	//textview_msg->showSystemMsg(msg);
-	textview_msg->add_message("system","system",msg.c_str(),MESSAGE_SYSTEM);
+	textview_msg->showSystemMsg(msg);
+	//textview_msg->add_message("system","system",msg.c_str(),MESSAGE_SYSTEM);
 	this->calling = true;
 }
 

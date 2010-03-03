@@ -22,7 +22,8 @@ talkmm_SOURCES = talkmm.cc \
 		 TreeModelDnd.cc \
 		 TreeViewTooltips.cc \
 		 TrayIcon.cc \
-		 xwebkit.cc \
+		 MsgBox.cc \
+		 TagList.cc \
 		 Unit.cc \
 		 pixmaps.cc \
 		 ./config/rwxml.cc  ./config/tinystr.cc  ./config/tinyxml.cc  \
@@ -41,7 +42,8 @@ noinst_HEADERS = talkmm.h \
 		 TreeModelDnd.h \
 		 TreeViewTooltips.h \
 		 TrayIcon.h \
-		 xwebkit.h \
+		 MsgBox.h \
+		 TagList.h \
 		 Unit.h \
 		 TreeItem.h \
 		 pixmaps.h \
