@@ -160,9 +160,9 @@ bool MsgWindow::on_delete_event(GdkEventAny* event)
 	}
 
 	if(flag){
-		m_parent->close_session(m_jid);
-		//delete this;
-		return true;
+		//m_parent->close_session(m_jid);
+		//return true;
+		hide();
 	}
 	return false;
 }
